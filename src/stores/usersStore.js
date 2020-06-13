@@ -10,6 +10,11 @@ const UsersStore = t
     items: t.array(UserModel),
     isLoading: t.optional(t.boolean, false),
   })
+  .actions((store) => ({
+    addUser(user) {
+      store.items.unshift(user);
+    },
+  }))
   .views((store) => ({
     get authUser() {
       const userId = storageService.get('userId');

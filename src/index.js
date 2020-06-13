@@ -8,7 +8,3 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById('root')
 );
-
-// TO-DO: Add folder structure
-// TO-DO: Add routing
-// TO-DO: Add mobx dev tools

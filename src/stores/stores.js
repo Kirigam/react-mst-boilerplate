@@ -7,7 +7,7 @@ import RootStore from './RootStore';
 const createStore = (initialStore = {}) => {
   const store = RootStore.create(initialStore);
 
-  if (!isProd) {
+  if (!isProd()) {
     makeInspectable(store);
   }
 
