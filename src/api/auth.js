@@ -28,6 +28,14 @@ export const registration = (data) =>
     method: 'POST',
     url: 'https://puz.supply/api/dj-rest-auth/registration/',
     data,
+  })
+  .then(response => { 
+    console.log(response.data );
+  
+    return response;
+  })
+  .catch(error => {
+    return error.response.data;
   });
 
 export const restorePassword = (data) =>

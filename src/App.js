@@ -1,12 +1,12 @@
 import React from 'react';
-import { Provider } from 'mobx-react';
+// import { Provider } from 'mobx-react';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
-import {createStore} from './stores/stores';
+import {createStore, Provider} from './stores/stores';
 import Themes from './them';
 import { Headers } from './Components/Header/Header';
 import { Router } from './scenes/Routes';
-import { isLoginUser } from './utils/userUtil';
-import { useHistory, BrowserRouter } from 'react-router-dom';
+ 
+import {  BrowserRouter } from 'react-router-dom';
 
 function App() {
   const store = createStore();
@@ -20,7 +20,7 @@ function App() {
 
           <Router />
         </BrowserRouter>
-        {/* <Header></Header> */}
+       
       </Provider>
     </ThemeProvider>
   );

@@ -1,1 +1,2 @@
-export * from './auth';
+import * as Api from './auth';
+export default Api;

@@ -37,7 +37,7 @@ export const Headers = () => {
             <MenuItem value={10}>РУС</MenuItem>
           </Select>
 
-          <a className={s.headerButton}>Повернутись на головну</a>
+          <a href="#" className={s.headerButton}>Повернутись на головну</a>
         </div>
       </div>
     </Box>

@@ -13,7 +13,7 @@ import { LoginFormComponent } from './components/LoginForm';
 // import { Switch } from '@material-ui/core';
 function LoginForm (){
   const s = useStyles();
-  // const store = useStore();
+  // const store = RootStore();
   // let history = useHistory();
   // if (isLogin()) {
   //   history.push(routes.home);
@@ -22,6 +22,8 @@ function LoginForm (){
 
 
   async function onSubmit(values) {
+    
+
   //   if (values.password && values.email) {
   //     await store.auth.login.run({
   //       password: values.password,

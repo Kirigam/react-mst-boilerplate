@@ -19,7 +19,7 @@ export const authRequest = (config) => {
 
   const withAuthTokenConfig = mergeDeepLeft(
     config,
-    { headers: { Authorization: `Bearer ${token}` } },
+    { headers: { Authorization: `Token ${token}` } },
   );
 
   return apiRequest(withAuthTokenConfig);

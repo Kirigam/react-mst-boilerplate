@@ -20,11 +20,11 @@ const MSTContext = createContext(null);
 export const Provider = MSTContext.Provider;
 
 export function useStore(mapStateToProps) {
-  console.log(MSTContext);
+  // console.log(MSTContext);
 
   const store = useContext(MSTContext);
 
-  console.log(store);
+  // console.log(store);
 
   if (typeof mapStateToProps === 'function') {
     return mapStateToProps(store);
