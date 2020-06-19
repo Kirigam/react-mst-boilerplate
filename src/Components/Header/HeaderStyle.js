@@ -5,13 +5,13 @@ export default makeStyles((theme) => ({
     textDecoration: 'none',
     fontWeight: '600',
   },
-  phoneText:{
+  phoneText: {
     fontWeight: '600',
   },
-  headerBox:{
+  headerBox: {
     display: 'flex',
     alignItems: 'center',
-    justifyContent: 'space-between'
+    justifyContent: 'space-between',
   },
   headerSelect: {
     border: 'none !important',
@@ -26,6 +26,9 @@ export default makeStyles((theme) => ({
     borderRadius: '4px',
     border: 'solid 1px #dadbdc',
     padding: '6px 16px',
-    marginLeft:'15px'
+    marginLeft: '15px',
+
+    textDecoration: 'none',
+    color: '#494a4e',
   },
 }));

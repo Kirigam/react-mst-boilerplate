@@ -1,0 +1,30 @@
+.SidebarGroup{
+    margin: 0px 0px 30px;
+}
+.SidebarGroupHeader{
+    display: flex;
+    align-items: center;
+    
+}
+.SidebarGroupHeader .Title{
+    margin-left: 10px;
+}
+.SidebarGroupMain{
+    display: flex;
+    flex-direction: column;
+    align-items: baseline;
+    margin-left: 35px;
+}
+.SidebarGroupMain .Item{
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: 600;
+    line-height: 1.5;
+    color: #5866a1;
+    transition: .3s;
+}
+.SidebarGroupMain .Item:hover{
+    transition: .3s;
+    color: #828cb9;;
+}
+

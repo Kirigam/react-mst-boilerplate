@@ -6,8 +6,9 @@ export const PublicRoute = {
 export const PrivateRoute = {
   HOME: '/',
   SETINGS: '/setings',
+  CREATEORDER: '/create_order',
 };
 export const NameStorage = {
-    USERID:'___User',
+    USERID:'userId',
     ORDERID:'___Order',
 }
