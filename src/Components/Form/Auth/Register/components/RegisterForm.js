@@ -1,5 +1,10 @@
 import React from 'react';
-import { Button, Box, Typography, CircularProgress, } from '@material-ui/core';
+import {
+  Button,
+  Box,
+  Typography,
+  CircularProgress,
+} from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
@@ -13,19 +18,21 @@ import useStyles from '../../AuthStyle';
 
 export const RegisterFormComponent = ({ onSubmit, isLoading }) => {
   const initialValues = {
-    full_name: 'qwe',
-    phone: '212312312',
-    email: 'qwe@wqe.qwe',
-    password1: '212312312',
-    password2: '212312312',
+    full_name: 'Собська Наталя Григорівна ',
+    phone: '+380 (073) 094 2345',
+    email: 'Sobtest@gmail.com',
+    password1: '123123123',
+    password2: '123123123',
   };
   const validationSchema = Yup.object({
-    full_name: Yup.string().required("Поле обов'язкове для заповнення"),
+    full_name: Yup.string().required(
+      "Поле обов'язкове для заповнення",
+    ),
     phone: Yup.string().required("Поле обов'язкове для заповнення"),
     email: Yup.string()
       .required("Поле обов'язкове для заповнення")
       .email('Введіть E-mail адресу'),
-      password1: Yup.string().required(
+    password1: Yup.string().required(
       "Поле обов'язкове для заповнення",
     ),
     password2: Yup.string()
@@ -99,7 +106,7 @@ export const RegisterFormComponent = ({ onSubmit, isLoading }) => {
                 </Typography>
                 <Link
                   className={classes.formFooter_link}
-                  to={PublicRoute.REGISTER}
+                  to={PublicRoute.LOGIN}
                 >
                   <Typography variant="body2">Увійти</Typography>
                 </Link>
