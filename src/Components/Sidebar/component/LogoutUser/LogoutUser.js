@@ -4,17 +4,24 @@ import useStyles from "./style";
 import { Typography } from "@material-ui/core";
 import { useHistory } from "react-router-dom";
 // import { routes } from "../../../../scenes/routes";
-import { PublicRoute } from "../../../../Constants/Index";
+import { PublicRoute, NameStorage } from "../../../../Constants/Index";
+// import { useStore } from '../../stores/stores.js';
+import { observer } from "mobx-react";
+// import UsersStore from "../../../../stores/usersStore";
+import { useStore } from "../../../../stores/stores";
 
-export const LogoutUser = () => {
+const LogoutUser = () => {
   var classes = useStyles();
   let history = useHistory();
-
+  const { users } = useStore((store) => ({
+    users: store.users,
+  }));
   function onClick() {
-    localStorage.removeItem("user_info");
-    localStorage.removeItem("userId");
-    // localStorage.removeItem("___User");
-
+    localStorage.removeItem(NameStorage.USERID);
+    localStorage.removeItem(NameStorage.USERINFO);
+    localStorage.removeItem(NameStorage.USERTOKEN);
+   
+    users.removeUser();
   
     history.push(PublicRoute.LOGIN);
 
@@ -31,3 +38,4 @@ export const LogoutUser = () => {
     </div>
   );
 };
+export default observer(LogoutUser)

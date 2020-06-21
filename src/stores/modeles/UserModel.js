@@ -18,7 +18,7 @@ const Profile = t.model('Profile', {
 
 const UserModel = t
   .model('User', {
-    id: t.number,
+    id: t.identifier,
     email: t.maybeNull(t.string),
     role: t.maybeNull(t.string),
     full_name: t.maybeNull(t.string),

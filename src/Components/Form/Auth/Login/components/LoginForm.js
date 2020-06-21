@@ -9,7 +9,7 @@ import {
 import { Link } from 'react-router-dom';
 // import { LineSeparator } from '../../compotents/LineSeparator/LineSeparator';
 // import { routes } from '../../../routes';
-import { Formik, Field,  Form } from 'formik';
+import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 
 import useStyles from '../../AuthStyle';
@@ -71,7 +71,7 @@ export const LoginFormComponent = ({ onSubmit, isLoading }) => {
                 className={classes.formFooter_link}
                 to={PublicRoute.FORGOTPASWORD}
               >
-                <Typography variant="body2">Забули пароль</Typography>
+                {/* <Typography  className={`${classes.link_standart}`} variant="body2">Забули пароль</Typography> */}
               </Link>
               <Button
                 type="submit"
@@ -91,14 +91,14 @@ export const LoginFormComponent = ({ onSubmit, isLoading }) => {
 
         {/* <LineSeparator></LineSeparator> */}
         <Box display="flex" justifyContent="center">
-          <Button size="large" className={classes.googleButton}>
-            {/* <img
+          {/* <Button size="large" className={classes.googleButton}>
+            <img
               src={google}
               alt="google"
               className={classes.googleIcon}
-            /> */}
+            />
             Увійти через Gmail
-          </Button>
+          </Button> */}
         </Box>
         <Box className={classes.auth__form_footer}>
           <Typography variant="body1" color="textPrimary">
@@ -108,9 +108,11 @@ export const LoginFormComponent = ({ onSubmit, isLoading }) => {
             <Link
               to={PublicRoute.REGISTER}
               style={{ textDecoration: 'none', color: '#5866a1' }}
+             
             >
               <Typography
                 variant="body2"
+                className={`${classes.link_standart}`}
                 style={{ textTransform: 'initial' }}
               >
                 Зареєструватися

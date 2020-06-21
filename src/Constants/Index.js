@@ -2,6 +2,7 @@ export const PublicRoute = {
   LOGIN: '/auth/login',
   REGISTER: '/auth/register',
   FORGOTPASWORD: '/auth/forgotPasword',
+  URLWEBSITE:'https://puz.supply/'
 };
 export const PrivateRoute = {
   HOME: '/',
@@ -10,5 +11,7 @@ export const PrivateRoute = {
 };
 export const NameStorage = {
     USERID:'userId',
-    ORDERID:'___Order',
+    USERINFO:'userInfo',
+    USERTOKEN:'token',
+    // ORDERID:'__Order',
 }

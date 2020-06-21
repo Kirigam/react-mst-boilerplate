@@ -1,2 +1,3 @@
-import * as Api from './auth';
-export default Api;
+export *  from './auth';
+export *  from './order';
+// export default Api;

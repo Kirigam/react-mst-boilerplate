@@ -122,4 +122,11 @@ export default makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
         color: '#262729',
       },
+      link_standart:{
+        transition:'.3s',
+        '&:hover':{
+          transition:'.3s',
+          color:'#828cb9'
+        }
+      }
 }))

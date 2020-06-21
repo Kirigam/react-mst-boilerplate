@@ -1,0 +1,30 @@
+
+  .first_order{
+    display: grid;
+    grid-template-columns: minmax(280px, 40%) 1fr;
+    grid-gap: 65px;
+  }
+  .FormOrderStart{
+    display: grid;
+    grid-gap: 16px;
+  }
+  .first_order__btn{
+    background-color: #2e408a !important;
+    color: #fff !important;
+
+}
+
+  @media (max-width: 1200px) {
+    .first_order{
+        grid-gap: 35px;
+      } 
+  }
+  @media (max-width: 992px) {
+    .first_order{
+        grid-template-columns: 1fr;
+    }
+  }
+
+  .input{
+      
+  }

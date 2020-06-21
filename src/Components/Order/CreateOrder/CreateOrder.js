@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import useStyles from './CreateOrderStyle.js';
+import s from './CreateOrder.module.scss';
 import {
   Box,
   Typography,
@@ -11,9 +11,9 @@ import {
 } from '@material-ui/core';
 // import Api from './../../../api';
 import { Form, Formik } from 'formik';
-import Api from './../../../Api';
+import * as Api from './../../../Api';
+import { CardManager } from './../CardManager/CardManager';
 
-import DateFnsUtils from '@date-io/date-fns'; // choose your lib
 import {
   DatePicker,
   // TimePicker,
@@ -21,60 +21,176 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import Select from 'react-select';
-// import { Link } from 'react-router-dom';
-// import { IconSvg } from '../../svg_icons/svg.js';
-import { SetingsSVG } from '../../../assetc/svg/setings.js';
+import { FirstStepOrder } from '../FirstStepOrder/FirstStepOrder';
 export const CreateOrder = () => {
-  const s = useStyles();
+  // const s = useStyles();
 
-  const [selectedDate, handleDateChange] = useState(new Date());
-  const [directions, setdirections] = useState({});
-  const [options, setoptions] = useState([
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' },
-  ]);
-  const [Nomenclature, setNomenclature] = useState([]);
+  const [directions, setDirections] = useState({
+    isLoading: true,
+    value: [],
+    list: [],
+  });
+  const [Nomenclature, setNomenclature] = useState({
+    isLoading: true,
+    list: [],
+    tempList: [],
+    value: [],
+  });
 
-  // const nomenclature = Api.Order.getDirections();
-  // // expected output: 'resolved'
+  const [manager, setManager] = useState({
+    isLoading: true,
+    list: [],
+    // tempList: [],
+    value: [],
+  });
 
-  // Promise.all([nomenclature]).then((values) => {
-  //   setNomenclature(values[0].data);
-  // })
+  useEffect(() => {
+    const fetchDirections = async () => {
+      try {
+        const responseDirections = await Api.getDirections();
+        const responseNomenclatures = await Api.getNomenclatures();
+        const responseManagers = await Api.getManagers();
+        let results = await Promise.all([
+          responseDirections,
+          responseNomenclatures,
+          responseManagers,
+        ]).then((results) => {
+          let tempArrayDirections = [];
+          results[0].data.forEach((element) => {
+            tempArrayDirections.push({
+              label: `${element.name}`,
+              value: element.code,
+            });
+          });
+          let allDirections = { label: `Усі напрямки`, value: 'all' };
+          tempArrayDirections.unshift(allDirections);
+          setDirections({
+            ...directions,
+            isLoading: false,
+            list: tempArrayDirections,
+          });
 
-  // useEffect(()=>(
+          let tempArrayNomenclatures = [];
+          results[1].data.forEach((element) => {
+            // console.log(element);
 
-  // ))
+            tempArrayNomenclatures.push({
+              label: `${element.name}`,
+              value: element.code,
+              direction: {
+                code:
+                  element.direction !== null
+                    ? element.direction.code
+                    : null,
+              },
+              manager: {
+                code:
+                  element.manager !== null
+                    ? element.manager.code
+                    : null,
+              },
+            });
+          });
+          setNomenclature({
+            ...Nomenclature,
+            isLoading: false,
+            list: tempArrayNomenclatures,
+            tempList: tempArrayNomenclatures,
+          });
 
-  // const res =
+          let tempArrayManagers = [];
+          results[2].data.forEach((element) => {
+            console.log(element);
 
-  // console.log(nomenclature );
-  // console.log("CreateOrder -> nomenclature", nomenclature)
+            tempArrayManagers.push({
+              phone: element.phone !== null ? element.phone : null,
+              email: element.email,
+              full_name: element.full_name,
+              code: element.manager_profile.code,
+            });
+          });
+          setManager({
+            ...manager,
+            isLoading: false,
+            list: tempArrayManagers,
+            //   tempList: tempArray,
+          });
+        });
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchDirections();
+  }, []);
 
-  // await store.auth.login.run({
-  //   password: values.password,
-  //   email: values.email,
-  // });
+  useEffect(() => {
+    const fetchManager = async () => {
+      try {
+        const response = await Api.getManagers();
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchManager();
+  }, []);
 
-  useEffect(()=>{
-    const directions = Api.Order.getDirections();
-    directions.then((response) => {
-      console.log(response );
-      
-      // let derection = response.data.map(item => {
-      //  value:'wwere',
-      //  value1:'wwereqe',
-      // })
+  // onChange Directions
+  function onDirections(direction) {
+    let filterNomenclature;
+    if (direction.value !== 'all') {
+      filterNomenclature = Nomenclature.list.filter(
+        (item) => item.direction.code === direction.value,
+      );
+    } else {
+      filterNomenclature = Nomenclature.list;
+    }
 
-      // const derection = {}
-
-      // setdirections(response)
-      // console.log(derection);
+    setNomenclature({
+      ...Nomenclature,
+      value: [],
+      tempList: filterNomenclature,
     });
-  })
-   
-  
+    setDirections({
+      ...directions,
+      value: direction,
+    });
+    setManager({
+      ...manager,
+      value: [],
+    });
+  }
+  // onChange onNomenclature
+  function onNomenclature(value) {
+    // console.log('onNomenclature -> value', value);
+
+    const managerValue = manager.list.filter(
+      (item) => item.code === value.manager.code,
+    );
+
+    const directionValue = directions.list.filter(
+      (item) => item.value == value.direction.code,
+    );
+    // console.log('onNomenclature -> directionValue', directionValue);
+
+    const filterNomenclature = Nomenclature.list.filter(
+      (item) => item.direction.code === directionValue[0].value,
+    );
+
+    setNomenclature({
+      ...Nomenclature,
+      value: value,
+      tempList: filterNomenclature,
+    });
+
+    setDirections({
+      ...directions,
+      value: directionValue[0],
+    });
+    setManager({
+      ...manager,
+      value: managerValue,
+    });
+  }
 
   return (
     <>
@@ -87,120 +203,45 @@ export const CreateOrder = () => {
             Додайте товар до замовлення.{' '}
           </Typography>
         </Box>
-        <Box>
-          <Grid item={true} xs={6}>
-            <Box maxWidth={400}>
-              <Formik>
-                <Form className={s.FormOrderStart}>
-                  <Select
-                    className={s.input}
-                    fullWidth
-                    placeholder="Напрям"
-                    options={options}
-                  />
-                  <Select
-                    className={s.input}
-                    fullWidth
-                    placeholder="Номенклатура"
-                    options={options}
-                  />
-                  <TextField
-                    className={s.input}
-                    fullWidth
-                    name="count"
-                    id="count"
-                    type="text"
-                    variant="outlined"
-                    placeholder="Кількість"
-                  ></TextField>
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <DatePicker
-                      className={s.input}
-                      fullWidth
-                      disableToolbar
-                      variant="inline"
-                      format="MM.dd.yyyy"
-                      minDate={new Date()}
-                      placeholder="Дата"
-                      margin="normal"
-                      inputVariant="outlined"
-                      value={selectedDate}
-                      onChange={handleDateChange}
-                      // KeyboardButtonProps={{
-                      //   'aria-label': 'change date',
-                      // }}
-                    />
-                  </MuiPickersUtilsProvider>
-                  <TextField
-                    className={s.input}
-                    fullWidth
-                    name="deliveri_addres"
-                    id="deliveri_addres"
-                    variant="outlined"
-                    placeholder="Адреса поставки"
-                  ></TextField>
-                  <Box display="flex" justifyContent="flex-end">
-                    <Button>Далі</Button>
-                  </Box>
-                </Form>
-              </Formik>
-            </Box>
-          </Grid>
-          <Grid item={true} xs={6}>
-            <Card p={3} className={s.card}>
-              <Typography className={s.cardTitle}>
-                Ваш менеджер
-              </Typography>
-              <Box variant="outlined" display="flex">
-                <Box mr={2}>
-                  {/* User Photo */}
-                  <Avatar
-                    style={{
-                      width: 40,
-                      height: 40,
-                      transition: '0.3s',
-                    }}
-                  />
-                </Box>
-                <Box>
-                  <Typography className={s.cardName} variant="body2">
-                    Романенко Роман
-                  </Typography>
-                  <a href={`mailto:aandrienko@gmail.com`}>
-                    <Typography
-                      className={s.cardMail}
-                      variant="body2"
-                    >
-                      aandrienko@gmail.com
-                    </Typography>
-                  </a>
-                  <a href={`tel:38034344334`}>
-                    <Typography
-                      className={s.cardMail}
-                      variant="body2"
-                    >
-                      +380 (34) 344 33 84
-                    </Typography>
-                  </a>
+        <FirstStepOrder
+          directions={directions}
+          Nomenclature={Nomenclature}
+          onNomenclature={onNomenclature}
+          onDirections={onDirections}
+          manager={manager.value}
+        ></FirstStepOrder>
+      </Box>
 
-                  <a href={`mailto:aandrienko@gmail.com`}>
-                    <Button
-                      className={s.seting}
-                      startIcon={
-                        <SetingsSVG
-                          color="#5866a1"
-                          name="setings"
-                        ></SetingsSVG>
-                      }
-                    >
-                      Написати менеджеру
-                    </Button>
-                  </a>
-                </Box>
-              </Box>
-            </Card>
-          </Grid>
+      <Box my={6} mx={4}>
+        <Typography className={s.MainTitle} variant="h4">
+          Створення замовлення
+        </Typography>
+        <Box my={2} mb={6}>
+          <Typography variant="h5" className={s.SubMainTitle}>
+            Додайте товар до замовлення.{' '}
+          </Typography>
         </Box>
+        <Box>
+          <Button
+            // onClick={handleOpen}
+            variant="outlined"
+            style={{ fontWeight: '600', margin: '30px 0px' }}
+          >
+            Додати номенклатуру
+          </Button>
+        </Box>
+        <Box>
+          <Typography variant="h5" className={s.SubMainTitle}>
+            Товари для розцінки
+          </Typography>
+        </Box>
+        {/* <FirstStepOrder
+          directions={directions}
+          Nomenclature={Nomenclature}
+          onNomenclature={onNomenclature}
+          onDirections={onDirections}
+          manager={manager.value}
+        ></FirstStepOrder> */}
       </Box>
     </>
   );

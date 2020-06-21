@@ -1,72 +1,81 @@
-import { propOr } from 'ramda';
-import { types as t } from 'mobx-state-tree';
+import { propOr, prop } from 'ramda';
+import { types as t, flow, getSnapshot } from 'mobx-state-tree';
 import storageService from '../utils/storageService';
 import UserModel from './modeles/UserModel';
 
 import { registration, login, getUser } from '../Api/auth.js';
 import { NameStorage } from '../Constants/Index';
-import Api from '../Api';
+import * as Api from '../Api';
+import { Snackbar } from '@material-ui/core';
 
 const UsersStore = t
   .model('UserStore', {
-    user: t.maybe(UserModel, {}),
-
-    isLoading: t.optional(t.boolean, false),
-    isLoggedIn: t.optional(t.boolean, false),
+    list: t.optional(t.array(UserModel), []),
   })
   .actions((store) => ({
     addUser(user) {
-      store.items.unshift(user);
-    },
-    setUser(user) {
-      store.user = user;
-    },
-    saveStore() {},
-    register(data) {
-      store.isLoading = true;
-      let result = registration(data);
+      user.id = user.id.toString();
 
-      store.isLoading = false;
-      store.isLoggedIn = true;
-      return result;
+      store.list.unshift(user);
+      console.log(store);
     },
-    login(data) {
-      
-      store.isLoading = true;
-      let result = Api.login(data);
-      // console.log(result);
-
-      store.isLoading = false;
-      store.isLoggedIn = true;
-      return result;
+    removeUser() {
+      store.list = [];
     },
-    async GetUsersInfo() {
+    register: flow(function* (data) {
       try {
-        const userID = window.localStorage.getItem('userId');
+        let res = yield registration(data);
+        store.addUser(res.data.user);
+        storageService.set(NameStorage.USERID, res.data.user.id);
+        storageService.set(NameStorage.USERTOKEN, res.data.key);
+        storageService.set(
+          NameStorage.USERINFO,
+          JSON.stringify(res.data.user),
+        );
+        return res;
+      } catch (error) {
+        return error.response.data;
+      }
+    }),
+    login: flow(function* (data) {
+      try {
+        const res = yield Api.login(data);
+        store.addUser(res.data.user);
+        storageService.set(NameStorage.USERID, res.data.user.id);
+        storageService.set(NameStorage.USERTOKEN, res.data.key);
+        storageService.set(
+          NameStorage.USERINFO,
+          JSON.stringify(res.data.user),
+        );
+        return res;
+      } catch (error) {
+        return error.response.data;
+      }
+    }),
+    fetchUser: flow(function* (userID) {
+      try {
+        const res = yield Api.getUser(userID);
 
-        if (!!userID) {
-          // store.isLoading = true;
-
-          const res = await Api.Users.get(userID);
-          console.log(res.data.user);
-          // console.log(store );
-          // store.user = res.data.user;
-          // store.setUser(res.data.user);
-
-          // store.isLoading = false;
-          // store.isLoggedIn = true;
-        }
+        store.addUser(res.data.user);
       } catch (error) {
         console.log(error);
+        return error.response.data;
       }
-    },
+    }),
   }))
   .views((store) => ({
     get authUser() {
       const userId = storageService.get('userId');
-      const allUsers = propOr([], ['users', 'list'], store);
+      const allUsers = propOr([], 'list', store);
+      console.log(allUsers);
+      console.log(userId);
+      allUsers.find((item) => {
+         console.log( item);
+         
+      }) 
+      
 
-      return allUsers.find(({ id }) => id === userId);
+      return allUsers.find(({ id }) => id == userId);
     },
   }));
 

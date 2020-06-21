@@ -101,14 +101,14 @@ export const RegisterFormComponent = ({ onSubmit, isLoading }) => {
 
             <Box className={classes.formFooterRegister}>
               <Box className={classes.formFooterRegister_info}>
-                <Typography variant="body1" color="textPrimary">
+                <Typography variant="body1" color="textPrimary" >
                   Вже зареєстровані?
                 </Typography>
                 <Link
                   className={classes.formFooter_link}
                   to={PublicRoute.LOGIN}
                 >
-                  <Typography variant="body2">Увійти</Typography>
+                  <Typography  className={`${classes.link_standart}`} variant="body2">Увійти</Typography>
                 </Link>
               </Box>
               <Button
@@ -129,14 +129,14 @@ export const RegisterFormComponent = ({ onSubmit, isLoading }) => {
 
         {/* <LineSeparator></LineSeparator> */}
         <Box display="flex" justifyContent="center">
-          <Button size="large" className={classes.googleButton}>
-            {/* <img
+          {/* <Button size="large" className={classes.googleButton}>
+            <img
               src={google}
               alt="google"
               className={classes.googleIcon}
-            /> */}
+            />
             Реєстрація через Gmail
-          </Button>
+          </Button> */}
         </Box>
       </div>
     </>

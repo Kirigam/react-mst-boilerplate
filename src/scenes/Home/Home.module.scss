@@ -1,0 +1,22 @@
+.mainScreen{
+    display: grid;
+    grid-template-columns: 285px 1fr;
+    height: calc(100vh - 40px);
+}
+.mainScreenSidebar{
+    display:grid;
+    grid-template-rows:  1fr 65px;
+}
+.mainScreenHero{
+    background-color: #fff;
+}
+  
+@media (max-width: 768px) {
+    .mainScreen{
+        display: grid;
+        grid-template-columns:  1fr;   
+    }
+    .mainScreenSidebar{
+        display: none;
+    }
+}

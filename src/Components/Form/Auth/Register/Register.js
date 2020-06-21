@@ -16,6 +16,7 @@ function RegisterForm() {
   const s = useStyles();
   const store = useStore();
   let history = useHistory();
+  const [isLoading, setisLoading] = useState(false);
 
   if (isLoginUser()) {
     history.push(PrivateRoute.HOME);
@@ -27,6 +28,7 @@ function RegisterForm() {
     horizontal: 'right',
     text: '',
   });
+  const [errorForm, seterrorForm] = useState({});
 
   const { vertical, horizontal, open, text } = state;
 
@@ -34,43 +36,34 @@ function RegisterForm() {
     setState({ ...state, open: false });
   };
 
+  
+
   async function onSubmit(values) {
-    if (values.password1 && values.email) {
-      // let results = await store.users.register(values);
-      // store.users.setUser(results.data.user);
-      // console.log(store);
-
-      // if (!!results.status_code) {
-      //   setState({ ...state, open: true, text: results.email });
-      // } else {
-      //   history.push(PrivateRoute.HOME);
-      // }
-
-
-
-
-      await store.users.register(values)
-      .then((results) => {
-        window.localStorage.setItem('userId', results.data.user.id);
-        window.localStorage.setItem('user_info', JSON.stringify(results.data.user));
-        history.push(PrivateRoute.HOME); 
-      })
-      .catch((error) => {
-        console.log(error );
-        let error_text;
-        if (!!error.response.data.status_code) {
-          // console.log('wqeqw' );
-          
+    try {
+      setisLoading(true)
+      const response = await store.users.register(values);
+      if (!!response.status_code) {
+        if (response.email) {
+          setState({ ...state, open: true, text: response.email });
+        }
+        if (response.full_name) {
           setState({
             ...state,
             open: true,
-            text: error_text,
+            text: response.full_name,
           });
-        } else {
-         
         }
-      });
+        if (response.phone) {
+          setState({ ...state, open: true, text: response.phone });
+        }
+      } else {
+        history.push(PrivateRoute.HOME);
+      }
+      setisLoading(false)
+    } catch (error) {
+      console.log(error);
     }
+     
   }
 
   return (
@@ -90,7 +83,7 @@ function RegisterForm() {
         <div className={s.auth_main}>
           <div className={s.auth_main__form}>
             <RegisterFormComponent
-              isLoading={store.users.isLoading}
+              isLoading={isLoading}
               onSubmit={onSubmit}
             ></RegisterFormComponent>
           </div>

@@ -1,37 +1,75 @@
-import React from "react";
-import { Avatar, Button, Typography, Box } from "@material-ui/core";
-import useStyles from "./UserSetingsStyle";
+import React from 'react';
+import { Avatar, Button, Typography, Box } from '@material-ui/core';
+import s from './UserSetings.module.scss';
 // import { CustomInput } from "../../form/input/input";
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik } from 'formik';
 // import { CustomInputMask } from "../../form/inputMask/inputMask";
-import { CustomInput } from "../../Form/Elements/input/input";
-import { CustomInputMask } from "../../Form/Elements/inputMask/inputMask";
+import { CustomInput } from '../../Form/Elements/input/input';
+import { CustomInputMask } from '../../Form/Elements/inputMask/inputMask';
+import { useStore } from '../../../stores/stores';
+import * as Yup from 'yup';
 
 export const UserSetings = () => {
-  var classes = useStyles();
+   
+  const { users } = useStore();
+  const AuthUser = users.authUser;
 
-  // let User_info;
-  // User_info = JSON.parse(window.localStorage.getItem("___User")).user;
-  // console.log();
+  const initialValues = {
+    email: '',
+    phone: '',
+    nameCompani: '',
+    edrpou: '',
+    adresss: '',
+    web_site: '',
+    oldpassword: '',
+    password: '',
+    RepeatPassword: '',
+  };
+  const validationSchema = Yup.object({
+    phone: Yup.string().required("Поле обов'язкове для заповнення"),
+    email: Yup.string()
+      .required("Поле обов'язкове для заповнення")
+      .email('Введіть E-mail адресу'),
 
+    RepeatPassword: Yup.string()
+      // .required("Поле обов'язкове для заповнення")
+      .oneOf(
+        [Yup.ref('password'), null],
+        'Паролі повинні співпадати',
+      ),
+    password: Yup.string()
+      // .required("Поле обов'язкове для заповнення")
+      .oneOf(
+        [Yup.ref('RepeatPassword'), null],
+        'Паролі повинні співпадати',
+      ),
+  });
+
+  const onSubmit = (value) => {
+    console.log(value);
+  };
   return (
     <Box p={3}>
-      <Typography variant="h2" fontWeight="600">
+      <Typography variant="h2" className={s.title} fontWeight="600">
         Налаштування профілю
       </Typography>
-      <Formik>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={onSubmit}
+      >
         <Form>
-          <Box mt={2} className={classes.setings}>
-            <div className={classes.conteiner}>
+          <Box mt={2} className={s.setings}>
+            <div className={s.conteiner}>
               <Typography
-                className={classes.SetingTitle}
+                className={s.SetingTitle}
                 variant="h4"
                 fontWeight="600"
               >
                 Особиста інформація
               </Typography>
-              <div className={classes.SetingAvatar}>
-                <Avatar className={classes.SetingAvatarFoto}></Avatar>
+              <div className={s.SetingAvatar}>
+                <Avatar className={s.SetingAvatarFoto}></Avatar>
                 <Button>Завантажити фото </Button>
               </div>
               <Field
@@ -39,7 +77,7 @@ export const UserSetings = () => {
                 name="email"
                 id="email"
                 type="text"
-                // value={User_info.fullName}
+                value={AuthUser.full_name}
                 component={CustomInput}
               />
               <Field
@@ -52,23 +90,26 @@ export const UserSetings = () => {
               />
 
               <Field
-              disabled
+                disabled
                 placeholder="E-mail"
                 name="email"
                 id="email"
                 type="text"
-                // value={User_info.fullName}
+                value={AuthUser.email}
                 component={CustomInput}
               />
 
               <div className="">
-                <Typography className={classes.InpunTitle} variant="body2">
+                <Typography
+                  className={s.InpunTitle}
+                  variant="body2"
+                >
                   Пароль
                 </Typography>
 
                 <Field
-                  name="password"
-                  id="password"
+                  name="oldpassword"
+                  id="oldpassword"
                   type="password"
                   placeholder="Старий пароль"
                   component={CustomInput}
@@ -90,9 +131,9 @@ export const UserSetings = () => {
               </div>
             </div>
 
-            <div className={classes.conteiner}>
+            <div className={s.conteiner}>
               <Typography
-                className={classes.SetingTitle}
+                className={s.SetingTitle}
                 variant="h4"
                 fontWeight="600"
               >
@@ -100,60 +141,72 @@ export const UserSetings = () => {
               </Typography>
 
               <div className="">
-                <Typography className={classes.InpunTitle} variant="body2">
+                <Typography
+                  className={s.InpunTitle}
+                  variant="body2"
+                >
                   Назва компанії
                 </Typography>
 
                 <Field
-                  placeholder="E-mail"
-                  name="email"
-                  id="email"
+                  placeholder=""
+                  name="nameCompani"
+                  id="nameCompani"
                   type="text"
-                  value="ТОВ Добробут"
-                  disabled
+                  // value="ТОВ Добробут"
+                  // disabled
                   component={CustomInput}
                 />
               </div>
               <div className="">
-                <Typography className={classes.InpunTitle} variant="body2">
+                <Typography
+                  className={s.InpunTitle}
+                  variant="body2"
+                >
                   Код ЄДРПОУ
                 </Typography>
 
                 <Field
-                  disabled
-                  placeholder="E-mail"
-                  name="email"
-                  id="email"
+                  // disabled
+                  placeholder=""
+                  name="edrpou"
+                  id="edrpou"
                   type="text"
-                  value="1263712631267838712"
+                  // value="1263712631267838712"
                   component={CustomInput}
                 />
               </div>
               <div className="">
-                <Typography className={classes.InpunTitle} variant="body2">
+                <Typography
+                  className={s.InpunTitle}
+                  variant="body2"
+                >
                   Адреса поставки
                 </Typography>
 
                 <Field
-                  placeholder="E-mail"
-                  name="email"
-                  id="email"
+                  placeholder=""
+                  name="adresss"
+                  id="adresss"
                   type="text"
-                  value="м. Тернопіль, С.Будного 32 А"
+                  // value="м. Тернопіль, С.Будного 32 А"
                   component={CustomInput}
                 />
               </div>
               <div className="">
-                <Typography className={classes.InpunTitle} variant="body2">
+                <Typography
+                  className={s.InpunTitle}
+                  variant="body2"
+                >
                   Сайт
                 </Typography>
 
                 <Field
-                  placeholder="E-mail"
-                  name="email"
-                  id="email"
+                  placeholder=""
+                  name="web_site"
+                  id="web_site"
                   type="text"
-                  value="www.company-site.com"
+                  // value="www.company-site.com"
                   component={CustomInput}
                 />
               </div>

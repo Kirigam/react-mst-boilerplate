@@ -42,9 +42,33 @@ export default {
       '0px 12px 33px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A',
   },
   overrides: {
+    MuiPickersDay: {
+      day: {
+        width: '24px',
+        height: '24px',
+        borderRadius: '2px',
+      },
+    },
+    MuiPickersCalendarHeader:{
+      dayLabel:{
+        width: '24px',
+      }
+    },
+    MuiPickersCalendar:{
+      transitionContainer:{
+        minHeight: '120px'
+      }
+    },
+    MuiPickersBasePicker:{
+      pickerView:{
+        minWidth: '220px',
+        minHeight: '215px'
+      }
+    },
+    
     MuiOutlinedInput: {
       input: {
-        padding: '0 5px',
+        padding: '8px 16px',
       },
     },
     MuiMenuItem: {
@@ -52,6 +76,13 @@ export default {
         lineHeight: '1',
       },
     },
+    MuiFormControl: {
+      marginNormal: {
+        marginTop: '0',
+        marginBottom: '0',
+      },
+    },
+
     MuiSelect: {
       select: {
         '&:focus': {
@@ -59,8 +90,5 @@ export default {
         },
       },
     },
-
-
-   
   },
 };

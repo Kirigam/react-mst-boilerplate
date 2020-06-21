@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import useStyles from "./style";
 
 import "./style_1.css";
-import { LogoutUser } from "./component/LogoutUser/LogoutUser";
+import LogoutUser from "./component/LogoutUser/LogoutUser";
 import { SmalInfoUser } from "../Users/SmalInfoUser/SmalInfoUser";
 import { PrivateRoute } from "../../Constants/Index";
 

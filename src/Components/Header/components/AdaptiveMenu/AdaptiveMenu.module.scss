@@ -1,0 +1,51 @@
+ 
+.wrap{
+    position: absolute;
+    // top: 42px;
+    
+    height: calc(100%);
+    width: 100%;
+    background: #f9fafa;
+    z-index: 100;
+    padding: 15px 20px;
+    right: -100%;
+    transition: .3s;
+    &active{
+      transition: .3s;
+      right: 0;
+    }
+    
+}
+.navbar{
+  display: block;
+    // position: relative;
+    position: fixed;
+    align-items: flex-start;
+    height: calc(100vh - 42px);
+    top: 42px;
+    right: 0;
+    overflow: hidden;
+    background: inherit;
+    z-index: -5;
+    width: 100%;
+  &_active{
+    // width: 350px;
+    z-index: 5;
+  }
+}
+ 
+.btn_standart{
+  color: #494a4e;
+  border: solid 1px #dadbdc;
+  padding: 6px 16px;
+  border-radius: 4px;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+  transition: .3s;
+  &:hover{
+    border-color: #556f99;
+    transition: .3s;
+    
+  }
+}

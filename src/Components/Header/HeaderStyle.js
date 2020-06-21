@@ -30,5 +30,23 @@ export default makeStyles((theme) => ({
 
     textDecoration: 'none',
     color: '#494a4e',
+    "&:hover":{
+      
+        borderColor: '#556f99',
+        transition: '.3s'
+       
+    },
+    '@media (max-width: 768px)': {
+      display: 'none',
+    },
+  },
+  HamburgerSlider: {
+    padding: '0  !important',
+    paddingLeft: ' 15px !important',
+    outline: 'none !important',
+    display:'none !important',
+    '@media (max-width: 768px)': {
+      display: 'block !important',
+    },
   },
 }));

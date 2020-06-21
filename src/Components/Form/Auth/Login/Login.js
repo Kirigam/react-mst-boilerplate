@@ -12,7 +12,6 @@ import { isLoginUser } from '../../../../utils/userUtil';
 
 function LoginForm() {
   const s = useStyles();
-
   let history = useHistory();
 
   if (isLoginUser()) {
@@ -27,6 +26,7 @@ function LoginForm() {
     horizontal: 'right',
     text: '',
   });
+  const [isLoading, setisLoading] = useState(false);
 
   const { vertical, horizontal, open, text } = state;
 
@@ -35,55 +35,35 @@ function LoginForm() {
   };
 
   async function onSubmit(values) {
-    // if (values.password && values.email) {
-    //   let results = await store.users.login(values);
-    //   store.users.setUser(results.data.user);
-    //   console.log(store);
+    try {
+      setisLoading(true)
+      let res = await store.users.login(values);
 
-    //   if (!!results.status_code) {
-    //     setState({
-    //       ...state,
-    //       open: true,
-    //       text: results.non_field_errors,
-    //     });
-    //   } else {
-    //     history.push(PrivateRoute.HOME);
-    //   }
-    // }
+      if (!!res.status_code) {
+        let error_text;
 
-
-
-    if (values.password && values.email) {
-      let results = await store.users
-        .login(values)
-        .then((results) => {
-          store.users.setUser(results.data.user);
-          // setUserToStorage
-          // storageService.set('userId', user.id);
-          window.localStorage.setItem('userId', results.data.user.id);
-          window.localStorage.setItem('user_info', JSON.stringify(results.data.user));
-          history.push(PrivateRoute.HOME);
-          
-        })
-        .catch((error) => {
-          console.log( );
-          let error_text;
-          if (!!error.response.data.status_code) {
-            console.log('wqeqw' );
-            if(error.response.data.non_field_errors == 'Неможливо зайти з введеними даними.'){
-              error_text = 'Користувача з такими даними не існує'
-            }else{
-              error_text= error.response.data.non_field_errors;
-            }
-            setState({
-              ...state,
-              open: true,
-              text: error_text,
-            });
-          } else {
-           
-          }
+        if (
+          res.non_field_errors ==
+          'Неможливо зайти з введеними даними.'
+        ) {
+          error_text = 'Користувача з такими даними не існує';
+        } else {
+          error_text = res.non_field_errors;
+        }
+        setState({
+          ...state,
+          open: true,
+          text: error_text,
         });
+      } else {
+        console.log('asdas');
+
+        history.push(PrivateRoute.HOME);
+      }
+      setisLoading(false);
+    } catch (error) {
+      setisLoading(false);
+      console.log(error);
     }
   }
 
@@ -105,7 +85,7 @@ function LoginForm() {
         <div className={s.auth_main}>
           <div className={s.auth_main__form}>
             <LoginFormComponent
-              // isLoading={store.auth.login.isLoading}
+              isLoading={isLoading}
               onSubmit={onSubmit}
             ></LoginFormComponent>
           </div>
