@@ -3,5 +3,5 @@ export default {
   SETINGS: '/setings',
   LOGIN: '/auth/login',
   REGISTER: '/auth/register',
-  FORGOTPASWORD: '/auth/forgotPasword',
+  FORGOT_PASSWORD: '/auth/forgot-password',
 };

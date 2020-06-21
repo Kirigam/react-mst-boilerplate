@@ -3,30 +3,29 @@ import { observer } from 'mobx-react';
 import { useHistory } from 'react-router-dom';
 
 import { Snackbar } from '@material-ui/core';
-import { RegisterFormComponent } from './components/RegisterForm';
-import useStyles from './../AuthStyle.js';
+import { RegisterFormComponent } from './RegisterForm';
+import getStyle from '../AuthStyle';
 
 import { Alert, AlertTitle } from '@material-ui/lab';
 import bg from './../../../../assetc/img/bg_fonts_1.jpg';
 import { useStore } from '../../../../stores/stores';
 import routes from '../../../../constants/routes';
 
+
 function RegisterForm() {
-  const s = useStyles();
   const store = useStore();
-  let history = useHistory();
+  const history = useHistory();
   const [state, setState] = useState({
-    open: false,
+    open: true,
     vertical: 'top',
     horizontal: 'right',
     text: '',
   });
 
-  const { vertical, horizontal, open, text } = state;
+  const s = getStyle();
+  const { open, text } = state;
 
-  const handleClose = () => {
-    setState({ ...state, open: false });
-  };
+  const handleClose = () => setState({ ...state, open: false });
 
   async function onSubmit(values) {
     if (values.password1 && values.email) {
@@ -40,32 +39,29 @@ function RegisterForm() {
   }
 
   return (
-    <>
-      <main className={s.auth}>
-        <div className={s.auth_main}>
-          <div className={s.auth_main__form}>
-            <Snackbar
-              anchorOrigin={{ vertical, horizontal }}
-              open={open}
-              onClose={handleClose}
-              key={vertical + horizontal}
-            >
-              <Alert severity="error">
-                <AlertTitle>Помилка</AlertTitle>
-                {text}
-              </Alert>
-            </Snackbar>
-            <RegisterFormComponent
-              isLoading={store.users.isLoading}
-              onSubmit={onSubmit}
-            ></RegisterFormComponent>
-          </div>
+    <main className={s.auth}>
+      <div className={s.auth_main}>
+        <div className={s.auth_main__form}>
+          <Snackbar
+            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+            open={open}
+            onClose={handleClose}
+          >
+            <Alert severity="error">
+              <AlertTitle>Помилка</AlertTitle>
+              {text}
+            </Alert>
+          </Snackbar>
+          <RegisterFormComponent
+            isLoading={store.users.isLoading}
+            onSubmit={onSubmit}
+          ></RegisterFormComponent>
         </div>
-        <div className={s.auth_bg}>
-          <img src={bg} alt="" />
-        </div>
-      </main>
-    </>
+      </div>
+      <div className={s.auth_bg}>
+        <img src={bg} alt="" />
+      </div>
+    </main>
   );
 }
 export default observer(RegisterForm);

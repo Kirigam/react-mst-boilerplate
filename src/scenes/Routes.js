@@ -5,11 +5,12 @@ import {
   useHistory,
 } from 'react-router-dom';
 
-import { isLoggedIn } from '../utils/general';
-import routes from '../constants/routes';
-
 import LoginForm from '../components/Form/Auth/Login/Login';
 import RegisterForm from '../components/Form/Auth/Register/Register';
+import ForgotPassword from '../components/Form/Auth/ForgotPassword/ForgotPassword';
+
+import routes from '../constants/routes';
+import { isLoggedIn } from '../utils/general';
 
 export function Routes() {
   const history = useHistory();
@@ -23,6 +24,7 @@ export function Routes() {
       <Route exact path={routes.HOME} />
       <Route path={routes.LOGIN} component={LoginForm} />
       <Route path={routes.REGISTER} component={RegisterForm} />
+      <Route path={routes.FORGOT_PASSWORD} component={ForgotPassword} />
     </Switch>
   );
 }

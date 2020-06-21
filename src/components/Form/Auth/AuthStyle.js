@@ -78,9 +78,14 @@ export default makeStyles((theme) => ({
           backgroundColor: '#5866a1',
           transition: '.3s',
         },
+        '&:disabled': {
+          opacity: '0.6',
+          color: theme.palette.secondary.contrastText,
+        },
       },
       loginLoader: {
-        marginRight: '10px',
+        color: theme.palette.secondary.contrastText,
+        marginLeft: '10px',
       },
       googleButton: {
         '&:hover': {

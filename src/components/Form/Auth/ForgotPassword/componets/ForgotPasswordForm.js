@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import {
   Button,
   Box,
@@ -7,12 +7,10 @@ import {
 } from '@material-ui/core';
 
 import { Link } from 'react-router-dom';
-import { routes } from '../../../routes';
+import routes from '../../../../../constants/routes';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
-
-import useStyles from '../../compotents/Form/style.js';
-import { CustomInput } from '../../../../components/form/input/input';
+import { CustomInput } from '../../../Elements/input/input';
 
 export const ForgotPasswordForm = ({ onSubmit, isLoading }) => {
   const initialValues = {
@@ -20,16 +18,13 @@ export const ForgotPasswordForm = ({ onSubmit, isLoading }) => {
   };
   const validationSchema = Yup.object({
     email: Yup.string().email('Введіть E-mail адресу'),
-    
   });
-
-  var classes = useStyles();
 
   return (
     <>
       <div className="auth__form">
         <Box>
-          <Typography variant="h3" className={classes.authFormTitle}>
+          <Typography variant="h3">
             Забули пароль
           </Typography>
         </Box>
@@ -50,16 +45,14 @@ export const ForgotPasswordForm = ({ onSubmit, isLoading }) => {
               />
             </div>
 
-            <Box className={classes.formFooter}>
+            <Box>
               <Link></Link>
               <Button
                 type="submit"
-                className={classes.formFooter_button}
               >
                 {isLoading ? (
                   <CircularProgress
                     size={22}
-                    className={classes.loginLoader}
                   />
                 ) : null}
                 Відновити
@@ -69,13 +62,13 @@ export const ForgotPasswordForm = ({ onSubmit, isLoading }) => {
         </Formik>
 
          
-        <Box className={classes.auth__form_footer}>
+        <Box>
           <Typography variant="body1" color="textPrimary">
             Ще не зареєcторовані
           </Typography>
           <Box ml={1}>
             <Link
-              to={routes.register}
+              to={routes.REGISTER}
               style={{ textDecoration: 'none', color: '#5866a1' }}
             >
               <Typography

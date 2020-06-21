@@ -1,10 +1,10 @@
 import React from 'react';
-import { observer } from "mobx-react";
-import bg from './../../../../assetc/img/bg_fonts_1.jpg'
+import { observer } from 'mobx-react';
+import bg from './../../../../assetc/img/bg_fonts_1.jpg';
 import useStyles from './../AuthStyle.js';
-import { LoginFormComponent } from './components/LoginForm';
+import { LoginFormComponent } from './LoginForm';
 
-function LoginForm (){
+function LoginForm() {
   const s = useStyles();
 
   return (
@@ -12,15 +12,14 @@ function LoginForm (){
       <main className={s.auth}>
         <div className={s.auth_main}>
           <div className={s.auth_main__form}>
-          <LoginFormComponent />
+            <LoginFormComponent onSubmit={() => null} />
           </div>
         </div>
         <div className={s.auth_bg}>
           <img src={bg} alt="" />
         </div>
       </main>
-      
     </>
   );
-};
+}
 export default observer(LoginForm);
