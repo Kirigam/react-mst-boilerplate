@@ -79,7 +79,7 @@ export default makeStyles((theme) => ({
           transition: '.3s',
         },
         '&:disabled': {
-          opacity: '0.6',
+          filter: 'grayscale(1) opacity(0.6)',
           color: theme.palette.secondary.contrastText,
         },
       },
@@ -127,4 +127,4 @@ export default makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
         color: '#262729',
       },
-}))
+}));

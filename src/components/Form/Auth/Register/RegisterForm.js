@@ -1,19 +1,19 @@
 import React from 'react';
 import {
-  Button,
   Box,
   Typography,
-  CircularProgress,
+  Button as MaterialButton,
 } from '@material-ui/core';
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { func, bool } from 'prop-types';
 import { Formik, Field, Form } from 'formik';
 
+import Button from '../../../button/Button';
 import { CustomInput } from '../../Elements/input/input';
 import { CustomInputMask } from './../../Elements/inputMask/inputMask';
 
-import getStyle from '../AuthStyle';
+import useStale from '../AuthStyle';
 import routes from '../../../../constants/routes';
 import {
   nameValidation,
@@ -40,7 +40,7 @@ const validationSchema = Yup.object({
 });
 
 export function RegisterFormComponent({ onSubmit, isLoading }) {
-  const s = getStyle();
+  const s = useStale();
 
   return (
     <div className="auth__form">
@@ -89,6 +89,7 @@ export function RegisterFormComponent({ onSubmit, isLoading }) {
             placeholder="Повторіть пароль"
             name="passwordConfirm"
             id="passwordConfirm"
+            key="passwordConfirm"
             type="password"
             component={CustomInput}
           />
@@ -103,26 +104,18 @@ export function RegisterFormComponent({ onSubmit, isLoading }) {
               </Link>
             </Box>
             <Button
+              text="Зареєструватись"
               type="submit"
-              disabled={isLoading}
-              className={s.formFooter_button}
-            >
-              Зареєструватись
-              {isLoading && (
-                <CircularProgress
-                  size={18}
-                  className={s.loginLoader}
-                />
-              )}
-            </Button>
+              isLoading={isLoading}
+            />
           </Box>
         </Form>
       </Formik>
 
       <Box display="flex" justifyContent="center">
-        <Button size="large" className={s.googleButton}>
+        <MaterialButton size="large" className={s.googleButton}>
           Реєстрація через Gmail
-        </Button>
+        </MaterialButton>
       </Box>
     </div>
   );

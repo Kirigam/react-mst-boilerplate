@@ -1,18 +1,18 @@
 import React from 'react';
+import * as Yup from 'yup';
 import {
-  Button,
   Box,
   Typography,
-  CircularProgress,
+  Button as MaterialButton,
 } from '@material-ui/core';
-import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { func, bool } from 'prop-types';
 import { Formik, Field, Form } from 'formik';
 
+import Button from '../../../button/Button';
 import { CustomInput } from '../../Elements/input/input';
 
-import getStyle from '../AuthStyle';
+import useStale from '../AuthStyle';
 import routes from '../../../../constants/routes';
 import {
   emailValidation,
@@ -29,7 +29,7 @@ const validationSchema = Yup.object({
 });
 
 export function LoginFormComponent({ onSubmit, isLoading }) {
-  const s = getStyle();
+  const s = useStale({ isLoading });
 
   return (
     <div className="auth__form">
@@ -69,25 +69,18 @@ export function LoginFormComponent({ onSubmit, isLoading }) {
             </Link>
             <Button
               type="submit"
-              disabled={isLoading}
-              className={s.formFooter_button}
-            >
-              Увійти
-              {isLoading && (
-                <CircularProgress
-                  size={18}
-                  className={s.loginLoader}
-                />
-              )}
-            </Button>
+              text="Увійти"
+              size="large"
+              isLoading={isLoading}
+            />
           </Box>
         </Form>
       </Formik>
 
       <Box display="flex" justifyContent="center">
-        <Button size="large" className={s.googleButton}>
+        <MaterialButton size="large" className={s.googleButton}>
           Увійти через Gmail
-        </Button>
+        </MaterialButton>
       </Box>
       <Box className={s.auth__form_footer}>
         <Typography variant="body1" color="textPrimary">

@@ -1,10 +1,10 @@
 import React from 'react';
-import getStyle from './style';
+import useStale from './style';
 import { Box, Select, MenuItem, Typography } from '@material-ui/core';
 
 export const Headers = () => {
   const [language, setLanguage] = React.useState('ua');
-  const s = getStyle();
+  const s = useStale();
 
   const selectLanguage = ({ target: { value } }) =>
     value !== language && setLanguage(value);
