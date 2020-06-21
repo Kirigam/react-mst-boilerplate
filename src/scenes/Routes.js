@@ -1,32 +1,28 @@
 import React from 'react';
-
-import { isLoginUser } from '../utils/userUtil';
-import { PublicRoute, PrivateRoute } from '../Constants/Index';
 import {
-  useHistory,
-  Switch,
   Route,
+  Switch,
+  useHistory,
 } from 'react-router-dom';
-import  LoginForm from '../Components/Form/Auth/Login/Login';
-import  RegisterForm from '../Components/Form/Auth/Register/Register';
 
-// import { BrowserRouter, Switch, Route } from "react-router-dom";
+import { isLoggedIn } from '../utils/general';
+import routes from '../constants/routes';
 
-export const Router = () => {
-  let history = useHistory();
+import LoginForm from '../components/Form/Auth/Login/Login';
+import RegisterForm from '../components/Form/Auth/Register/Register';
 
-  if (!!isLoginUser()) {
-    history.push(PublicRoute.REGISTER);
+export function Routes() {
+  const history = useHistory();
+
+  if (!isLoggedIn()) {
+    history.push(routes.LOGIN);
   }
 
   return (
     <Switch>
-      <Route exact path={PrivateRoute.HOME} ></Route>
-
-
-      <Route path={PublicRoute.LOGIN} component={LoginForm}></Route>
-      <Route path={PublicRoute.REGISTER} component={RegisterForm}></Route>
+      <Route exact path={routes.HOME} />
+      <Route path={routes.LOGIN} component={LoginForm} />
+      <Route path={routes.REGISTER} component={RegisterForm} />
     </Switch>
   );
-};
-export default Router;
+}

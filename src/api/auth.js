@@ -26,7 +26,7 @@ export const login = ({ email, password }) =>
 export const registration = (data) =>
   apiRequest({
     method: 'POST',
-    url: 'https://puz.supply/api/dj-rest-auth/registration/',
+    url: '/auth/registration/',
     data,
   })
   .then(response => { 

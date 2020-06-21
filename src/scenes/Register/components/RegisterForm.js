@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { Formik, Field, Form } from 'formik';
 import * as Yup from 'yup';
 
-import { PublicRoute } from '../../../../../Constants/Index';
+import routes from '../../../../../constants/routes';
 import { CustomInput } from '../../../Elements/input/input';
 import { CustomInputMask } from './../../../Elements/inputMask/inputMask';
 
@@ -99,7 +99,7 @@ export const RegisterFormComponent = ({ onSubmit, isLoading }) => {
                 </Typography>
                 <Link
                   className={classes.formFooter_link}
-                  to={PublicRoute.REGISTER}
+                  to={routes.REGISTER}
                 >
                   <Typography variant="body2">Увійти</Typography>
                 </Link>

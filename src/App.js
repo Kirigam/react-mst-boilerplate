@@ -1,26 +1,24 @@
 import React from 'react';
-// import { Provider } from 'mobx-react';
+import { BrowserRouter } from 'react-router-dom';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
-import {createStore, Provider} from './stores/stores';
-import Themes from './them';
-import { Headers } from './Components/Header/Header';
-import { Router } from './scenes/Routes';
- 
-import {  BrowserRouter } from 'react-router-dom';
+import { createStore, Provider } from './stores/stores';
+
+import { Routes } from './scenes/Routes';
+import { Headers } from './components/Header/Header';
+
+import themes from './them';
 
 function App() {
   const store = createStore();
-  
+
   return (
-    <ThemeProvider theme={Themes.default}>
+    <ThemeProvider theme={themes.default}>
       <Provider value={store}>
         <CssBaseline />
+        <Headers />
         <BrowserRouter>
-          <Headers></Headers>
-
-          <Router />
+          <Routes />
         </BrowserRouter>
-       
       </Provider>
     </ThemeProvider>
   );

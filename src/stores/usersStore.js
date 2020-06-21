@@ -3,7 +3,7 @@ import { types as t } from 'mobx-state-tree';
 import storageService from '../utils/storageService';
 import UserModel from './modeles/UserModel';
 
-import { registration } from '../Api/auth.js';
+import { registration } from '../api';
 
 const UsersStore = t
   .model('UserStore', {
