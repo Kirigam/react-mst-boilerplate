@@ -7,16 +7,16 @@ import { AdaptiveMenu } from './components/AdaptiveMenu/AdaptiveMenu';
 // import { HamburgerButton } from './components/HamburgerButton/HamburgerButton.js';
 import { HamburgerSlider } from 'react-animated-burgers';
 
-export const Headers = () => {
+export const Headers = ({isOpen,OpenMenu}) => {
   const s = useStyles();
   const [age, setAge] = useState('');
 
-  const [isOpen, SetOpen] = useState({ open: false });
+  // const [isOpen, SetOpen] = useState({ open: false });
 
-  function OpenMenu() {
-    SetOpen({ open: !isOpen.open });
-    console.log(isOpen);
-  }
+  // function OpenMenu() {
+  //   SetOpen({ open: !isOpen.open });
+  //   console.log(isOpen);
+  // }
 
   const handleChange = (event) => {
     setAge(event.target.value);
@@ -24,7 +24,7 @@ export const Headers = () => {
 
   return (
     <>
-     
+
       <Box p={1.25}>
         <div className={s.headerBox}>
           <div className="">
@@ -68,7 +68,7 @@ export const Headers = () => {
           </div>
         </div>
       </Box>
-      <AdaptiveMenu isOpen={!isOpen.open}></AdaptiveMenu>
+      <AdaptiveMenu isOpen={isOpen.open} ></AdaptiveMenu>
     </>
   );
 };

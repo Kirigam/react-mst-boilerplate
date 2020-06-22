@@ -13,7 +13,7 @@ import {
 import { Form, Formik } from 'formik';
 import * as Api from './../../../Api';
 import { CardManager } from './../CardManager/CardManager';
-
+import { useTable } from 'react-table';
 import {
   DatePicker,
   // TimePicker,
@@ -192,6 +192,69 @@ export const CreateOrder = () => {
     });
   }
 
+  const columns = React.useMemo(
+    () => [
+      {
+        Header: '#',
+        accessor: 'idNomenclature', // accessor is the "key" in the data
+      },
+      {
+        Header: 'Менеджео',
+        accessor: 'manager',
+      },
+      {
+        Header: 'Напрям',
+        accessor: 'direction',
+      },
+      {
+        Header: 'Номенклатура',
+        accessor: 'nomenclature',
+      },
+      {
+        Header: 'К-сть',
+        accessor: 'Count',
+      },
+      {
+        Header: 'Дата',
+        accessor: 'date',
+      },
+      {
+        Header: 'Адреса',
+        accessor: 'address',
+      },
+      {
+        Header: 'Дія',
+        accessor: 'Action',
+      },
+    ],
+    [],
+  );
+  const data = React.useMemo(
+    () => [
+      {
+        idNomenclature: 1,
+        manager: 'Миколенко М.В.',
+        direction:
+          'Централізована закупівля виробів для забезпечення умов ',
+        nomenclature: 'Товар 1 ',
+        Count: '5 шт.',
+        date: '17.02.2020',
+        address: 'м. Тернопіль, С.Будного 32 А',
+      },
+      {
+        idNomenclature: 2,
+        manager: 'Миколенко М.В.',
+        direction:
+          'Централізована закупівля виробів для забезпечення умов ',
+        nomenclature: 'Товар 1 ',
+        Count: '5 шт.',
+        date: '17.02.2020',
+        address: 'м. Тернопіль, С.Будного 32 А',
+      },
+    ],
+    [],
+  );
+
   return (
     <>
       <Box my={6} mx={4}>
@@ -235,6 +298,7 @@ export const CreateOrder = () => {
             Товари для розцінки
           </Typography>
         </Box>
+        <Table columns={columns} data={data} />
         {/* <FirstStepOrder
           directions={directions}
           Nomenclature={Nomenclature}
@@ -246,3 +310,52 @@ export const CreateOrder = () => {
     </>
   );
 };
+
+function Table({ columns, data }) {
+  // Use the state and functions returned from useTable to build your UI
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+  } = useTable({
+    columns,
+    data,
+  });
+
+  return (
+    <table {...getTableProps()}>
+      <thead>
+        {headerGroups.map((headerGroup) => (
+          // console.log(...headerGroup.getHeaderGroupProps() );
+          // console.log()
+          
+          <tr {...headerGroup.getHeaderGroupProps()}>
+            {headerGroup.headers.map((column) => (
+              <th {...column.getHeaderProps()}>
+                {column.render('Header')}
+              </th>
+            ))}
+          </tr>
+        ))}
+      </thead>
+      <tbody {...getTableBodyProps()}>
+        {rows.map((row, i) => {
+          prepareRow(row);
+          return (
+            <tr {...row.getRowProps()}>
+              {row.cells.map((cell) => {
+                return (
+                  <td {...cell.getCellProps()}>
+                    {cell.render('Cell')}
+                  </td>
+                );
+              })}
+            </tr>
+          );
+        })}
+      </tbody>
+    </table>
+  );
+}

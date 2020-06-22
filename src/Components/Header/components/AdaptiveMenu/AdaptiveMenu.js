@@ -6,18 +6,27 @@ import { isLoginUser } from '../../../../utils/userUtil';
 import { Sidebar } from '../../../Sidebar/Sidebar';
 
 export const AdaptiveMenu = ({ isOpen }) => {
-  //  console.log(!!isLoginUser());
+  console.log(isOpen);
 
   return (
     <>
-      <div className={ isOpen ? `${s.navbar}` : `${s.navbar} ${s.navbar_active}` }>
+      {isOpen && (
         <div
           className={
-            isOpen ? `${s.wrap}` : `${s.wrap} ${s.wrapactive}`
+            isOpen ? `${s.navbar} ${s.navbar_active}` : `${s.navbar} `
           }
         >
-          {!!isLoginUser() ? (
-            <>
+          <div
+            className={
+              isOpen ? `${s.wrap} ${s.wrapactive}` : `${s.wrap}`
+            }
+          >
+            {!!isLoginUser() ? (
+              <>
+                <Sidebar></Sidebar>
+              </>
+            ) : (
+              // <></>
               <div className="">
                 <a
                   href={PublicRoute.URLWEBSITE}
@@ -26,13 +35,10 @@ export const AdaptiveMenu = ({ isOpen }) => {
                   Повернутись на головну
                 </a>
               </div>
-            </>
-          ) : (
-            <></>
-            // <Sidebar></Sidebar>
-          )}
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
