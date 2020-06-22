@@ -5,14 +5,18 @@ const Company = t.model('Company',{
   id:t.identifier,
   name: t.maybeNull(t.string),
   edrpou: t.maybeNull(t.string),
+  concluded: t.maybeNull(t.boolean),
 })
 
 const Profile = t.model('Profile', {
-  id: t.maybeNull(t.string),
+  id: t.maybeNull(t.integer),
   company: t.maybeNull(Company),
-  is_admin: t.boolean,
+  has_free_order: t.maybeNull(t.boolean),
+  is_admin: t.maybeNull(t.boolean),
+  full_name: t.maybeNull(t.string),
   address: t.maybeNull(t.string),
   site: t.maybeNull(t.string),
+ 
 });
 
 

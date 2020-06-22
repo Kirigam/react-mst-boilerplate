@@ -28,19 +28,16 @@ function RegisterForm() {
     horizontal: 'right',
     text: '',
   });
-  const [errorForm, seterrorForm] = useState({});
-
+   
   const { vertical, horizontal, open, text } = state;
 
   const handleClose = () => {
     setState({ ...state, open: false });
   };
 
-  
-
   async function onSubmit(values) {
     try {
-      setisLoading(true)
+      setisLoading(true);
       const response = await store.users.register(values);
       if (!!response.status_code) {
         if (response.email) {
@@ -59,11 +56,10 @@ function RegisterForm() {
       } else {
         history.push(PrivateRoute.HOME);
       }
-      setisLoading(false)
+      setisLoading(false);
     } catch (error) {
       console.log(error);
     }
-     
   }
 
   return (

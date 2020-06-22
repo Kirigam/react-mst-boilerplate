@@ -1,5 +1,4 @@
 import { apiRequest } from './utils';
-import { isUnauthorizedError } from './utils';
 import storageService from '../utils/storageService';
 
 const setUserToStorage = ({ data: { key, user } }) => {

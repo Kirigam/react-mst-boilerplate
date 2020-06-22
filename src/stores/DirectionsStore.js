@@ -1,13 +1,8 @@
-import { propOr, prop } from 'ramda';
-import { types as t, flow, getSnapshot } from 'mobx-state-tree';
+import { propOr } from 'ramda';
+import { types as t, flow } from 'mobx-state-tree';
 import storageService from '../utils/storageService';
 import DirectionsModel from './modeles/DirectionsModel';
-
-import { registration, login, getUser } from '../Api/auth.js';
-import { NameStorage } from '../Constants/Index';
-import * as Api from '../Api';
-import { Snackbar } from '@material-ui/core';
-
+ 
 const DirectionsStore = t
   .model('DirectionsStore', {
     list: t.optional(t.array(DirectionsModel), []),
@@ -18,11 +13,7 @@ const DirectionsStore = t
       store.list.unshift(user);
     },
     fetchDirections: flow(function* () {
-      try {
-
-      } catch (error) {
-          
-      }
+       
     }),
     // removeUser(){
     //   store.list=[];

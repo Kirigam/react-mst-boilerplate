@@ -19,21 +19,19 @@ export const getManagers = () => {
   });
 };
 
-export const createOrder = () => {
+export const createOrder = (userID) => {
   return apiRequest({
     method: 'POST',
-    url: `https://puz.supply//api/ordered_nomenclatures/`,
-    data: {
-      client_id: '11',
-      product: [
-        {
-          nomenclature_id: '1',
-          date: '12.02.2020',
-          amount: '12',
-          price: '500',
-        },
-      ],
-      order_id: '21',
-    },
+    url: `https://puz.supply/api/orders/`,
+    data: { client_profile_id: userID },
+    
+  });
+};
+export const addOrderedNomenclatures = (data) => {
+  return apiRequest({
+    method: 'POST',
+    url: `https://puz.supply/api/ordered_nomenclatures/`,
+    data:  data,
+    
   });
 };

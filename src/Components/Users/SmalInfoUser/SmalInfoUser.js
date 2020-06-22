@@ -1,24 +1,16 @@
 import React from "react";
-import { Box, Typography, Button, Avatar } from "@material-ui/core";
-// import { IconSvg } from "../../svg_icons/svg";
+import { Box, Typography, Button, Avatar } from "@material-ui/core"; 
 import s from "./SmalInfoUser.module.scss";
-import { observer } from 'mobx-react';
-import { useEffect } from "react";
-import { Link } from "react-router-dom";
-// import { routes } from "../../../scenes/routes";
-import { PrivateRoute, NameStorage } from "../../../Constants/Index";
+import { observer } from 'mobx-react'; 
+import { Link } from "react-router-dom"; 
+import { PrivateRoute  } from "../../../Constants/Index";
 import { useStore } from "../../../stores/stores";
-import { SetingsSVG } from "../../../assetc/svg/setings";
-// import { SidePanel } from '../../components/SidePanel/SidePanel'
-
+import { SetingsSVG } from "../../../assetc/svg/setings"; 
 export const SmalInfoUser = observer(() => {
    
   const {users} = useStore();
-  console.log(users );
-  console.log(users.authUser );
-  
-  const AuthUser = users.authUser;
-  console.log(AuthUser );
+
+  const AuthUser = users.authUser; 
   
   return (
     <Box display="flex">
