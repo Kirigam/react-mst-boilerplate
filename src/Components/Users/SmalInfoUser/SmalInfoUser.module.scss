@@ -1,6 +1,6 @@
 .seting{
     color: #5866a1;
-    padding: 0;
+    padding:0 6px !important;
     // font-size: 14px;
     transition: .3s;
     font-weight: 600 !important;
@@ -21,7 +21,15 @@
 a{
     text-decoration: none !important;
 }
- 
+ .infoUser{
+    font-size: 14px;
+    line-height: 1.71;
+    color: #6c6e76;
+    margin: 4px 0 !important;
+ }
+ .infoUserSetings{
+     padding: 0 8px;
+ }
 .linkMail{
     color: #6c6e75;
     text-decoration: none;

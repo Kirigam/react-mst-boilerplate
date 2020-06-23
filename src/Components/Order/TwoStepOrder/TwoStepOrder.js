@@ -92,14 +92,14 @@ export const TwoStepOrder = ({ ...props }) => {
         </Typography>
       </Box>
       <div className={s.table_wrap}>
-      <Table columns={columns} data={data} />
+      <Table className={s.table_box} columns={columns} data={data} />
       </div>
       
     </>
   );
 };
 
-function Table({ columns, data }) {
+function Table({ columns, data,className }) {
   // Use the state and functions returned from useTable to build your UI
   const {
     getTableProps,
@@ -115,12 +115,10 @@ function Table({ columns, data }) {
   // console.log(getTableProps)
 
   return (
-    <table {...getTableProps()}>
+    <table className={className} {...getTableProps()}>
       <thead>
         {headerGroups.map((headerGroup) => (
-          // console.log(...headerGroup.getHeaderGroupProps() );
-          // console.log()
-
+         
           <tr {...headerGroup.getHeaderGroupProps()}>
             {headerGroup.headers.map((column) => (
               <th {...column.getHeaderProps()}>

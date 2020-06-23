@@ -31,13 +31,12 @@ export const Sidebar = () => {
           </div>
           <div className="SidebarGroupMain">
             <Link to={PrivateRoute.CREATEORDER} className="Item">Активні</Link>
-            <Link to="" className="Item">Архів заявок</Link>
+            <Link to="" disabled className="Item">Архів заявок</Link>
           </div>
         </div>
-        <div className="SidebarGroup">
+        {/* <div className="SidebarGroup">
           <div className="SidebarGroupHeader">
-            {/* <IconSvg className="Icon" name="my_manager" /> */}
-            <Typography className="Title" variant="body1">
+             <Typography className="Title" variant="body1">
               Менеджери
             </Typography>
           </div>
@@ -45,7 +44,7 @@ export const Sidebar = () => {
             <Link to="" className="Item">Усі менеджери</Link>
             <Link to="" className="Item">Запити на створення</Link>
           </div>
-        </div>
+        </div> */}
 
    
       </Box>

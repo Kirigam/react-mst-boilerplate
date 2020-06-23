@@ -26,11 +26,12 @@ export const SmalInfoUser = observer(() => {
       </Box>
       <Box>
         <Typography variant="body2">{AuthUser.full_name}</Typography>
-        <a href={`mailto:${AuthUser.email}`} className={s.linkMail} >
-          <Typography variant="body2">{AuthUser.email}</Typography>
-        </a>
+        <Typography variant="body2" className={s.infoUser}>{AuthUser.email}</Typography>
+        {/* <a href={`mailto:${AuthUser.email}`} className={} >
+          
+        </a> */}
 
-        <Link to={PrivateRoute.SETINGS}>
+        <Link  to={PrivateRoute.SETINGS}>
           <Button
             className={s.seting}
             // startIcon={<IconSvg color="#5866a1" name="setings" />}

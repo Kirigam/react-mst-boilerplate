@@ -7,9 +7,11 @@
     width: 100%;
     background: #f9fafa;
     z-index: 100;
-    padding: 15px 20px;
+    // padding: 15px 20px;
     right: -100%;
     transition: .3s;
+    display: grid;
+    grid-template-rows: 1fr 75px;
     &active{
       transition: .3s;
       right: 0;
@@ -28,6 +30,7 @@
     background: inherit;
     z-index: -5;
     width: 100%;
+    
   &_active{
     // width: 350px;
     z-index: 5;

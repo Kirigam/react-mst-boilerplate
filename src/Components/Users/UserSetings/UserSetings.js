@@ -10,7 +10,6 @@ import { useStore } from '../../../stores/stores';
 import * as Yup from 'yup';
 
 export const UserSetings = () => {
-   
   const { users } = useStore();
   const AuthUser = users.authUser;
 
@@ -70,40 +69,39 @@ export const UserSetings = () => {
               </Typography>
               <div className={s.SetingAvatar}>
                 <Avatar className={s.SetingAvatarFoto}></Avatar>
-                <Button>Завантажити фото </Button>
+                {/* <Button>Завантажити фото </Button> */}
               </div>
-              <Field
-                placeholder="E-mail"
-                name="email"
-                id="email"
-                type="text"
-                value={AuthUser.full_name}
-                component={CustomInput}
-              />
-              <Field
-                placeholder="Номер телефону"
-                name="phone"
-                id="phone"
-                mask="+380(99)999-99-99"
-                type="tel"
-                component={CustomInputMask}
-              />
+              <div className={s.userInfoBlock}>
+                <Field
+                  placeholder="E-mail"
+                  name="email"
+                  id="email"
+                  type="text"
+                  value={AuthUser.full_name}
+                  component={CustomInput}
+                />
+                <Field
+                  placeholder="Номер телефону"
+                  name="phone"
+                  id="phone"
+                  mask="+380(99)999-99-99"
+                  type="tel"
+                  component={CustomInputMask}
+                />
 
-              <Field
-                disabled
-                placeholder="E-mail"
-                name="email"
-                id="email"
-                type="text"
-                value={AuthUser.email}
-                component={CustomInput}
-              />
+                <Field
+                  disabled
+                  placeholder="E-mail"
+                  name="email"
+                  id="email"
+                  type="text"
+                  value={AuthUser.email}
+                  component={CustomInput}
+                />
+              </div>
 
-              <div className="">
-                <Typography
-                  className={s.InpunTitle}
-                  variant="body2"
-                >
+              {/* <div className="">
+                <Typography className={s.InpunTitle} variant="body2">
                   Пароль
                 </Typography>
 
@@ -128,10 +126,10 @@ export const UserSetings = () => {
                   type="password"
                   component={CustomInput}
                 />
-              </div>
+              </div> */}
             </div>
 
-            <div className={s.conteiner}>
+            <div className={`${s.conteiner} `}>
               <Typography
                 className={s.SetingTitle}
                 variant="h4"
@@ -139,76 +137,77 @@ export const UserSetings = () => {
               >
                 Особиста інформація
               </Typography>
+              <div className={s.userInfoCompany}>
+                <div>
+                  <Typography
+                    className={s.InpunTitle}
+                    variant="body2"
+                  >
+                    Назва компанії
+                  </Typography>
 
-              <div className="">
-                <Typography
-                  className={s.InpunTitle}
-                  variant="body2"
-                >
-                  Назва компанії
-                </Typography>
+                  <Field
+                    placeholder=""
+                    name="nameCompani"
+                    id="nameCompani"
+                    type="text"
+                    // value="ТОВ Добробут"
+                    // disabled
+                    component={CustomInput}
+                  />
+                </div>
+                <div className="">
+                  <Typography
+                    className={s.InpunTitle}
+                    variant="body2"
+                  >
+                    Код ЄДРПОУ
+                  </Typography>
 
-                <Field
-                  placeholder=""
-                  name="nameCompani"
-                  id="nameCompani"
-                  type="text"
-                  // value="ТОВ Добробут"
-                  // disabled
-                  component={CustomInput}
-                />
-              </div>
-              <div className="">
-                <Typography
-                  className={s.InpunTitle}
-                  variant="body2"
-                >
-                  Код ЄДРПОУ
-                </Typography>
+                  <Field
+                    // disabled
+                    placeholder=""
+                    name="edrpou"
+                    id="edrpou"
+                    type="text"
+                    // value="1263712631267838712"
+                    component={CustomInput}
+                  />
+                </div>
+                <div className="">
+                  <Typography
+                    className={s.InpunTitle}
+                    variant="body2"
+                  >
+                    Адреса поставки
+                  </Typography>
 
-                <Field
-                  // disabled
-                  placeholder=""
-                  name="edrpou"
-                  id="edrpou"
-                  type="text"
-                  // value="1263712631267838712"
-                  component={CustomInput}
-                />
-              </div>
-              <div className="">
-                <Typography
-                  className={s.InpunTitle}
-                  variant="body2"
-                >
-                  Адреса поставки
-                </Typography>
+                  <Field
+                    placeholder=""
+                    name="adresss"
+                    id="adresss"
+                    type="text"
+                    // value="м. Тернопіль, С.Будного 32 А"
+                    component={CustomInput}
+                  />
+                </div>
+                <div className="">
+                  <Typography
+                    className={s.InpunTitle}
+                    variant="body2"
+                  >
+                    Сайт
+                  </Typography>
 
-                <Field
-                  placeholder=""
-                  name="adresss"
-                  id="adresss"
-                  type="text"
-                  // value="м. Тернопіль, С.Будного 32 А"
-                  component={CustomInput}
-                />
-              </div>
-              <div className="">
-                <Typography
-                  className={s.InpunTitle}
-                  variant="body2"
-                >
-                  Сайт
-                </Typography>
-
-                <Field
-                  placeholder=""
-                  name="web_site"
-                  id="web_site"
-                  type="text"
-                  // value="www.company-site.com"
-                  component={CustomInput}
-                />
+                  <Field
+                    placeholder=""
+                    name="web_site"
+                    id="web_site"
+                    type="text"
+                    // value="www.company-site.com"
+                    component={CustomInput}
+                  />
+                </div>
               </div>
             </div>
           </Box>

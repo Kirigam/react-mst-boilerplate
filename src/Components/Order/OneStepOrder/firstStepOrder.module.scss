@@ -5,11 +5,7 @@
   grid-template-columns: 1fr;
   grid-gap: 16px;
   margin-bottom: 16px;
-  & .input{
-    & .input__box{
-      margin-bottom: 0 !important;
-    }
-  }
+   
 }
 .butoon__order_wrap{
   display: flex;
