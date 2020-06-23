@@ -18,11 +18,11 @@ import useStyles from '../../AuthStyle';
 
 export const RegisterFormComponent = ({ onSubmit, isLoading }) => {
   const initialValues = {
-    full_name: '',
-    phone: '',
-    email: '',
-    password1: '',
-    password2: '',
+    full_name: 'qweqwe',
+    phone: '123123123',
+    email: 'qweqweqwe@qweqwe.com',
+    password1: '14141414',
+    password2: '14141414',
   };
   const validationSchema = Yup.object({
     full_name: Yup.string().required(

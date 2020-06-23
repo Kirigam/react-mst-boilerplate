@@ -22,14 +22,14 @@ const Profile = t.model('Profile', {
 
 const UserModel = t
   .model('User', {
-    id: t.identifier,
+    id: t.string,
     email: t.maybeNull(t.string),
     role: t.maybeNull(t.string),
     full_name: t.maybeNull(t.string),
     phone_number: t.maybeNull(t.string),
     photo: t.maybeNull(t.string),
-    is_superuser: t.boolean,
-    client_profile: t.maybeNull(Profile),
+    is_superuser: t.maybeNull(t.string),
+    client_profile: t.maybeNull(t.string),
     manager_profile: t.maybeNull(t.string),
   })
  
