@@ -60,7 +60,7 @@ export const RegisterFormComponent = ({ onSubmit, isLoading }) => {
           validationSchema={validationSchema}
         >
           <Form>
-            <div>
+            <div className={classes.auth_inputs} >
               <Field
                 placeholder="Ім'я"
                 name="full_name"

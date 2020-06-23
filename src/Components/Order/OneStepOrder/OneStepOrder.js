@@ -24,11 +24,9 @@ export const OneStepOrder = ({ ...props }) => {
 
   const { users } = useStore();
 
-  const { directions, nomenclature, newOrder , manager } = useContext(
+  const { directions, nomenclature, newOrder, manager } = useContext(
     CreateInfoOrder,
   );
-
-
 
   const {
     onDirections,
@@ -77,12 +75,12 @@ export const OneStepOrder = ({ ...props }) => {
           return Api.addOrderedNomenclatures(nomenclatureObject);
         })
         .then((results) => {
-          console.log(results );
+          console.log(results);
           console.log(newOrder);
           newOrder.nomenclature.unsift(results.data);
           newOrder.orderID = results.data.order_id;
-          console.log( directions, nomenclature, newOrder , manager);
-          
+          console.log(directions, nomenclature, newOrder, manager);
+
           console.log(newOrder);
           // setOrderStep(2);
           // console.log();
@@ -100,7 +98,7 @@ export const OneStepOrder = ({ ...props }) => {
               validationSchema={validationSchema}
             >
               <Form>
-                <div>
+                <div className={s.Form_wrap}>
                   <Select
                     className={s.input}
                     fullWidth
@@ -151,12 +149,13 @@ export const OneStepOrder = ({ ...props }) => {
                     placeholder="Адрес доставки"
                     name="deliveri_addres"
                     id="deliveri_addres"
-                    type="text"
+                    type="text" 
                     component={CustomInput}
                   />
                 </div>
-
-                <Button type="submit">Створити замовлення</Button>
+                <div className={s.butoon__order_wrap}>
+                  <Button className={s.butoon__order} type="submit">Створити замовлення</Button>
+                </div>
               </Form>
             </Formik>
           </Box>

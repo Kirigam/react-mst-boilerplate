@@ -49,7 +49,7 @@ export const LoginFormComponent = ({ onSubmit, isLoading }) => {
           validationSchema={validationSchema}
         >
           <Form>
-            <div>
+            <div className={classes.auth_inputs}>
               <Field
                 placeholder="E-mail"
                 name="email"

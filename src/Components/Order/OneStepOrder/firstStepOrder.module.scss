@@ -1,4 +1,32 @@
 
+
+.Form_wrap{
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-gap: 16px;
+  margin-bottom: 16px;
+  & .input{
+    & .input__box{
+      margin-bottom: 0 !important;
+    }
+  }
+}
+.butoon__order_wrap{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.butoon__order{
+  border-radius: 4px !important;
+  background-color: #2e408a !important;
+  color: #fff !important;
+}
+.input_order{
+  & .input__box{
+    margin-bottom: 0 !important;
+  }
+}
+
   .first_order{
     display: grid;
     grid-template-columns: minmax(280px, 40%) 1fr;
@@ -13,6 +41,7 @@
     color: #fff !important;
 
 }
+
 
   @media (max-width: 1200px) {
     .first_order{

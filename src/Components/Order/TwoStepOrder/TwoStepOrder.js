@@ -6,12 +6,11 @@ import { useStore } from '../../../stores/stores';
 import CreateInfoOrder from '../CreateOrder/CreateInfoOrderContext';
 
 export const TwoStepOrder = ({ ...props }) => {
-  const { directions, nomenclature, newOrder , manager } = useContext(
+  const { directions, nomenclature, newOrder, manager } = useContext(
     CreateInfoOrder,
   );
 
-  console.log(newOrder );
-  
+  console.log(newOrder);
 
   const columns = React.useMemo(
     () => [
@@ -82,7 +81,7 @@ export const TwoStepOrder = ({ ...props }) => {
         <Button
           // onClick={handleOpen}
           variant="outlined"
-          style={{ fontWeight: '600', margin: '30px 0px' }}
+          style={{ fontWeight: '600', margin: '12px 0px 32px' }}
         >
           Додати номенклатуру
         </Button>
@@ -92,7 +91,10 @@ export const TwoStepOrder = ({ ...props }) => {
           Товари для розцінки
         </Typography>
       </Box>
+      <div className={s.table_wrap}>
       <Table columns={columns} data={data} />
+      </div>
+      
     </>
   );
 };

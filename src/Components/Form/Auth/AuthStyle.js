@@ -7,6 +7,11 @@ export default makeStyles((theme) => ({
         overflow:'hidden'
 
     },
+    auth_inputs:{
+      display: 'grid',
+      gridTemplateColumns: '1fr',
+      gridGap: '16px'
+    },
     auth_bg:{
         position: 'absolute',
         top: '0',

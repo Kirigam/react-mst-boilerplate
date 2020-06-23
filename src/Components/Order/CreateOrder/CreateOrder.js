@@ -8,7 +8,7 @@ import { ThreeStepOrder } from '../ThreeStepOrder/ThreeStepOrder';
 import CreateInfoOrder from './CreateInfoOrderContext';
 
 export const CreateOrder = () => {
-  const [activeStep, setActiveStep] = React.useState(0);
+  // const [activeStep, setActiveStep] = React.useState(0);
 
   // const allInfo = ;
   const [orderInfo, setOrderInfo] = useState({
@@ -207,9 +207,9 @@ export const CreateOrder = () => {
           <Typography className={s.MainTitle} variant="h4">
             Створення замовлення
           </Typography>
-          <Box my={2} mb={6}>
+          <Box my={2} mb={2}>
             <Typography variant="h5" className={s.SubMainTitle}>
-              Додайте товар до замовлення.{' '}
+              Додайте товар до замовлення.
             </Typography>
           </Box>
           <TwoStepOrder
@@ -222,7 +222,7 @@ export const CreateOrder = () => {
           <Typography className={s.MainTitle} variant="h4">
             Оформлення замовлення. Реєстрація
           </Typography>
-          <Box my={2} mb={6}>
+          <Box my={2} mb={4}>
             <Typography variant="h5" className={s.SubMainTitle}>
               Для продовження заповніть форму даними бізнесу
             </Typography>

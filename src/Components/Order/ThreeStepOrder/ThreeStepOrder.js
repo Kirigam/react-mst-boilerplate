@@ -39,12 +39,8 @@ export const ThreeStepOrder = () => {
 
   return (
     <>
-      <div className="auth__form">
-        <Box>
-          <Typography variant="h3" className={s.authFormTitle}>
-            Реєстрація
-          </Typography>
-        </Box>
+      <div  >
+        
 
         <Formik
           initialValues={initialValues}
@@ -52,7 +48,7 @@ export const ThreeStepOrder = () => {
           validationSchema={validationSchema}
         >
           <Form>
-            <div>
+            <div className={s.form_wrap}>
               <Field
                 placeholder="Назва компанії"
                 name="full_name"
@@ -105,9 +101,9 @@ export const ThreeStepOrder = () => {
               />
             </div>
 
-            <Box className={s.formFooterRegister}>
-              <Button type="submit" className={s.formFooter_button}>
-                Розцінити
+            <Box className={s.butoon__order_wrap}>
+              <Button type="submit" className={s.butoon__order}>
+                Відправитии на розціннку
               </Button>
             </Box>
           </Form>

@@ -1,0 +1,17 @@
+.form_wrap{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 16px;
+    margin-bottom: 16px;
+     
+  }
+  .butoon__order_wrap{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+  }
+  .butoon__order{
+    border-radius: 4px !important;
+    background-color: #2e408a !important;
+    color: #fff !important;
+  }
