@@ -78,6 +78,7 @@ export default makeStyles((theme) => ({
         backgroundColor: '#2e408a !important',
         color: theme.palette.secondary.contrastText,
         padding: '10px 19px',
+        color:'#fff',
         transition: '.3s',
         '&:hover': {
           backgroundColor: '#5866a1',

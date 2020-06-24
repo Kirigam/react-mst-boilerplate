@@ -20,8 +20,8 @@ import { PublicRoute } from '../../../../../Constants/Index';
 
 export const LoginFormComponent = ({ onSubmit, isLoading }) => {
   const initialValues = {
-    email: 'qweqweqwe@qweqwe.com',
-    password: '14141414',
+    email: '',
+    password: '',
   };
   const validationSchema = Yup.object({
     email: Yup.string()
