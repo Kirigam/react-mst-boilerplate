@@ -160,7 +160,7 @@ export const MainTablet = ({ ...props }) => {
           <TableCell>#ID</TableCell>
           <TableCell></TableCell>
           <TableCell></TableCell>
-          <TableCell>Менеджео</TableCell>
+          <TableCell>Менеджер</TableCell>
           <TableCell>Напрям</TableCell>
           <TableCell>Номенклатура</TableCell>
           <TableCell>К-сть</TableCell>
