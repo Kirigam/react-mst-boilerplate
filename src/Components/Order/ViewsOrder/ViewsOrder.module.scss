@@ -1,0 +1,38 @@
+.MainTitle{
+    color: #26272a
+}
+.SubMainTitle{
+    color: #262729,
+  }
+.tableWrap{
+    width: 100%;
+    overflow: auto;
+    padding: 5px 0;
+    margin: 20px 0;
+}
+.tableBox{
+    min-width: 900px;
+}
+.tableRow{
+    background-color: #f4f4f5;
+}
+.managerTable{
+    display: flex;
+    align-items: center;
+}
+.managerTableAvatar{
+    margin-right: 8px !important;
+    height: 40px;
+    width:  40px;
+}
+.valuating{
+    color: #faad14 !important;
+}
+.status{
+    font-weight: bold !important;
+}
+.btn_standart{
+    border-radius: 4px !important;
+    background-color: #2e408a !important;
+    color: #fff !important;
+}

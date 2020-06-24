@@ -10,7 +10,8 @@ import storageService from '../../utils/storageService';
 import { useStore } from '../../stores/stores.js';
 import { observer } from 'mobx-react';
 import { Loader } from '../../Components/Loader/Loader.js';
-
+import { ViewsOrder } from '../../Components/Order/ViewsOrder/ViewsOrder';
+import * as Api from '../../Api';
 const MainScreen = () => {
   const [isLoading, setisLoading] = useState(true);
 
@@ -18,20 +19,48 @@ const MainScreen = () => {
     users: store.users,
   }));
 
+  // useEffect(() => {
+
+  //   async function fun() {
+  //     const userID = storageService.get(NameStorage.USERID);
+
+  //     try {
+  //       await users.fetchUser(userID);
+
+  //       setisLoading(false);
+  //     } catch (error) {
+  //       console.log(error.response);
+  //       setisLoading(false);
+  //     }
+  //   }
+  //   fun();
+  // }, []);
+
   useEffect(() => {
-    async function fun() {
-      const userID = storageService.get(NameStorage.USERID);
+    const userID = storageService.get(NameStorage.USERID);
 
-      try {
-        await users.fetchUser(userID);
+    Promise.resolve(users.fetchUser(userID))
+      .then((result) => {
+        console.log(result.data.user);
 
+
+        // return Api.allOrderUsers(result.data.user.id);
+      })
+      .then((result) => {
+        // Api
+        // console.log( result);
+        
+        // storageService.set(
+        //   NameStorage.USERORDE,
+        //   result.data.results.length,
+        // );
         setisLoading(false);
-      } catch (error) {
+        
+      })
+      .catch((error) => {
         console.log(error.response);
         setisLoading(false);
-      }
-    }
-    fun();
+      });
   }, []);
 
   return (
@@ -52,6 +81,12 @@ const MainScreen = () => {
             <Route
               path={PrivateRoute.CREATEORDER}
               component={CreateOrder}
+              exact
+            />
+
+            <Route
+              path={PrivateRoute.HOME}
+              component={ViewsOrder}
               exact
             />
           </div>

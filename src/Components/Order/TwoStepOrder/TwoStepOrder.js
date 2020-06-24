@@ -1,19 +1,57 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import s from './twoStepOrder.module.scss';
-import { Box, Typography, Button } from '@material-ui/core';
+import {
+  Box,
+  Typography,
+  Button,
+  Modal,
+  Fade,
+} from '@material-ui/core';
 import { useTable } from 'react-table';
 import { useStore } from '../../../stores/stores';
 import CreateInfoOrder from '../CreateOrder/CreateInfoOrderContext';
+import { CustomInput } from '../../Form/Elements/input/input';
+import { ModalOrder } from '../ModalOrder/ModalOrder';
+import { TableOrder } from '../TableOrder/TableOrder';
 
 export const TwoStepOrder = ({ ...props }) => {
   const { directions, nomenclature, newOrder, manager } = useContext(
     CreateInfoOrder,
   );
+  const { onNomenclature, onDirections, setActiveStep } = props;
 
-  console.log(newOrder);
+  const [open, setOpen] = React.useState(false);
 
-  const columns = React.useMemo(
-    () => [
+  const handleOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  function OrderNomenclature(Orders) {
+    const temsArray = [];
+
+    // console.log( );
+
+    Orders.nomenclatures.map((item) => {
+      temsArray.push({
+        idNomenclature: 1,
+        manager: item.nomenclature.nomenclature.name,
+        direction: item.nomenclature.direction.name,
+        nomenclature: item.nomenclature.name,
+        Count: `${item.item} ${item.nomenclature.unit.name}`,
+        date: item.date,
+        address: item.address,
+      });
+    });
+
+    return temsArray;
+  }
+
+  const defaultData = {
+    columns: [
       {
         Header: '#',
         accessor: 'idNomenclature', // accessor is the "key" in the data
@@ -42,45 +80,45 @@ export const TwoStepOrder = ({ ...props }) => {
         Header: 'Адреса',
         accessor: 'address',
       },
-      {
-        Header: 'Дія',
-        accessor: 'Action',
-      },
+    
     ],
-    [],
-  );
-  const data = React.useMemo(
-    () => [
-      {
-        idNomenclature: 1,
-        manager: 'Миколенко М.В.',
-        direction:
-          'Централізована закупівля виробів для забезпечення умов ',
-        nomenclature: 'Товар 1 ',
-        Count: '5 шт.',
-        date: '17.02.2020',
-        address: 'м. Тернопіль, С.Будного 32 А',
-      },
-      {
-        idNomenclature: 2,
-        manager: 'Миколенко М.В.',
-        direction:
-          'Централізована закупівля виробів для забезпечення умов ',
-        nomenclature: 'Товар 1 ',
-        Count: '5 шт.',
-        date: '17.02.2020',
-        address: 'м. Тернопіль, С.Будного 32 А',
-      },
-    ],
-    [],
-  );
+
+    data: [],
+  };
+
+  const [dataTable, setDataTable] = useState(defaultData);
+
+  useEffect(() => {
+    const temsArray = [];
+    let increment = 1;
+    newOrder.nomenclatures.map((item) => {
+      temsArray.push({
+        idNomenclature: increment,
+        manager: item.nomenclature.manager.full_name,
+        direction: item.nomenclature.direction.name,
+        nomenclature: item.nomenclature.name,
+        Count: `${item.amount} ${item.nomenclature.unit.name}`,
+        date: item.date,
+        address: item.address,
+      });
+      increment++;
+    });
+
+    setDataTable({
+      ...dataTable,
+      data: temsArray,
+    });
+  }, [newOrder]);
+
+  function NextStep() {
+    setActiveStep(2);
+  }
 
   return (
     <>
       <Box>
         <Button
-        disabled
-          // onClick={handleOpen}
+          onClick={handleOpen}
           variant="outlined"
           style={{ fontWeight: '600', margin: '12px 0px 32px' }}
         >
@@ -92,59 +130,30 @@ export const TwoStepOrder = ({ ...props }) => {
           Товари для розцінки
         </Typography>
       </Box>
-      <div className={s.table_wrap}>
-      <Table className={s.table_box} columns={columns} data={data} />
+      <div className="">
+        <div className={s.table_wrap}>
+          <TableOrder
+            className={s.table_box}
+            columns={dataTable.columns}
+            data={dataTable.data}
+          />
+        </div>
+        <Box className={s.fotterControl} px={3} px={2}>
+          <Typography variant="subtitle2">
+            Якщо ваше замовлення готове, перейдіть до наступного етапу
+          </Typography>
+          <Button className={s.NextStep} onClick={NextStep}>
+            Далі
+          </Button>
+        </Box>
       </div>
-      
+
+      <ModalOrder
+        open={open}
+        onNomenclature={onNomenclature}
+        onDirections={onDirections}
+        handleClose={handleClose}
+      ></ModalOrder>
     </>
   );
 };
-
-function Table({ columns, data,className }) {
-  // Use the state and functions returned from useTable to build your UI
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable({
-    columns,
-    data,
-  });
-
-  // console.log(getTableProps)
-
-  return (
-    <table className={className} {...getTableProps()}>
-      <thead>
-        {headerGroups.map((headerGroup) => (
-         
-          <tr {...headerGroup.getHeaderGroupProps()}>
-            {headerGroup.headers.map((column) => (
-              <th {...column.getHeaderProps()}>
-                {column.render('Header')}
-              </th>
-            ))}
-          </tr>
-        ))}
-      </thead>
-      <tbody {...getTableBodyProps()}>
-        {rows.map((row, i) => {
-          prepareRow(row);
-          return (
-            <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => {
-                return (
-                  <td {...cell.getCellProps()}>
-                    {cell.render('Cell')}
-                  </td>
-                );
-              })}
-            </tr>
-          );
-        })}
-      </tbody>
-    </table>
-  );
-}

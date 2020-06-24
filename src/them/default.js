@@ -42,6 +42,18 @@ export default {
       '0px 12px 33px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A',
   },
   overrides: {
+    MuiTableCell:{
+      head:{
+        fontSize: '16px',
+        fontWeight: 'bold',
+        lineHeight: '1.5',
+        color: '#6c6e76'
+      },
+      root:{
+        padding: '16px 5px'      
+      }
+    },
+    
     MuiPickersDay: {
       day: {
         width: '24px',

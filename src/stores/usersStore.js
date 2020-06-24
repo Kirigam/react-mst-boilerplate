@@ -13,9 +13,9 @@ const UsersStore = t
   })
   .actions((store) => ({
     addUser(user) {
-      console.log(user);
-      user.client_profile = null;
-      user.is_superuser = null;
+      // console.log(user);
+      user.client_profile.id.toString();
+
       user.manager_profile = null;
       user.phone_number = null;
       user.photo = null;
@@ -23,6 +23,18 @@ const UsersStore = t
 
       user.id = user.id.toString();
       console.log(user);
+
+      // const test = {
+      //   client_profile: null,
+      //   email: 'qweqweqwe@qweqwe.com',
+      //   full_name: 'qweqwe',
+      //   id: 31,
+      //   is_superuser: false,
+      //   manager_profile: null,
+      //   phone_number: null,
+      //   photo: null,
+      //   role: null,
+      // }
 
       // user.client_profile.company.concluded=null
       // user.client_profile.company.edrpou=null
@@ -39,9 +51,11 @@ const UsersStore = t
       store.list.unshift(user);
       // console.log(store);
     },
+    
     removeUser() {
       store.list = [];
     },
+
     register: flow(function* (data) {
       try {
         let res = yield registration(data);
@@ -83,8 +97,32 @@ const UsersStore = t
         const res = yield Api.getUser(userID);
 
         store.addUser(res.data.user);
+        return res;
       } catch (error) {
         console.log(error);
+        console.log(error.response);
+        return error.response.data;
+      }
+    }),
+    setingsUser: flow(function* (userID,...userData) {
+      try {
+        console.log(userID );
+        console.log(userData );
+        
+        const res = yield Api.setUserData(userID,userData);
+console.log(res );
+
+        store.addUser(res.data.user);
+        storageService.set(NameStorage.USERID, res.data.user.id);
+        storageService.set(NameStorage.USERTOKEN, res.data.key);
+        storageService.set(
+          NameStorage.USERINFO,
+          JSON.stringify(res.data.user),
+        );
+        return res;
+      } catch (error) {
+        console.log(error);
+        console.log(error.response);
         return error.response.data;
       }
     }),

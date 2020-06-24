@@ -32,6 +32,19 @@ export const addOrderedNomenclatures = (data) => {
     method: 'POST',
     url: `https://puz.supply/api/ordered_nomenclatures/`,
     data:  data,
-    
   });
 };
+export const orderFinishStep = (data) => {
+  return apiRequest({
+    method: 'POST',
+    url: `https://puz.supply/api/order_last_step/`,
+    data:  data,
+  });
+};
+export const allOrderUsers = (id) => {
+  return apiRequest({
+    method: 'GET',
+    url: `https://puz.supply/api/orders/?user_id=${id}`,
+  });
+};
+

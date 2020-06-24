@@ -75,7 +75,7 @@ export default makeStyles((theme) => ({
         color: '#5866a1',
       },
       formFooter_button: {
-        backgroundColor: theme.palette.secondary.main,
+        backgroundColor: '#2e408a !important',
         color: theme.palette.secondary.contrastText,
         padding: '10px 19px',
         transition: '.3s',

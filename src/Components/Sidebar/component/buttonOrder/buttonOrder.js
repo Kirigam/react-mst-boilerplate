@@ -8,6 +8,7 @@ import { PrivateRoute } from "../../../../Constants/Index";
 // import { Link } from "react-router-dom";
 // import { SidePanel } from '../../components/SidePanel/SidePanel'
 
+
 export const ButtonOrder = () => {
     var classes = useStyles();
   const [open, setOpen] = React.useState(false);
@@ -34,30 +35,7 @@ export const ButtonOrder = () => {
     </Link>
       
 
-      <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        // className={classes.modal}
-        open={open}
-        onClose={handleClose}
-        closeAfterTransition
-        // BackdropComponent ={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
-      >
-        <Fade in={open}>
-          <div  className={classes.ModalWrap}>
-            <div className="header">
-              <Typography variant="h3" >Додавання Товару</Typography>
-            </div>
-            
-            <div className="">
-              
-            </div>
-          </div>
-        </Fade>
-      </Modal>
+      
     </>
   );
 };

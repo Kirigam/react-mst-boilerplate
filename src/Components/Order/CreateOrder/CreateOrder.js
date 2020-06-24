@@ -8,9 +8,9 @@ import { ThreeStepOrder } from '../ThreeStepOrder/ThreeStepOrder';
 import CreateInfoOrder from './CreateInfoOrderContext';
 
 export const CreateOrder = () => {
-  // const [activeStep, setActiveStep] = React.useState(0);
-
-  // const allInfo = ;
+  const [activeStep, setActiveStep] = useState(0);
+  console.log(activeStep );
+  
   const [orderInfo, setOrderInfo] = useState({
     directions: {
       isLoading: true,
@@ -30,7 +30,7 @@ export const CreateOrder = () => {
     },
     newOrder: {
       orderID: '',
-      nomenclature: [],
+      nomenclatures: [],
     },
   });
 
@@ -61,7 +61,7 @@ export const CreateOrder = () => {
             },
             newOrder: {
               orderID: '',
-              nomenclature: [],
+              nomenclatures: [],
             },
           };
           let tempArrayDirections = [];
@@ -178,58 +178,73 @@ export const CreateOrder = () => {
     });
   }
 
+  // function
+ 
+
   return (
     <>
-      <CreateInfoOrder.Provider value={orderInfo}>
-        <Box my={6} mx={4}>
-          <Typography className={s.MainTitle} variant="h4">
-            Створення замовлення
-          </Typography>
-          <Box my={2} mb={6}>
-            <Typography variant="body1" className={s.SubMainTitle}>
-              Додайте товар до замовлення.{' '}
+      <CreateInfoOrder.Provider
+        value={{ ...orderInfo, setOrderInfo }}
+      >
+        {activeStep === 0 && (
+          <Box my={6} mx={4}>
+            <Typography className={s.MainTitle} variant="h4">
+              Створення замовлення
             </Typography>
+            <Box my={2} mb={6}>
+              <Typography variant="body1" className={s.SubMainTitle}>
+                Додайте товар до замовлення.{' '}
+              </Typography>
+            </Box>
+
+            <OneStepOrder 
+              // directions={directions}
+              // Nomenclature={Nomenclature}
+              setActiveStep={setActiveStep}
+              onNomenclature={onNomenclature}
+              onDirections={onDirections}
+              // manager={manager.value}
+              // newOrder={newOrder}
+              // setNewOrder={setNewOrder}
+              // setOrderStep={setOrderStep}
+            ></OneStepOrder>
           </Box>
-
-          <OneStepOrder
-            // directions={directions}
-            // Nomenclature={Nomenclature}
-            onNomenclature={onNomenclature}
-            onDirections={onDirections}
-            // manager={manager.value}
-            // newOrder={newOrder}
-            // setNewOrder={setNewOrder}
-            // setOrderStep={setOrderStep}
-          ></OneStepOrder>
-        </Box>
-
-        <Box my={6} mx={4}>
+        )}
+        {activeStep === 1 && (
+          <Box py={6} px={4}>
           <Typography className={s.MainTitle} variant="h4">
             Створення замовлення
           </Typography>
           <Box my={2} mb={2}>
-            <Typography variant="h5" className={s.SubMainTitle}>
+            <Typography  variant="h5" className={s.SubMainTitle}>
               Додайте товар до замовлення.
             </Typography>
           </Box>
-          <TwoStepOrder
+          <TwoStepOrder onNomenclature={onNomenclature}
+            onDirections={onDirections}
+            setActiveStep={setActiveStep}
+              
           // setNewOrder={setNewOrder}
           // newOrder={newOrder}
           ></TwoStepOrder>
+          
         </Box>
-
-        <Box my={6} mx={4}>
-          <Typography className={s.MainTitle} variant="h4">
-            Оформлення замовлення. Реєстрація
-          </Typography>
-          <Box my={2} mb={4}>
-            <Typography variant="h5" className={s.SubMainTitle}>
-              Для продовження заповніть форму даними бізнесу
+        )}
+        
+        {activeStep === 2 && (
+          <Box my={6} mx={4}>
+            <Typography className={s.MainTitle} variant="h4">
+              Оформлення замовлення. Реєстрація
             </Typography>
+            <Box my={2} mb={4}>
+              <Typography variant="h5" className={s.SubMainTitle}>
+                Для продовження заповніть форму даними бізнесу
+              </Typography>
+            </Box>
+            <ThreeStepOrder></ThreeStepOrder>
+            {/* <TwoStepOrder></TwoStepOrder> */}
           </Box>
-          <ThreeStepOrder></ThreeStepOrder>
-          {/* <TwoStepOrder></TwoStepOrder> */}
-        </Box>
+        )}
       </CreateInfoOrder.Provider>
     </>
   );

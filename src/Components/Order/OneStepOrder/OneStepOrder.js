@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import s from './firstStepOrder.module.scss';
-import { Box, Button } from '@material-ui/core';
+import { Box, Button, Typography } from '@material-ui/core';
 import { CardManager } from '../CardManager/CardManager';
 import Select from 'react-select';
 import * as Yup from 'yup';
@@ -24,19 +24,10 @@ export const OneStepOrder = ({ ...props }) => {
 
   const { users } = useStore();
 
-  const { directions, nomenclature, newOrder, manager } = useContext(
-    CreateInfoOrder,
-  );
+  const { setOrderInfo, ...orderInfo } = useContext(CreateInfoOrder);
+  const { directions, nomenclature, newOrder, manager } = orderInfo;
 
-  const {
-    onDirections,
-    onNomenclature,
-    //   newOrder,
-    //   setNewOrder,
-    //   setOrderStep,
-  } = props;
-
-  // const infoOrder = useContext(CreateOrder);
+  const { onDirections, onNomenclature, setActiveStep } = props;
 
   const initialValues = {
     directions: '',
@@ -49,43 +40,58 @@ export const OneStepOrder = ({ ...props }) => {
   const validationSchema = Yup.object().shape({
     directions: Yup.string(),
     nomenclature: Yup.string(),
-    count: Yup.string().required("Поле обов'язкове для заповнення "),
+    count: Yup.number()
+      .typeError('Введіть кількість в числовому форматі')
+      .required("Поле обов'язкове для заповнення "),
     data: Yup.string().required("Поле обов'язкове для заповнення "),
     deliveri_addres: Yup.string().required(
       "Поле обов'язкове для заповнення ",
     ),
+    // topic: Yup.string()
+    //   .ensure()
+    //   .required("Topic is required!")
   });
 
   async function onSubmit(value) {
     const clientProfileUser = users.authUser.client_profile.id;
-    try {
-      const userID = storageService.get(NameStorage.USERID);
-      const responseOrder = await Api.createOrder(clientProfileUser);
 
-      let results = await Promise.all([responseOrder])
-        .then((results) => {
-          const OrderId = results[0].data.id;
-          let nomenclatureObject = {
-            order_id: OrderId,
-            nomenclature_id: nomenclature.value.id,
-            amount: value.count,
-            address: value.deliveri_addres,
-            date: moment(new Date(value.data)).format('YYYY.MM.DD'),
-          };
-          return Api.addOrderedNomenclatures(nomenclatureObject);
-        })
-        .then((results) => {
-          console.log(results);
-          console.log(newOrder);
-          newOrder.nomenclature.unsift(results.data);
-          newOrder.orderID = results.data.order_id;
-          console.log(directions, nomenclature, newOrder, manager);
+    const userID = storageService.get(NameStorage.USERID);
 
-          console.log(newOrder);
-          // setOrderStep(2);
-          // console.log();
+    Promise.resolve(Api.createOrder(clientProfileUser))
+      .then((results) => {
+        const OrderId = results.data.id;
+
+        let nomenclatureObject = {
+          order_id: OrderId,
+          nomenclature_id: nomenclature.value.id,
+          amount: value.count,
+          address: value.deliveri_addres,
+          date: moment(new Date(value.data)).format('YYYY.MM.DD'),
+        };
+        return Api.addOrderedNomenclatures(nomenclatureObject);
+      })
+      .then((results) => {
+        setActiveStep(1);
+
+        setOrderInfo({
+          ...orderInfo,
+          directions:{
+            ...orderInfo.directions,
+            value:[],
+          },
+          nomenclature:{
+            ...orderInfo.nomenclature,
+            value:[],
+          },
+          newOrder: {
+            ...orderInfo.newOrder,
+            orderID: results.data.order_id,
+            nomenclatures: newOrder.nomenclatures.concat(
+              results.data,
+            ),
+          },
         });
-    } catch (error) {}
+      });
   }
   return (
     <>
@@ -99,62 +105,109 @@ export const OneStepOrder = ({ ...props }) => {
             >
               <Form>
                 <div className={s.Form_wrap}>
-                  <Select
-                    className={s.input}
-                    fullWidth
-                    placeholder="Напрям"
-                    options={directions.list}
-                    isLoading={directions.isLoading}
-                    onChange={onDirections}
-                    value={directions.value}
-                    name="directions"
-                    id="directions"
-                  />
+                  <div>
+                    <Typography
+                      className={s.InpunTitle}
+                      variant="body1"
+                    >
+                      Напрям номенклатури
+                    </Typography>
 
-                  <Select
-                    className={s.input}
-                    fullWidth
-                    placeholder="Номенклатура"
-                    options={nomenclature.tempList}
-                    isLoading={nomenclature.isLoading}
-                    value={nomenclature.value}
-                    onChange={onNomenclature}
-                    name="nomenclature"
-                    id="nomenclature"
-                    // error={touched.file && Boolean(errors.file)}
-                  />
-                  <Field
-                    placeholder="Кількість"
-                    name="count"
-                    id="count"
-                    type="text"
-                    component={CustomInput}
-                  />
-                  <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                    <DatePicker
+                    <Select
                       className={s.input}
                       fullWidth
-                      disableToolbar
-                      variant="inline"
-                      format="MM.dd.yyyy"
-                      minDate={new Date()}
-                      placeholder="Дата"
-                      margin="normal"
-                      inputVariant="outlined"
-                      value={selectedDate}
-                      onChange={handleDateChange}
+                      placeholder="Виберіть напрям"
+                      options={directions.list}
+                      isLoading={directions.isLoading}
+                      onChange={onDirections}
+                      value={directions.value}
+                      name="directions"
+                      id="directions"
                     />
-                  </MuiPickersUtilsProvider>
-                  <Field
-                    placeholder="Адрес доставки"
-                    name="deliveri_addres"
-                    id="deliveri_addres"
-                    type="text" 
-                    component={CustomInput}
-                  />
+                  </div>
+                  <div>
+                    <Typography
+                      className={s.InpunTitle}
+                      variant="body1"
+                    >
+                      Номенклатура
+                    </Typography>
+
+                    <Select
+                      className={s.input}
+                      fullWidth
+                      placeholder="Виберіть номенклатуру"
+                      options={nomenclature.tempList}
+                      isLoading={nomenclature.isLoading}
+                      value={nomenclature.value}
+                      onChange={onNomenclature}
+                      name="nomenclature"
+                      id="nomenclature"
+                      // error={touched.file && Boolean(errors.file)}
+                    />
+                  </div>
+                  <div>
+                    <Typography
+                      className={s.InpunTitle}
+                      variant="body1"
+                    >
+                      Кількість номенклвтури
+                    </Typography>
+
+                    <Field
+                      placeholder="Ведіть кількість "
+                      name="count"
+                      id="count"
+                      type="text"
+                      component={CustomInput}
+                    />
+                  </div>
+                  <div>
+                    <Typography
+                      className={s.InpunTitle}
+                      variant="body1"
+                    >
+                      Дата доставки
+                    </Typography>
+
+                    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                      <DatePicker
+                        className={s.input}
+                        fullWidth
+                        disableToolbar
+                        variant="inline"
+                        format="MM.dd.yyyy"
+                        minDate={new Date()}
+                        placeholder="Виберіть дату доставки"
+                        margin="normal"
+                        inputVariant="outlined"
+                        value={selectedDate}
+                        onChange={handleDateChange}
+                      />
+                    </MuiPickersUtilsProvider>
+                  </div>
+
+                  <div>
+                    <Typography
+                      className={s.InpunTitle}
+                      variant="body1"
+                    >
+                      Адреса доставки
+                    </Typography>
+
+                    <Field
+                      placeholder="Ведіть адресу доставки"
+                      name="deliveri_addres"
+                      id="deliveri_addres"
+                      type="text"
+                      component={CustomInput}
+                    />
+                  </div>
                 </div>
                 <div className={s.butoon__order_wrap}>
-                  <Button className={s.butoon__order} type="submit">Створити замовлення</Button>
+                  <Button className={s.butoon__order} type="submit">
+                    Створити замовлення
+                  </Button>
                 </div>
               </Form>
             </Formik>

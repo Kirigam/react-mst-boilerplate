@@ -2,56 +2,109 @@ import React from 'react';
 import { Avatar, Button, Typography, Box } from '@material-ui/core';
 import s from './UserSetings.module.scss';
 // import { CustomInput } from "../../form/input/input";
-import { Field, Form, Formik } from 'formik';
+import { Formik, Form, Field } from 'formik';
 // import { CustomInputMask } from "../../form/inputMask/inputMask";
 import { CustomInput } from '../../Form/Elements/input/input';
 import { CustomInputMask } from '../../Form/Elements/inputMask/inputMask';
 import { useStore } from '../../../stores/stores';
 import * as Yup from 'yup';
+// import * as Api from '../../../Api';
+import storageService from '../../../utils/storageService';
+import { NameStorage } from '../../../Constants/Index';
 
 export const UserSetings = () => {
   const { users } = useStore();
   const AuthUser = users.authUser;
+  const infoUser = {
+    companyName: '',
+    companyEdrpou: '',
+  };
+
+  if (AuthUser.client_profile.company !== null) {
+    if (!!AuthUser.client_profile.company.edrpou) {
+      infoUser.companyEdrpou = AuthUser.client_profile.company.edrpou;
+    }
+    if (!!AuthUser.client_profile.company.name) {
+      infoUser.companyName = AuthUser.client_profile.company.name;
+    }
+  }
 
   const initialValues = {
-    email: '',
-    phone: '',
-    nameCompani: '',
-    edrpou: '',
-    adresss: '',
-    web_site: '',
-    oldpassword: '',
-    password: '',
-    RepeatPassword: '',
+    full_name: AuthUser.full_name,
+    email: AuthUser.email,
+    phone_number: '',
+    nameCompani: infoUser.companyName,
+
+    edrpou: infoUser.companyEdrpou,
+    adresss: !!AuthUser.client_profile.address
+      ? AuthUser.client_profile.address
+      : '',
+    web_site: !!AuthUser.client_profile.site
+      ? AuthUser.client_profile.site
+      : '',
+    // oldpassword: '',
+    // password: '',
+    // RepeatPassword: '',
   };
   const validationSchema = Yup.object({
-    phone: Yup.string().required("Поле обов'язкове для заповнення"),
+    full_name: Yup.string().required(
+      "Поле обов'язкове для заповнення",
+    ),
+    phone_number: Yup.string().required(
+      "Поле обов'язкове для заповнення",
+    ),
     email: Yup.string()
       .required("Поле обов'язкове для заповнення")
       .email('Введіть E-mail адресу'),
 
-    RepeatPassword: Yup.string()
-      // .required("Поле обов'язкове для заповнення")
-      .oneOf(
-        [Yup.ref('password'), null],
-        'Паролі повинні співпадати',
-      ),
-    password: Yup.string()
-      // .required("Поле обов'язкове для заповнення")
-      .oneOf(
-        [Yup.ref('RepeatPassword'), null],
-        'Паролі повинні співпадати',
-      ),
+    // RepeatPassword: Yup.string()
+    //   // .required("Поле обов'язкове для заповнення")
+    //   .oneOf(
+    //     [Yup.ref('password'), null],
+    //     'Паролі повинні співпадати',
+    //   ),
+    // password: Yup.string()
+    //   // .required("Поле обов'язкове для заповнення")
+    //   .oneOf(
+    //     [Yup.ref('RepeatPassword'), null],
+    //     'Паролі повинні співпадати',
+    //   ),
   });
 
   const onSubmit = (value) => {
-    console.log(value);
+    const userID = storageService.get(NameStorage.USERID);
+
+    // value.user_id = Number(userID);
+    // value.order_id = newOrder.orderID;
+    console.log(value );
+
+    Promise.resolve(users.setingsUser(userID, value))
+      .then((result) => {
+        console.log(result);
+        // if (result.data.status == 'ok') {
+        //   console.log(result.data.message);
+        //    storageService.set(NameStorage.USERORDE,1);
+
+        //   history.push(PrivateRoute.HOME);
+        // }if (result.data.status == 'bad') {
+        //   setIsError({ ...isError, open: true, text: result.data.messages[0].message });
+        // } else {
+
+        // }
+      })
+      .catch((result) => {
+        console.log(result);
+      });
   };
   return (
     <Box p={3}>
       <Typography variant="h2" className={s.title} fontWeight="600">
         Налаштування профілю
       </Typography>
+
+       
+
+
       <Formik
         initialValues={initialValues}
         validationSchema={validationSchema}
@@ -73,17 +126,16 @@ export const UserSetings = () => {
               </div>
               <div className={s.userInfoBlock}>
                 <Field
-                  placeholder="E-mail"
-                  name="email"
-                  id="email"
+                  placeholder="Прізвище Ім'я Побатькові"
+                  name="full_name"
+                  id="full_name"
                   type="text"
-                  value={AuthUser.full_name}
                   component={CustomInput}
                 />
                 <Field
                   placeholder="Номер телефону"
-                  name="phone"
-                  id="phone"
+                  name="phone_number"
+                  id="phone_number"
                   mask="+380(99)999-99-99"
                   type="tel"
                   component={CustomInputMask}
@@ -95,7 +147,6 @@ export const UserSetings = () => {
                   name="email"
                   id="email"
                   type="text"
-                  value={AuthUser.email}
                   component={CustomInput}
                 />
               </div>
@@ -151,8 +202,7 @@ export const UserSetings = () => {
                     name="nameCompani"
                     id="nameCompani"
                     type="text"
-                    // value="ТОВ Добробут"
-                    // disabled
+                    disabled={!!infoUser.companyName}
                     component={CustomInput}
                   />
                 </div>
@@ -165,12 +215,11 @@ export const UserSetings = () => {
                   </Typography>
 
                   <Field
-                    // disabled
                     placeholder=""
                     name="edrpou"
                     id="edrpou"
                     type="text"
-                    // value="1263712631267838712"
+                    disabled={!!infoUser.companyEdrpou}
                     component={CustomInput}
                   />
                 </div>
@@ -210,6 +259,16 @@ export const UserSetings = () => {
                 </div>
               </div>
             </div>
+          </Box>
+          <Box>
+            {/* <Button>Змінити пароль</Button> */}
+            {/* <Button
+              className={s.btn_standart}
+              type="submit"
+              onSubmit={onSubmit}
+            >
+              Зберегти дані
+            </Button> */}
           </Box>
         </Form>
       </Formik>

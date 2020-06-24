@@ -7,11 +7,24 @@ export const PublicRoute = {
 export const PrivateRoute = {
   HOME: '/',
   SETINGS: '/setings',
+  ORDER: '/order',
   CREATEORDER: '/create_order',
 };
 export const NameStorage = {
     USERID:'userId',
+    USERORDE:'countOrder',
     USERINFO:'userInfo',
     USERTOKEN:'token',
     // ORDERID:'__Order',
+}
+
+export const OrderStatut = {
+  valuating:{
+    class: "valuating",
+    text:'Розглядається'
+  },
+  unordered:{
+    text:'Незавершені',
+    class: ""
+  }
 }

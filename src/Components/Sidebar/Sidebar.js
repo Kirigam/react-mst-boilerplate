@@ -30,7 +30,7 @@ export const Sidebar = () => {
             </Typography>
           </div>
           <div className="SidebarGroupMain">
-            <Link to={PrivateRoute.CREATEORDER} className="Item">Активні</Link>
+            <Link to={PrivateRoute.HOME} className="Item">Активні</Link>
             <Link to="" disabled className="Item">Архів заявок</Link>
           </div>
         </div>
