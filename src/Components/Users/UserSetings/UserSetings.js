@@ -15,6 +15,8 @@ import { NameStorage } from '../../../Constants/Index';
 export const UserSetings = () => {
   const { users } = useStore();
   const AuthUser = users.authUser;
+  console.log(AuthUser );
+  
   const infoUser = {
     companyName: '',
     companyEdrpou: '',
@@ -32,7 +34,9 @@ export const UserSetings = () => {
   const initialValues = {
     full_name: AuthUser.full_name,
     email: AuthUser.email,
-    phone_number: '',
+    phone_number: !!AuthUser.phone_number
+    ? AuthUser.phone_number
+    : '',
     nameCompani: infoUser.companyName,
 
     edrpou: infoUser.companyEdrpou,

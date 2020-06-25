@@ -17,7 +17,7 @@ const UsersStore = t
       user.client_profile.id.toString();
 
       user.manager_profile = null;
-      user.phone_number = null;
+      // user.phone_number = null;
       user.photo = null;
       user.role = null;
 
@@ -95,7 +95,9 @@ const UsersStore = t
     fetchUser: flow(function* (userID) {
       try {
         const res = yield Api.getUser(userID);
-console.log(res );
+
+console.log(res.data.user );
+console.log(res.data.user.phone_number );
 
         store.addUser(res.data.user);
         return res;

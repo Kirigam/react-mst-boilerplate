@@ -50,7 +50,9 @@ export const ThreeStepOrder = () => {
         ? AuthUser.client_profile.company.edrpou
         : '',
     full_name: !!AuthUser.full_name ? AuthUser.full_name : '',
-    phone: !!AuthUser.phone ? AuthUser.phone : '',
+    phone: !!AuthUser.phone_number
+    ? AuthUser.phone_number
+    : '',
     email: !!AuthUser.email ? AuthUser.email : '',
     address: !!AuthUser.client_profile.address
       ? AuthUser.client_profile.address
@@ -139,6 +141,7 @@ export const ThreeStepOrder = () => {
                 component={CustomInput}
               />
               <Field
+                
                 placeholder="Телефон"
                 name="phone"
                 id="phone"
@@ -146,6 +149,7 @@ export const ThreeStepOrder = () => {
                 component={CustomInput}
               />
               <Field
+                
                 placeholder="E-mail"
                 name="email"
                 id="email"

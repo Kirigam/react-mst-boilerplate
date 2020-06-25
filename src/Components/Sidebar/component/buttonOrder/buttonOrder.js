@@ -29,7 +29,7 @@ export const ButtonOrder = () => {
         variant="outlined"
         style={{ fontWeight: "600", margin: "30px 0px" }}
       >
-        Офромити замовлення
+        Офоромити замовлення
       </Button>
 
     </Link>

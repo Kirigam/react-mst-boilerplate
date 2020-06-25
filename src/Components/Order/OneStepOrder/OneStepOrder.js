@@ -155,7 +155,7 @@ export const OneStepOrder = ({ ...props }) => {
                     </Typography>
 
                     <Field
-                      placeholder="Ведіть кількість "
+                      placeholder="Введіть кількість номенклатури"
                       name="count"
                       id="count"
                       type="text"
@@ -176,7 +176,7 @@ export const OneStepOrder = ({ ...props }) => {
                         fullWidth
                         disableToolbar
                         variant="inline"
-                        format="MM.dd.yyyy"
+                        format="dd.MM.yyyy"
                         minDate={new Date()}
                         placeholder="Виберіть дату доставки"
                         margin="normal"
@@ -196,7 +196,7 @@ export const OneStepOrder = ({ ...props }) => {
                     </Typography>
 
                     <Field
-                      placeholder="Ведіть адресу доставки"
+                      placeholder="Введіть адресу доставки"
                       name="deliveri_addres"
                       id="deliveri_addres"
                       type="text"

@@ -92,10 +92,12 @@ export const TwoStepOrder = ({ ...props }) => {
     const temsArray = [];
     let increment = 1;
     newOrder.nomenclatures.map((item) => {
+      console.log(item );
+      
       temsArray.push({
         idNomenclature: increment,
         manager: item.nomenclature.manager.full_name,
-        direction: item.nomenclature.direction.name,
+        direction: item.nomenclature.direction != null ? item.nomenclature.direction.name:'',
         nomenclature: item.nomenclature.name,
         Count: `${item.amount} ${item.nomenclature.unit.name}`,
         date: item.date,

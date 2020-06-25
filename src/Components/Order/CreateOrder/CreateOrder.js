@@ -138,7 +138,7 @@ export const CreateOrder = () => {
       ...orderInfo,
       directions: {
         ...orderInfo.directions,
-        value: filterNomenclature,
+        value: direction.value,
       },
       nomenclature: {
         ...orderInfo.nomenclature,
@@ -154,14 +154,32 @@ export const CreateOrder = () => {
     const managerValue = orderInfo.manager.list.filter(
       (item) => item.code === value.manager.code,
     );
+    console.log(value);
+    console.log(value.direction);
 
-    const directionValue = orderInfo.directions.list.filter(
-      (item) => item.value === value.direction.code,
-    );
+    let directionValue;
+    if (value.direction != null) {
+      if (value.direction.code != null) {
+        directionValue = orderInfo.directions.list.filter(
+          (item) => item.value === value.direction.code,
+        );
+      } else {
+        directionValue = [];
+      }
+    } else {
+      directionValue = [];
+    }
 
-    const filterNomenclature = orderInfo.nomenclature.list.filter(
-      (item) => item.direction.code === directionValue[0].value,
-    );
+    let filterNomenclature ;
+    if (directionValue[0] != undefined) {
+      filterNomenclature = orderInfo.nomenclature.list.filter(
+        (item) => item.direction.code === directionValue[0].value,
+      );
+    }else{
+      filterNomenclature = orderInfo.nomenclature.list;
+    }
+
+    // console.log(value );
 
     setOrderInfo({
       ...orderInfo,

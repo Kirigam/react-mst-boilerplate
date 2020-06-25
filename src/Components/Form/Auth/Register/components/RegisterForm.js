@@ -19,7 +19,7 @@ import useStyles from '../../AuthStyle';
 export const RegisterFormComponent = ({ onSubmit, isLoading }) => {
   const initialValues = {
     full_name: '',
-    phone: '',
+    phone_number: '',
     email: '',
     password1: '',
     password2: '',
@@ -28,7 +28,7 @@ export const RegisterFormComponent = ({ onSubmit, isLoading }) => {
     full_name: Yup.string().required(
       "Поле обов'язкове для заповнення",
     ),
-    phone: Yup.string().required("Поле обов'язкове для заповнення"),
+    phone_number: Yup.string().required("Поле обов'язкове для заповнення"),
     email: Yup.string()
       .required("Поле обов'язкове для заповнення")
       .email('Введіть E-mail адресу'),
@@ -70,8 +70,8 @@ export const RegisterFormComponent = ({ onSubmit, isLoading }) => {
               />
               <Field
                 placeholder="Номер телефону"
-                name="phone"
-                id="phone"
+                name="phone_number"
+                id="phone_number"
                 mask="+380(99)999-99-99"
                 type="tel"
                 component={CustomInputMask}

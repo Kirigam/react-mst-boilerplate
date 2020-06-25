@@ -18,11 +18,12 @@ export const Router = () => {
     SetOpen({ open: !isOpen.open });
   }
 
+  console.log(window );
+  
+
   if (!isLoginUser()) {
     history.push(PublicRoute.LOGIN);
   }
-  console.log(isOpen );
-  
 
   return (
     <>
