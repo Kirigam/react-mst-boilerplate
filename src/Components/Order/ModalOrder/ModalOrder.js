@@ -42,6 +42,7 @@ export const ModalOrder = ({ ...props }) => {
         open={open}
         onClose={handleClose}
         closeAfterTransition
+        
         BackdropProps={{
           timeout: 500,
         }}

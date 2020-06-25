@@ -95,6 +95,7 @@ const UsersStore = t
     fetchUser: flow(function* (userID) {
       try {
         const res = yield Api.getUser(userID);
+console.log(res );
 
         store.addUser(res.data.user);
         return res;

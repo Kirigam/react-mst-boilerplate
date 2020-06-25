@@ -9,8 +9,8 @@ import CreateInfoOrder from './CreateInfoOrderContext';
 
 export const CreateOrder = () => {
   const [activeStep, setActiveStep] = useState(0);
-  console.log(activeStep );
-  
+  console.log(activeStep);
+
   const [orderInfo, setOrderInfo] = useState({
     directions: {
       isLoading: true,
@@ -72,6 +72,7 @@ export const CreateOrder = () => {
               value: element.code,
             });
           });
+
           let allDirections = { label: `Усі напрямки`, value: 'all' };
           tempArrayDirections.unshift(allDirections);
 
@@ -179,7 +180,6 @@ export const CreateOrder = () => {
   }
 
   // function
- 
 
   return (
     <>
@@ -197,7 +197,7 @@ export const CreateOrder = () => {
               </Typography>
             </Box>
 
-            <OneStepOrder 
+            <OneStepOrder
               // directions={directions}
               // Nomenclature={Nomenclature}
               setActiveStep={setActiveStep}
@@ -212,25 +212,25 @@ export const CreateOrder = () => {
         )}
         {activeStep === 1 && (
           <Box py={6} px={4}>
-          <Typography className={s.MainTitle} variant="h4">
-            Створення замовлення
-          </Typography>
-          <Box my={2} mb={2}>
-            <Typography  variant="h5" className={s.SubMainTitle}>
-              Додайте товар до замовлення.
+            <Typography className={s.MainTitle} variant="h4">
+              Створення замовлення
             </Typography>
+            <Box my={2} mb={2}>
+              <Typography variant="h5" className={s.SubMainTitle}>
+                Додайте товар до замовлення.
+              </Typography>
+            </Box>
+            <TwoStepOrder
+              onNomenclature={onNomenclature}
+              onDirections={onDirections}
+              setActiveStep={setActiveStep}
+
+              // setNewOrder={setNewOrder}
+              // newOrder={newOrder}
+            ></TwoStepOrder>
           </Box>
-          <TwoStepOrder onNomenclature={onNomenclature}
-            onDirections={onDirections}
-            setActiveStep={setActiveStep}
-              
-          // setNewOrder={setNewOrder}
-          // newOrder={newOrder}
-          ></TwoStepOrder>
-          
-        </Box>
         )}
-        
+
         {activeStep === 2 && (
           <Box my={6} mx={4}>
             <Typography className={s.MainTitle} variant="h4">

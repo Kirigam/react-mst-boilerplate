@@ -18,23 +18,7 @@ const MainScreen = () => {
   const { users } = useStore((store) => ({
     users: store.users,
   }));
-
-  // useEffect(() => {
-
-  //   async function fun() {
-  //     const userID = storageService.get(NameStorage.USERID);
-
-  //     try {
-  //       await users.fetchUser(userID);
-
-  //       setisLoading(false);
-  //     } catch (error) {
-  //       console.log(error.response);
-  //       setisLoading(false);
-  //     }
-  //   }
-  //   fun();
-  // }, []);
+ 
 
   useEffect(() => {
     const userID = storageService.get(NameStorage.USERID);
@@ -42,22 +26,11 @@ const MainScreen = () => {
     Promise.resolve(users.fetchUser(userID))
       .then((result) => {
         console.log(result.data.user);
-
-
-        // return Api.allOrderUsers(result.data.user.id);
-      })
-      .then((result) => {
-        // Api
-        // console.log( result);
-        
-        // storageService.set(
-        //   NameStorage.USERORDE,
-        //   result.data.results.length,
-        // );
-        setisLoading(false);
-        
+        setisLoading(false);  
       })
       .catch((error) => {
+        // console.log( );
+        
         console.log(error.response);
         setisLoading(false);
       });

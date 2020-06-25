@@ -25,7 +25,7 @@ export const ThreeStepOrder = () => {
     horizontal: 'right',
     text: '',
   });
-   
+
   const { vertical, horizontal, open, text } = isError;
 
   const handleClose = () => {
@@ -34,7 +34,7 @@ export const ThreeStepOrder = () => {
 
   const { users } = useStore();
   const AuthUser = users.authUser;
-  console.log(AuthUser);
+  // console.log(AuthUser);
 
   // AuthUser.client_profile.company !== null;
 
@@ -83,22 +83,27 @@ export const ThreeStepOrder = () => {
     value.user_id = Number(userID);
     value.order_id = newOrder.orderID;
     if (newOrder.orderID) {
-      Promise.resolve(Api.orderFinishStep(value)).then((result) => {
-        console.log(result);
-        if (result.data.status == 'ok') {
-          console.log(result.data.message);
-           storageService.set(NameStorage.USERORDE,1);
-  
-          history.push(PrivateRoute.HOME);
-        }if (result.data.status == 'bad') {
-          setIsError({ ...isError, open: true, text: result.data.messages[0].message });
-        } else {
-          
-        }
-      }).catch(result=>{
-        console.log( result);
-        
-      })
+      Promise.resolve(Api.orderFinishStep(value))
+        .then((result) => {
+          console.log(result);
+          if (result.data.status == 'ok') {
+            console.log(result.data.message);
+            storageService.set(NameStorage.USERORDE, 1);
+
+            history.push(PrivateRoute.HOME);
+          }
+          if (result.data.status == 'bad') {
+            setIsError({
+              ...isError,
+              open: true,
+              text: result.data.messages[0].message,
+            });
+          } else {
+          }
+        })
+        .catch((result) => {
+          console.log(result);
+        });
     }
   }
 
@@ -175,7 +180,6 @@ export const ThreeStepOrder = () => {
           </Form>
         </Formik>
       </div>
-
 
       <Snackbar
         anchorOrigin={{ vertical, horizontal }}
