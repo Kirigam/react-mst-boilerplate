@@ -26,8 +26,6 @@ export const ThreeStepOrder = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  // const { vertical, horizontal, open, text } = isError;
-
   const { users } = useStore();
   const AuthUser = users.authUser;
 
@@ -112,17 +110,13 @@ export const ThreeStepOrder = () => {
 
     value.user_id = Number(userID);
     value.order_id = newOrder.orderID;
-    console.log(newOrder);
-
+   
     if (newOrder.orderID) {
       Promise.resolve(Api.orderFinishStep(value))
         .then((result) => {
-          console.log(result);
-
           result.data.messages.map((item) =>
             infoMassege(item.status, item.text),
           );
-
           return users.fetchUser(userID);
         })
         .then((result) => {

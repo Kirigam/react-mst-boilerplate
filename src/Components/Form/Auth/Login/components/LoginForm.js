@@ -51,7 +51,7 @@ export const LoginFormComponent = ({ onSubmit, isLoading }) => {
           <Form>
             <div className={classes.auth_inputs}>
               <Field
-                placeholder="E-mail"
+                placeholder="Email"
                 name="email"
                 id="email"
                 type="text"
@@ -102,7 +102,7 @@ export const LoginFormComponent = ({ onSubmit, isLoading }) => {
         </Box>
         <Box className={classes.auth__form_footer}>
           <Typography variant="body1" color="textPrimary">
-            Ще не зареєcторовані
+            Ще не зареєcторовані?
           </Typography>
           <Box ml={1}>
             <Link
@@ -112,7 +112,7 @@ export const LoginFormComponent = ({ onSubmit, isLoading }) => {
             >
               <Typography
                 variant="body2"
-                className={`${classes.link_standart}`}
+                className={`${classes.link_standart}`} 
                 style={{ textTransform: 'initial' }}
               >
                 Зареєструватися

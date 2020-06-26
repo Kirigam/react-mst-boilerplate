@@ -11,17 +11,15 @@ import { useStore } from '../../stores/stores.js';
 import { observer } from 'mobx-react';
 import { Loader } from '../../Components/Loader/Loader.js';
 import { ViewsOrder } from '../../Components/Order/ViewsOrder/ViewsOrder';
-import * as Api from '../../Api';
+ 
 const MainScreen = () => {
   const [isLoading, setisLoading] = useState(true);
 
-  const { orders,users } = useStore();
-console.log(orders );
+  const { orders, users } = useStore();
+  console.log(orders);
 
   useEffect(() => {
     const userID = storageService.get(NameStorage.USERID);
-
-
 
     Promise.resolve(users.fetchUser(userID))
       .then((result) => {
@@ -34,7 +32,6 @@ console.log(orders );
         console.log(error.response);
         setisLoading(false);
       });
-      
   }, []);
 
   return (
