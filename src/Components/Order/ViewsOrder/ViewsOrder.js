@@ -105,10 +105,10 @@ export const ViewsOrder = () => {
   return (
     <>
      {console.log('das')}
-     {console.log(AuthUser.client_profile)}
+     {console.log(AuthUser.client_profile.company)}
       {viewsOrders.isLoading && (
         <>
-          {AuthUser.client_profile.has_free_order && AuthUser.client_profile.company === null && (
+          {AuthUser.client_profile.has_free_order  && (
             <Box my={6} mx={4}>
               <Typography className={s.MainTitle} variant="h4">
                 Оформлення замовлення

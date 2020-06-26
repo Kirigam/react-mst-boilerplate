@@ -20,6 +20,8 @@ export const Router = () => {
  
 
   if (!isLoginUser()) {
+    console.log(window.location.pathname );
+    
     if (window.location.pathname != '/auth/register') {
       history.push(PublicRoute.LOGIN);
     }

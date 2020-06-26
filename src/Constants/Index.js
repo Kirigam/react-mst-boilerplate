@@ -2,7 +2,7 @@ export const PublicRoute = {
   LOGIN: '/auth/login',
   REGISTER: '/auth/register',
   FORGOTPASWORD: '/auth/forgotPasword',
-  URLWEBSITE:'https://puz.starway.agency/'
+  URLWEBSITE:'https://puz.supply/'
 };
 export const PrivateRoute = {
   HOME: '/',

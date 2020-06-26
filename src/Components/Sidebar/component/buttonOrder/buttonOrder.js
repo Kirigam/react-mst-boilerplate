@@ -25,14 +25,10 @@ export const ButtonOrder = () => {
   function notHasOrders(){
     infoMassege('warning', 'У вас більше немає безкоштовних замовлень, укладіть договір щоб продовжити роботу на сайті')
   }
-  // console.log(AuthUser.client_profile.company)
-  
+ 
   return (
     <>
-      {
-       
-        
-      ( AuthUser.client_profile.company === null || AuthUser.client_profile.company.concluded ) ? (
+      {AuthUser.client_profile.has_free_order && (AuthUser.client_profile.company === null || AuthUser.client_profile.company.concluded) ? (
         <>
           <Link to={PrivateRoute.CREATEORDER}>
             <Button
