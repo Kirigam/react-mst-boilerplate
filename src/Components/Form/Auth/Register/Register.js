@@ -5,12 +5,11 @@ import { RegisterFormComponent } from './components/RegisterForm';
 import bg from './../../../../assetc/img/bg_fonts_1.jpg';
 import useStyles from './../AuthStyle.js';
 import { useStore } from '../../../../stores/stores';
-import { Snackbar } from '@material-ui/core';
 
-import { Alert, AlertTitle } from '@material-ui/lab';
 import { PrivateRoute } from '../../../../Constants/Index';
 import { useHistory } from 'react-router-dom';
 import { isLoginUser } from '../../../../utils/userUtil';
+import { useSnackbar } from 'notistack';
 
 function RegisterForm() {
   const s = useStyles();
@@ -22,18 +21,10 @@ function RegisterForm() {
     history.push(PrivateRoute.HOME);
   }
 
-  const [state, setState] = useState({
-    open: false,
-    vertical: 'top',
-    horizontal: 'right',
-    text: '',
-  });
-   
-  const { vertical, horizontal, open, text } = state;
-
-  const handleClose = () => {
-    setState({ ...state, open: false });
-  };
+  function infoMassege(variant, text) {
+    enqueueSnackbar(text, { variant });
+  }
+  const { enqueueSnackbar } = useSnackbar();
 
   async function onSubmit(values) {
     try {
@@ -41,17 +32,16 @@ function RegisterForm() {
       const response = await store.users.register(values);
       if (!!response.status_code) {
         if (response.email) {
-          setState({ ...state, open: true, text: response.email });
+          infoMassege('error', response.email);
         }
         if (response.full_name) {
-          setState({
-            ...state,
-            open: true,
-            text: response.full_name,
-          });
+          infoMassege('error', response.full_name);
         }
         if (response.phone) {
-          setState({ ...state, open: true, text: response.phone });
+          infoMassege('error', response.phone);
+        }
+        if (response.password1) {
+          infoMassege('error', response.password1[0]);
         }
       } else {
         history.push(PrivateRoute.HOME);
@@ -64,17 +54,6 @@ function RegisterForm() {
 
   return (
     <>
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={open}
-        onClose={handleClose}
-        key={vertical + horizontal}
-      >
-        <Alert severity="error">
-          <AlertTitle>Помилка</AlertTitle>
-          {text}
-        </Alert>
-      </Snackbar>
       <main className={s.auth}>
         <div className={s.auth_main}>
           <div className={s.auth_main__form}>

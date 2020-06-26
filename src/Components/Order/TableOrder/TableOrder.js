@@ -1,7 +1,7 @@
 import React from 'react';
 import './TableOrder.modules.scss';
 import { useTable } from 'react-table';
-import { Avatar } from '@material-ui/core';
+import { Avatar, Popover, Typography } from '@material-ui/core';
 import { CardManager } from '../CardManager/CardManager';
 
 export const TableOrder = ({ columns, data, className }) => {
@@ -15,6 +15,17 @@ export const TableOrder = ({ columns, data, className }) => {
     columns,
     data,
   });
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handlePopoverOpen = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handlePopoverClose = () => {
+    setAnchorEl(null);
+  };
+  const open = Boolean(anchorEl);
 
   console.log(data);
 
@@ -45,13 +56,38 @@ export const TableOrder = ({ columns, data, className }) => {
                       <td {...cell.getCellProps()}>
                         <div className="managerBox">
                           <Avatar className="avatarManager"></Avatar>
-                          <div className="linkManager">
+                          <Typography
+                            className="linkManager"
+                            onMouseEnter={handlePopoverOpen}
+                            onMouseLeave={handlePopoverClose}
+                          >
                             {cell.render('Cell')}
-                          </div>
+                          </Typography>
                         </div>
-                        <div>
+                        {/* <div> */}
+                          {/* <Popover
+                            // id="mouse-over-popover"
+                            // className={classes.popover}
+                            // classes={{
+                            //   paper: classes.paper,
+                            // }}
+                            open={open}
+                            // anchorEl={anchorEl}
+                            anchorOrigin={{
+                              vertical: 'bottom',
+                              horizontal: 'left',
+                            }}
+                            transformOrigin={{
+                              vertical: 'top',
+                              horizontal: 'left',
+                            }}
+                            onClose={handlePopoverClose}
+                            disableRestoreFocus
+                          >
+                            <Typography>I use Popover.</Typography>
+                          </Popover> */}
                           {/* <CardManager></CardManager> */}
-                        </div>
+                        {/* </div> */}
                       </td>
                     );
                   } else {

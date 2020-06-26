@@ -94,7 +94,7 @@ export const TwoStepOrder = ({ ...props }) => {
     const temsArray = [];
     let increment = 1;
     newOrder.nomenclatures.map((item) => {
-      console.log(item.nomenclature.manager );
+      // console.log(item.nomenclature.manager );
       
       temsArray.push({
         idNomenclature: increment,

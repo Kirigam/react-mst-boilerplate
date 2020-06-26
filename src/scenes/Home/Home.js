@@ -15,12 +15,13 @@ import * as Api from '../../Api';
 const MainScreen = () => {
   const [isLoading, setisLoading] = useState(true);
 
-  const { users } = useStore((store) => ({
-    users: store.users,
-  }));
+  const { orders,users } = useStore();
+console.log(orders );
 
   useEffect(() => {
     const userID = storageService.get(NameStorage.USERID);
+
+
 
     Promise.resolve(users.fetchUser(userID))
       .then((result) => {
@@ -33,6 +34,7 @@ const MainScreen = () => {
         console.log(error.response);
         setisLoading(false);
       });
+      
   }, []);
 
   return (

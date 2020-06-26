@@ -62,7 +62,7 @@ export const RegisterFormComponent = ({ onSubmit, isLoading }) => {
           <Form>
             <div className={classes.auth_inputs} >
               <Field
-                placeholder="Ім'я"
+                placeholder="Прізвище Ім'я Побатькові"
                 name="full_name"
                 id="full_name"
                 type="text"

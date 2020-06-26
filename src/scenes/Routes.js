@@ -17,12 +17,12 @@ export const Router = () => {
   function OpenMenu() {
     SetOpen({ open: !isOpen.open });
   }
-
-  console.log(window );
-  
+ 
 
   if (!isLoginUser()) {
-    history.push(PublicRoute.LOGIN);
+    if (window.location.pathname != '/auth/register') {
+      history.push(PublicRoute.LOGIN);
+    }
   }
 
   return (

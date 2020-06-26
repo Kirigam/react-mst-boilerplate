@@ -178,7 +178,7 @@ export const OneStepOrder = ({ ...props }) => {
                       className={s.InpunTitle}
                       variant="body1"
                     >
-                      Дата доставки
+                      Дата поставки
                     </Typography>
 
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -205,7 +205,7 @@ export const OneStepOrder = ({ ...props }) => {
                       className={s.InpunTitle}
                       variant="body1"
                     >
-                      Адреса доставки
+                      Адреса поставки
                     </Typography>
 
                     <Field

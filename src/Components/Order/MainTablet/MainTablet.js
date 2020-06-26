@@ -41,7 +41,8 @@ export const MainTablet = ({ ...props }) => {
         {data.map((item, i) => {
           return (
             //   <MuiTableContainer>
-            <ExpandableTableRow
+            <ExpandableTableRow 
+              key={i}
               className={(i & 1) != 0 ? `${s.tableRow}` : null}
               data={item.main}
               orderID={item.idOrder}
@@ -106,8 +107,8 @@ const ExpandableTableRow = ({ children, ...props }) => {
       </TableRow>
       {isExpanded && (
         <>
-          {data.map((item) => (
-            <TableRow className={className}>
+          {data.map((item,key) => (
+            <TableRow key={key} className={className}>
               <TableCell></TableCell>
               <TableCell>{item.idNomenclature}</TableCell>
               <TableCell>{item.idproduct}</TableCell>
@@ -127,8 +128,8 @@ const ExpandableTableRow = ({ children, ...props }) => {
           ))}
         </>
       )}
-      {/* <TableRow>
-        <TableCell className={s.foterInfoBox} colspan="10">
+      <TableRow>
+        {/* <TableCell className={s.foterInfoBox} colSpan="10">
           <div className={s.foterInfoLine}>
             <div className={s.foterInfoText}>
               У вас залишилось незавершене замовлення. Продовжіть
@@ -142,8 +143,8 @@ const ExpandableTableRow = ({ children, ...props }) => {
               Продовжити
             </Button>
           </div>
-        </TableCell>
-      </TableRow> */}
+        </TableCell> */}
+      </TableRow>
     </>
   );
 };

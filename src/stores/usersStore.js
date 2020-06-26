@@ -13,15 +13,12 @@ const UsersStore = t
   })
   .actions((store) => ({
     addUser(user) {
-     
       user.client_profile.id.toString();
-      
       user.id = user.id.toString();
-
-      console.log(user );
-      console.log(store.list );
-      
       store.list.unshift(user);
+    },
+    updateUser(){
+
     },
 
     removeUser() {

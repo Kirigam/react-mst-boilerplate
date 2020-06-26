@@ -6,9 +6,8 @@ import { LoginFormComponent } from './components/LoginForm';
 import { useStore } from '../../../../stores/stores';
 import { useHistory } from 'react-router-dom';
 import { PrivateRoute } from '../../../../Constants/Index';
-import { Snackbar } from '@material-ui/core';
-import { Alert, AlertTitle } from '@material-ui/lab';
 import { isLoginUser } from '../../../../utils/userUtil';
+import { useSnackbar } from 'notistack';
 
 function LoginForm() {
   const s = useStyles();
@@ -20,23 +19,16 @@ function LoginForm() {
 
   const store = useStore();
 
-  const [state, setState] = useState({
-    open: false,
-    vertical: 'top',
-    horizontal: 'right',
-    text: '',
-  });
+  function infoMassege(variant, text) {
+    enqueueSnackbar(text, { variant });
+  }
+  const { enqueueSnackbar } = useSnackbar();
+ 
   const [isLoading, setisLoading] = useState(false);
-
-  const { vertical, horizontal, open, text } = state;
-
-  const handleClose = () => {
-    setState({ ...state, open: false });
-  };
-
+ 
   async function onSubmit(values) {
     try {
-      setisLoading(true)
+      setisLoading(true);
       let res = await store.users.login(values);
 
       if (!!res.status_code) {
@@ -50,14 +42,8 @@ function LoginForm() {
         } else {
           error_text = res.non_field_errors;
         }
-        setState({
-          ...state,
-          open: true,
-          text: error_text,
-        });
+        infoMassege('error', error_text);
       } else {
-        console.log('asdas');
-
         history.push(PrivateRoute.HOME);
       }
       setisLoading(false);
@@ -69,18 +55,6 @@ function LoginForm() {
 
   return (
     <>
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={open}
-        onClose={handleClose}
-        key={vertical + horizontal}
-      >
-        <Alert severity="error">
-          <AlertTitle>Помилка</AlertTitle>
-          {text}
-        </Alert>
-      </Snackbar>
-
       <main className={s.auth}>
         <div className={s.auth_main}>
           <div className={s.auth_main__form}>

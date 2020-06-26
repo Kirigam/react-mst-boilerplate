@@ -26,24 +26,10 @@ export const ThreeStepOrder = () => {
 
   const { enqueueSnackbar } = useSnackbar();
 
-  const [isError, setIsError] = useState({
-    open: false,
-    vertical: 'top',
-    horizontal: 'right',
-    text: '',
-  });
-
-  const { vertical, horizontal, open, text } = isError;
-
-  const handleClose = () => {
-    setIsError({ ...isError, open: false });
-  };
+  // const { vertical, horizontal, open, text } = isError;
 
   const { users } = useStore();
   const AuthUser = users.authUser;
-  // console.log(AuthUser);
-
-  // AuthUser.client_profile.company !== null;
 
   const infoUser = {
     full_name: {
@@ -94,7 +80,6 @@ export const ThreeStepOrder = () => {
       infoUser.companyName.visible = true;
   }
 
-
   const initialValues = {
     company_name: infoUser.companyName.value,
     edrpou: infoUser.companyEdrpou.value,
@@ -127,8 +112,8 @@ export const ThreeStepOrder = () => {
 
     value.user_id = Number(userID);
     value.order_id = newOrder.orderID;
-   console.log(newOrder );
-   
+    console.log(newOrder);
+
     if (newOrder.orderID) {
       Promise.resolve(Api.orderFinishStep(value))
         .then((result) => {
@@ -138,6 +123,9 @@ export const ThreeStepOrder = () => {
             infoMassege(item.status, item.text),
           );
 
+          return users.fetchUser(userID);
+        })
+        .then((result) => {
           history.push(PrivateRoute.HOME);
         })
         .catch((result) => {
@@ -145,8 +133,6 @@ export const ThreeStepOrder = () => {
         });
     }
   }
-
-
 
   return (
     <>
@@ -163,7 +149,6 @@ export const ThreeStepOrder = () => {
                 name="company_name"
                 id="company_name"
                 disabled={!!infoUser.companyName.visible}
-                
                 type="text"
                 component={CustomInput}
               />
@@ -173,7 +158,6 @@ export const ThreeStepOrder = () => {
                 disabled={!!infoUser.companyEdrpou.visible}
                 id="edrpou"
                 type="tel"
-                
                 component={CustomInput}
               />
               <Field
@@ -225,18 +209,6 @@ export const ThreeStepOrder = () => {
           </Form>
         </Formik>
       </div>
-
-      <Snackbar
-        anchorOrigin={{ vertical, horizontal }}
-        open={open}
-        onClose={handleClose}
-        key={vertical + horizontal}
-      >
-        <Alert severity="error">
-          <AlertTitle>Помилка</AlertTitle>
-          {text}
-        </Alert>
-      </Snackbar>
     </>
   );
 };

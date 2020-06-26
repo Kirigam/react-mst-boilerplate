@@ -21,7 +21,7 @@ export const UserSetings = () => {
   function isOpenBox(){
     setOpen(!open);
   }
-  
+    
   return (
     <>
       <Box px={3}>

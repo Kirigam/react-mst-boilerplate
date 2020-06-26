@@ -43,10 +43,11 @@ export const ViewsOrder = () => {
   const [viewsOrders, setViewsOrders] = useState({
     isLoading: false,
     Orders: [],
-    // : [],
   });
 
   useEffect(() => {
+    console.log('12' );
+
     const userID = storageService.get(NameStorage.USERID);
 
     Promise.resolve(Api.allOrderUsers(userID))
@@ -99,12 +100,15 @@ export const ViewsOrder = () => {
         console.log(error);
       });
   }, []);
+ 
 
   return (
     <>
+     {console.log('das')}
+     {console.log(AuthUser.client_profile)}
       {viewsOrders.isLoading && (
         <>
-          {AuthUser.client_profile.has_free_order && (
+          {AuthUser.client_profile.has_free_order && AuthUser.client_profile.company === null && (
             <Box my={6} mx={4}>
               <Typography className={s.MainTitle} variant="h4">
                 Оформлення замовлення

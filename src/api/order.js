@@ -56,3 +56,17 @@ export const getNomenclatureOrder = (id) => {
   });
 };
 
+
+
+
+
+
+
+
+// 
+export const fetchOrderUser = (id) => {
+  return apiRequest({
+    method: 'GET',
+    url: `https://puz.supply/api/orders/?user_id=${id}`,
+  });
+};

@@ -9,7 +9,7 @@ export const ArrowLeft = ({ size, color, ...props }) => {
       {...props}
       viewBox="0 0 24 24"
     >
-      <g xmlns="http://www.w3.org/2000/svg" id="Home" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+      <g   id="Home" stroke="none" fill="none"  >
         <g id="active_orders_additional_options" transform="translate(-272.000000, -807.000000)">
             <g id="table" transform="translate(272.000000, 307.000000)">
                 <g id="Group-3-Copy-3" transform="translate(0.000000, 486.000000)">
