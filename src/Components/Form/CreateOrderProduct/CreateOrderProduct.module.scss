@@ -28,3 +28,10 @@
 .btn_back{
     margin-right: 15px;
 }
+
+.password_box{
+  display: grid;
+  grid-template-columns: 400px;
+  grid-gap: 16px ;
+  margin-bottom: 16px;
+}

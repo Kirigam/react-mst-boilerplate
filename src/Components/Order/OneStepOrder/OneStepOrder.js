@@ -7,8 +7,11 @@ import * as Yup from 'yup';
 import moment from 'moment';
 import {
   DatePicker,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
+
 import { Form, Formik, Field } from 'formik';
 import DateFnsUtils from '@date-io/date-fns'; // choose your lib
 import { CustomInput } from '../../Form/Elements/input/input';
@@ -20,7 +23,12 @@ import { useStore } from '../../../stores/stores';
 import CreateInfoOrder from '../CreateOrder/CreateInfoOrderContext';
 // import { getSnapshot } from 'mobx-state-tree';
 export const OneStepOrder = ({ ...props }) => {
-  const [selectedDate, handleDateChange] = useState(new Date());
+  // const [selectedDate, handleDateChange] = useState(new Date());
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   const { users } = useStore();
 
@@ -28,6 +36,7 @@ export const OneStepOrder = ({ ...props }) => {
   const { directions, nomenclature, newOrder, manager } = orderInfo;
 
   const { onDirections, onNomenclature, setActiveStep } = props;
+  console.log(selectedDate);
 
   const initialValues = {
     directions: '',
@@ -53,6 +62,8 @@ export const OneStepOrder = ({ ...props }) => {
   });
 
   async function onSubmit(value) {
+    console.log(value);
+
     const clientProfileUser = users.authUser.client_profile.id;
 
     const userID = storageService.get(NameStorage.USERID);
@@ -66,7 +77,7 @@ export const OneStepOrder = ({ ...props }) => {
           nomenclature_id: nomenclature.value.id,
           amount: value.count,
           address: value.deliveri_addres,
-          date: moment(new Date(value.data)).format('YYYY.MM.DD'),
+          date: moment(new Date(selectedDate)).format('DD.MM.YYYY'),
         };
         return Api.addOrderedNomenclatures(nomenclatureObject);
       })
@@ -75,13 +86,13 @@ export const OneStepOrder = ({ ...props }) => {
 
         setOrderInfo({
           ...orderInfo,
-          directions:{
+          directions: {
             ...orderInfo.directions,
-            value:[],
+            value: [],
           },
-          nomenclature:{
+          nomenclature: {
             ...orderInfo.nomenclature,
-            value:[],
+            value: [],
           },
           newOrder: {
             ...orderInfo.newOrder,
@@ -171,18 +182,20 @@ export const OneStepOrder = ({ ...props }) => {
                     </Typography>
 
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                      <DatePicker
-                        className={s.input}
-                        fullWidth
+                      <KeyboardDatePicker
                         disableToolbar
+                        // variant=""
                         variant="inline"
                         format="dd.MM.yyyy"
-                        minDate={new Date()}
-                        placeholder="Виберіть дату доставки"
                         margin="normal"
-                        inputVariant="outlined"
+                        id="dataPicer"
+                        fullWidth
+                        // label="Date picker inline"
                         value={selectedDate}
                         onChange={handleDateChange}
+                        KeyboardButtonProps={{
+                          'aria-label': 'change date',
+                        }}
                       />
                     </MuiPickersUtilsProvider>
                   </div>
@@ -220,119 +233,3 @@ export const OneStepOrder = ({ ...props }) => {
     </>
   );
 };
-
-{
-  /* <Formik
-// validationSchema={testSchema}
-initialValues={initialValues}
-onSubmit={onSubmit}
->
-{/* { {(props) => { */
-}
-{
-  /* const {
-    onSubmit,
-    values,
-    touched,
-    errors,
-    dirty,
-    isSubmitting,
-    handleChange,
-    handleBlur,
-    handleSubmit,
-    handleReset, 
-  } = props; */
-}
-{
-  /* return ( */
-}
-// {/* <Form onSubmit={onSubmit} className={s.FormOrderStart}>
-//   <Select
-//     className={s.input}
-//     fullWidth
-//     placeholder="Напрям"
-//     options={directions.list}
-//     isLoading={directions.isLoading}
-//     onChange={onDirections}
-//     value={directions.value}
-//     name="directions"
-//     id="directions"
-//   />
-
-//   <Field
-//   placeholder="Кількість"
-//   name="count"
-//   id="count"
-//   type="text"
-//   component={CustomInput}
-// />
-
-//   {/* <TextField
-//     className={s.input}
-//     fullWidth
-//     placeholder="Кількість"
-//     name="count"
-//     id="count"
-//     type="text"
-//     variant="outlined"
-//     // error={errors.count && touched.count}
-//     // onChange={handleChange}
-//     // onBlur={handleBlur}
-//     // helperText={
-//     //   errors.count && touched.count && errors.count
-//     // }
-//   ></TextField> */}
-
-//   <MuiPickersUtilsProvider utils={DateFnsUtils}>
-//     <DatePicker
-//       className={s.input}
-//       fullWidth
-//       disableToolbar
-//       variant="inline"
-//       format="MM.dd.yyyy"
-//       minDate={new Date()}
-//       placeholder="Дата"
-//       margin="normal"
-//       inputVariant="outlined"
-//       value={selectedDate}
-//       onChange={handleDateChange}
-//     />
-//   </MuiPickersUtilsProvider>
-//   <Field
-//   placeholder="Адреса поставки"
-//   name="deliveri_addres"
-//   id="deliveri_addres"
-//   type="text"
-//   component={CustomInput}
-// />
-//   {/* <TextField
-//     className={s.input}
-//     fullWidth
-//     name="deliveri_addres"
-//     id="deliveri_addres"
-//     variant="outlined"
-//     placeholder="Адреса поставки"
-//     // error={
-//     //   errors.deliveri_addres &&
-//     //   touched.deliveri_addres
-//     // }
-//     // onChange={handleChange}
-//     // onBlur={handleBlur}
-//     // helperText={
-//     //   errors.deliveri_addres &&
-//     //   touched.deliveri_addres &&
-//     //   errors.deliveri_addres
-//     // }
-//   ></TextField> */}
-//   <Box display="flex" justifyContent="flex-end">
-//     <Button
-//       className={s.first_order__btn}
-//       type="submit"
-//     >
-//       Далі
-//     </Button>
-//   </Box>
-// </Form>
-// {/* ); */}
-// {/* }} */}
-// </Formik> */} */}

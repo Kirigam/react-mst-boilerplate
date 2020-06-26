@@ -9,22 +9,24 @@ import {
   Avatar,
   IconButton,
   TableBody,
+  TableFooter,
+  Button,
 } from '@material-ui/core';
 import { ArrowLeft } from '../../../assetc/svg/arrowLeft';
 import { ArrowDown } from '../../../assetc/svg/arrowDown';
+import { useHistory } from 'react-router-dom';
+import { PrivateRoute } from '../../../Constants/Index';
+import storageService from '../../../utils/storageService';
 
 export const MainTablet = ({ ...props }) => {
   const { dataAll, data } = props;
 
-  //  const  data1 = Object.entries(data);
-  //   console.log(dataAll.map());
-  console.log(data);
   return (
     <Table className={s.table}>
       <TableHead>
         <TableRow>
-          <TableCell>#ID</TableCell>
           <TableCell></TableCell>
+          <TableCell>#ID</TableCell>
           <TableCell></TableCell>
           <TableCell>Менеджер</TableCell>
           <TableCell>Напрям</TableCell>
@@ -36,40 +38,40 @@ export const MainTablet = ({ ...props }) => {
         </TableRow>
       </TableHead>
       <TableBody>
-        {data.map((item, i) => (
-          //   <MuiTableContainer>
-          <ExpandableTableRow
-            className={(i & 1) != 0 ? `${s.tableRow}` : null}
-            data={item.main}
-          >
-            <TableCell>{item.header.idNomenclature}</TableCell>
-            <TableCell>{item.header.idproduct}</TableCell>
-            <TableCell>
-              <Box className={s.managerTable}>
-                <Avatar className={s.managerTableAvatar}></Avatar>
-                {item.header.manager}
-              </Box>
-            </TableCell>
-            <TableCell>{item.header.direction}</TableCell>
-            <TableCell>{item.header.nomenclature}</TableCell>
-            <TableCell>{item.header.Count}</TableCell>
-            <TableCell>{item.header.date}</TableCell>
-            <TableCell>{item.header.address}</TableCell>
-            <TableCell
-              className={`${
-                item.header.status === 'valuating' && s.valuating
-              } ${s.status}`}
+        {data.map((item, i) => {
+          return (
+            //   <MuiTableContainer>
+            <ExpandableTableRow
+              className={(i & 1) != 0 ? `${s.tableRow}` : null}
+              data={item.main}
+              orderID={item.idOrder}
             >
-              {item.header.status === 'valuating'
-                ? 'Розглядається'
-                : ''}
-              {item.header.status === 'unordered'
-                ? 'Незавершене'
-                : ''}
-            </TableCell>
-          </ExpandableTableRow>
-          //   </MuiTableContainer>
-        ))}
+              <TableCell>{item.header.idNomenclature}</TableCell>
+              <TableCell>{item.header.idproduct}</TableCell>
+              <TableCell>
+                <Box className={s.managerTable}>
+                  <Avatar className={s.managerTableAvatar}></Avatar>
+                  {item.header.manager}
+                </Box>
+              </TableCell>
+              <TableCell>{item.header.direction}</TableCell>
+              <TableCell>{item.header.nomenclature}</TableCell>
+              <TableCell>{item.header.Count}</TableCell>
+              <TableCell>{item.header.date}</TableCell>
+              <TableCell>{item.header.address}</TableCell>
+              <TableCell
+                className={`${
+                  item.header.status === 'valuating' && s.valuating
+                } ${s.status}`}
+              >
+                {item.header.status === 'valuating'
+                  ? 'Розглядається'
+                  : ''}
+                {item.header.status === 'unordered' ? 'Чернетка' : ''}
+              </TableCell>
+            </ExpandableTableRow>
+          );
+        })}
       </TableBody>
     </Table>
   );
@@ -77,8 +79,14 @@ export const MainTablet = ({ ...props }) => {
 
 const ExpandableTableRow = ({ children, ...props }) => {
   const [isExpanded, setIsExpanded] = React.useState(false);
-  const { data, className } = props;
-  console.log(data);
+  const { orderID, data, className } = props;
+  let history = useHistory();
+ 
+
+  function continueOrder() {
+    storageService.set('continueOrderID', orderID);
+    history.push(PrivateRoute.CREATEORDER);
+  }
 
   return (
     <>
@@ -119,6 +127,23 @@ const ExpandableTableRow = ({ children, ...props }) => {
           ))}
         </>
       )}
+      {/* <TableRow>
+        <TableCell className={s.foterInfoBox} colspan="10">
+          <div className={s.foterInfoLine}>
+            <div className={s.foterInfoText}>
+              У вас залишилось незавершене замовлення. Продовжіть
+              роботу або видаліть його.
+            </div>
+            <Button className={s.btn_delete}>Видалити</Button>
+            <Button
+              onClick={continueOrder}
+              className={s.btn_continue}
+            >
+              Продовжити
+            </Button>
+          </div>
+        </TableCell>
+      </TableRow> */}
     </>
   );
 };

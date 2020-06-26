@@ -1,0 +1,86 @@
+.MainTitle{
+    color: #26272a
+}
+.SubMainTitle{
+    color: #262729,
+  }
+.tableWrap{
+    width: 100%;
+    overflow: auto;
+    padding: 5px 0;
+    margin: 20px 0;
+}
+.tableBox{
+    min-width: 900px;
+}
+.tableRow{
+    background-color: #f4f4f5;
+}
+.managerTable{
+    display: flex;
+    align-items: center;
+}
+.managerTableAvatar{
+    margin-right: 8px !important;
+    height: 40px;
+    width:  40px;
+}
+.valuating{
+    color: #faad14 !important;
+}
+.status{
+    font-weight: bold !important;
+}
+.btn_standart{
+    border-radius: 4px !important;
+    background-color: #2e408a !important;
+    color: #fff !important;
+}
+
+.foterInfoBox{
+    background-color: #dadbdc;
+    padding: 0 !important;
+    margin-bottom: 3px;
+}
+.foterInfoLine{
+
+    display: flex;
+    align-items: center !important;
+    padding: 10px 30px;
+
+}
+.foterInfoText{
+ 
+  line-height: 1.5; 
+  color: #262729;
+ 
+
+}
+.btn_delete{
+    border-radius: 4px !important;
+    background-color: #e6353b !important;
+    padding: 8px 12px !important;
+    color: #fff !important;
+    font-weight: 600;
+    margin: 0 20px !important;
+    transform: scale(1);
+    transition: .3s;
+    &:hover{
+        transform: scale(1.05);
+        transition: .3s;
+    }
+}
+.btn_continue{
+    border-radius: 4px !important;
+    background-color: #2e408a !important;
+    padding: 8px 12px !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    margin: 0 20px !important;
+    transform: scale(1);
+    transition: .3s;
+    &:hover{
+        transform: scale(1.05);
+        transition: .3s;
+    }
+}

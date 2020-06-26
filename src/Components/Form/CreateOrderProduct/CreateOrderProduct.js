@@ -10,6 +10,8 @@ import DateFnsUtils from '@date-io/date-fns';
 import {
   DatePicker,
   MuiPickersUtilsProvider,
+  KeyboardTimePicker,
+  KeyboardDatePicker,
 } from '@material-ui/pickers';
 import CreateInfoOrder from '../../Order/CreateOrder/CreateInfoOrderContext';
 import * as Api from '../../../Api';
@@ -18,9 +20,13 @@ export const CreateOrderProduct = ({ ...props }) => {
   const { setOrderInfo, ...orderInfo } = useContext(CreateInfoOrder);
   const { directions, nomenclature, newOrder, manager } = orderInfo;
 
-  const { onNomenclature, onDirections,handleClose } = props;
+  const { onNomenclature, onDirections, handleClose } = props;
 
-  const [selectedDate, handleDateChange] = useState(new Date());
+  const [selectedDate, setSelectedDate] = React.useState(new Date());
+
+  const handleDateChange = (date) => {
+    setSelectedDate(date);
+  };
 
   const initialValues = {
     directions: '',
@@ -43,12 +49,14 @@ export const CreateOrderProduct = ({ ...props }) => {
   });
 
   async function onSubmit(value) {
+    console.log(value);
+
     let nomenclatureObject = {
       order_id: newOrder.orderID,
       nomenclature_id: nomenclature.value.id,
       amount: value.count,
       address: value.deliveri_addres,
-      date: moment(new Date(value.data)).format('YYYY.MM.DD'),
+      date: moment(new Date(selectedDate)).format('DD.MM.YYYY'),
     };
     return Api.addOrderedNomenclatures(nomenclatureObject).then(
       (results) => {
@@ -65,7 +73,7 @@ export const CreateOrderProduct = ({ ...props }) => {
           },
         });
 
-        handleClose()
+        handleClose();
       },
     );
   }
@@ -112,18 +120,20 @@ export const CreateOrderProduct = ({ ...props }) => {
               component={CustomInput}
             />
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
-              <DatePicker
-                className={s.input}
-                fullWidth
+              <KeyboardDatePicker
                 disableToolbar
+                // variant=""
                 variant="inline"
-                format="MM.dd.yyyy"
-                minDate={new Date()}
-                placeholder="Дата"
+                format="dd.MM.yyyy"
                 margin="normal"
-                inputVariant="outlined"
-                // value={selectedDate}
-                // onChange={handleDateChang}
+                id="dataPicer"
+                fullWidth
+                // label="Date picker inline"
+                value={selectedDate}
+                onChange={handleDateChange}
+                KeyboardButtonProps={{
+                  'aria-label': 'change date',
+                }}
               />
             </MuiPickersUtilsProvider>
             <Field
@@ -136,8 +146,14 @@ export const CreateOrderProduct = ({ ...props }) => {
           </div>
           <div className={s.butoon__order_wrap}>
             <div>
-              <Button className={s.btn_back} onClick={handleClose}>Назад</Button>
-              <Button className={s.btn_standart} type="Submit" onSubmit={onSubmit}>
+              <Button className={s.btn_back} onClick={handleClose}>
+                Назад
+              </Button>
+              <Button
+                className={s.btn_standart}
+                type="Submit"
+                onSubmit={onSubmit}
+              >
                 Додати
               </Button>
             </div>

@@ -47,4 +47,12 @@ export const allOrderUsers = (id) => {
     url: `https://puz.supply/api/orders/?user_id=${id}`,
   });
 };
+export const getNomenclatureOrder = (id) => {
+  console.log(id );
+  
+  return apiRequest({
+    method: 'GET',
+    url: `https://puz.supply/api/ordered_nomenclatures/?order_id=${id}`,
+  });
+};
 

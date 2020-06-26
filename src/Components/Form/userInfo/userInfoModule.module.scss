@@ -1,0 +1,76 @@
+.title{
+    font-size: 32px;
+  line-height: 1.41;
+  color: #26272a;
+
+}
+.btn_standart{
+  border-radius: 4px !important;
+    background-color: #2e408a !important;
+    color: #fff !important;
+    //
+}
+.setings{
+    display: grid;
+    grid-template-columns: 400px 400px;
+    grid-gap: 80px;
+  }
+  .userInfoBlock{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 16px;
+    margin-bottom: 17px;
+  }
+  .userInfoCompany{
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-gap: 16px;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+  .SetingTitle{
+    font-size: 24px;
+    line-height: 1.5;
+    color: #262729;
+  
+  }
+  .conteiner{
+    display: flex;
+    flex-direction: column;
+  }
+  .SetingAvatar{
+    display: flex;
+    align-items: center;
+    margin: 35px 0;
+    justify-content: space-between;
+  }
+  .SetingAvatarFoto{
+    width: 88px !important;
+    height: 88px !important;
+  }
+  .InpunTitle{
+    font-size: 16px !important;
+  font-weight: bold !important;
+  line-height: 1.5 ;
+  color: #6c6f77 !important;
+  margin-bottom: 5px !important ;
+
+  }
+.password_box{
+  display: grid;
+  grid-template-columns: 400px;
+  grid-gap: 16px ;
+  margin-bottom: 16px;
+}
+  @media (max-width: 1368px) {
+    .setings{
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+  @media (max-width: 992px) {
+    .setings{
+        grid-gap: 30px;
+        grid-template-columns: 1fr;
+    }
+  }
+  

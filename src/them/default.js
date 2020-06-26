@@ -42,6 +42,20 @@ export default {
       '0px 12px 33px 0px #E8EAFC, 0 3px 3px -2px #B2B2B21A, 0 1px 8px 0 #9A9A9A1A',
   },
   overrides: {
+    MuiInputBase:{
+      adornedEnd:{
+        border: '1px solid #dadbdc',
+        fontSize: '14px',
+        padding: '5px 10px',
+        borderRadius: '4px',
+        '&:after': {
+          borderBottom:'none !important'
+        },
+        '&:before': {
+          borderBottom:'none !important'
+        },
+      }
+    },
     MuiTableCell:{
       head:{
         fontSize: '16px',

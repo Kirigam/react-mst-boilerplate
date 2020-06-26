@@ -42,9 +42,6 @@ td {
     padding: 10px 5px;
 
 }
-
-
-
   th {
     padding: 10px 5px;
     height: 0;
@@ -54,4 +51,26 @@ td {
     border-bottom: 1px solid #d5d9e8;
     white-space: pre;
     text-align: inherit;
+}
+
+.managerBox{
+  display: flex;
+  align-items: center;
+}
+.linkManager{
+  font-weight: 600;
+  color: #5866a1;
+  cursor: pointer;
+  &:hover{
+    transition: .3s;
+    color: #828cb9;
+  }
+}
+.avatarManager{
+  width: 40px;
+  height: 40px;
+  margin-right: 10px;
+
+  transition: .3s;
+  
 }

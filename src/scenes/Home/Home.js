@@ -18,7 +18,6 @@ const MainScreen = () => {
   const { users } = useStore((store) => ({
     users: store.users,
   }));
- 
 
   useEffect(() => {
     const userID = storageService.get(NameStorage.USERID);
@@ -26,11 +25,11 @@ const MainScreen = () => {
     Promise.resolve(users.fetchUser(userID))
       .then((result) => {
         console.log(result.data.user);
-        setisLoading(false);  
+        setisLoading(false);
       })
       .catch((error) => {
         // console.log( );
-        
+
         console.log(error.response);
         setisLoading(false);
       });

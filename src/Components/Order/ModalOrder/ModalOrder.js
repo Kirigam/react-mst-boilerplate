@@ -42,7 +42,6 @@ export const ModalOrder = ({ ...props }) => {
         open={open}
         onClose={handleClose}
         closeAfterTransition
-        
         BackdropProps={{
           timeout: 500,
         }}
@@ -57,10 +56,7 @@ export const ModalOrder = ({ ...props }) => {
                     aria-label="close"
                     onClick={handleClose}
                   >
-                    <Closse
-                      color="#5866a1"
-                      width="18px"
-                    ></Closse>
+                    <Closse color="#5866a1" width="18px"></Closse>
                     {/* <CloseIcon /> */}
                   </IconButton>
                 ) : null}
@@ -69,8 +65,7 @@ export const ModalOrder = ({ ...props }) => {
 
             <div className={s.modalBox}>
               <CreateOrderProduct
-               
-               handleClose={handleClose}
+                handleClose={handleClose}
                 onNomenclature={onNomenclature}
                 onDirections={onDirections}
               ></CreateOrderProduct>

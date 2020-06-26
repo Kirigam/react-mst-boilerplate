@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { SetingsSVG } from '../../../assetc/svg/setings';
 import CreateInfoOrder from '../CreateOrder/CreateInfoOrderContext';
+import { Mail } from '../../../assetc/svg/mail';
 
 export const CardManager = ({ ...props }) => {
   // const { manager } = props;
@@ -75,10 +76,11 @@ export const CardManager = ({ ...props }) => {
                     className={s.cardButtonLink}
                     href={`mailto:${manager.value[0].email}`}
                   >
-                    <SetingsSVG
+                    <Mail
+                      size='16px'
                       color="#5866a1"
                       name="setings"
-                    ></SetingsSVG>
+                    ></Mail>
                     <Typography>Написати менеджеру</Typography>
                   </a>
                 )}

@@ -18,6 +18,8 @@ export const TwoStepOrder = ({ ...props }) => {
   const { directions, nomenclature, newOrder, manager } = useContext(
     CreateInfoOrder,
   );
+  // console.log(newOrder );
+  
   const { onNomenclature, onDirections, setActiveStep } = props;
 
   const [open, setOpen] = React.useState(false);
@@ -92,7 +94,7 @@ export const TwoStepOrder = ({ ...props }) => {
     const temsArray = [];
     let increment = 1;
     newOrder.nomenclatures.map((item) => {
-      console.log(item );
+      console.log(item.nomenclature.manager );
       
       temsArray.push({
         idNomenclature: increment,
@@ -102,6 +104,7 @@ export const TwoStepOrder = ({ ...props }) => {
         Count: `${item.amount} ${item.nomenclature.unit.name}`,
         date: item.date,
         address: item.address,
+        manager_info:item.nomenclature.manager,
       });
       increment++;
     });

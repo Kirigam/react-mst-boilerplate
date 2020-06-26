@@ -6,10 +6,15 @@ import { OneStepOrder } from '../OneStepOrder/OneStepOrder';
 import { TwoStepOrder } from '../TwoStepOrder/TwoStepOrder';
 import { ThreeStepOrder } from '../ThreeStepOrder/ThreeStepOrder';
 import CreateInfoOrder from './CreateInfoOrderContext';
+import storageService from '../../../utils/storageService';
+import { useStore } from '../../../stores/stores';
 
 export const CreateOrder = () => {
+  const { users } = useStore();
+  const AuthUser = users.authUser;
+
   const [activeStep, setActiveStep] = useState(0);
-  console.log(activeStep);
+  // console.log(activeStep);
 
   const [orderInfo, setOrderInfo] = useState({
     directions: {
@@ -154,8 +159,8 @@ export const CreateOrder = () => {
     const managerValue = orderInfo.manager.list.filter(
       (item) => item.code === value.manager.code,
     );
-    console.log(value);
-    console.log(value.direction);
+    // console.log(value);
+    // console.log(value.direction);
 
     let directionValue;
     if (value.direction != null) {
@@ -170,12 +175,12 @@ export const CreateOrder = () => {
       directionValue = [];
     }
 
-    let filterNomenclature ;
+    let filterNomenclature;
     if (directionValue[0] != undefined) {
       filterNomenclature = orderInfo.nomenclature.list.filter(
         (item) => item.direction.code === directionValue[0].value,
       );
-    }else{
+    } else {
       filterNomenclature = orderInfo.nomenclature.list;
     }
 
@@ -196,11 +201,43 @@ export const CreateOrder = () => {
       manager: { ...orderInfo.manager, value: managerValue },
     });
   }
+  useEffect(() => {
+    if (storageService.get('continueOrderID')) {
+      setActiveStep(1);
+      const continueOrderID = Number(
+        storageService.get('continueOrderID'),
+      );
+
+      localStorage.removeItem('continueOrderID');
+
+      Promise.resolve(Api.getNomenclatureOrder(continueOrderID)).then(
+        (results) => {
+          setOrderInfo({
+            ...orderInfo,
+            directions: {
+              ...orderInfo.directions,
+              value: [],
+            },
+            nomenclature: {
+              ...orderInfo.nomenclature,
+              value: [],
+            },
+            newOrder: {
+              ...orderInfo.newOrder,
+              orderID: results.data.order_id,
+              nomenclatures: results.data,
+            },
+          });
+        },
+      );
+    }
+  }, []);
 
   // function
 
   return (
     <>
+    
       <CreateInfoOrder.Provider
         value={{ ...orderInfo, setOrderInfo }}
       >
@@ -252,11 +289,14 @@ export const CreateOrder = () => {
         {activeStep === 2 && (
           <Box my={6} mx={4}>
             <Typography className={s.MainTitle} variant="h4">
-              Оформлення замовлення. Реєстрація
+              Оформлення замовлення. 
+              {AuthUser.client_profile.has_free_order &&(<>Реєстрація</>)}
+              
             </Typography>
             <Box my={2} mb={4}>
               <Typography variant="h5" className={s.SubMainTitle}>
                 Для продовження заповніть форму даними бізнесу
+               
               </Typography>
             </Box>
             <ThreeStepOrder></ThreeStepOrder>

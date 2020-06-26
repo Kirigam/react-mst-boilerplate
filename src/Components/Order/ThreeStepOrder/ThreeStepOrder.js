@@ -13,11 +13,18 @@ import { NameStorage, PrivateRoute } from '../../../Constants/Index';
 import { useHistory } from 'react-router-dom';
 import { useStore } from '../../../stores/stores';
 import { Alert, AlertTitle } from '@material-ui/lab';
+import { useSnackbar } from 'notistack';
 
 export const ThreeStepOrder = () => {
   const history = useHistory();
   const { setOrderInfo, ...orderInfo } = useContext(CreateInfoOrder);
   const { directions, nomenclature, newOrder, manager } = orderInfo;
+
+  function infoMassege(variant, text) {
+    enqueueSnackbar(text, { variant });
+  }
+
+  const { enqueueSnackbar } = useSnackbar();
 
   const [isError, setIsError] = useState({
     open: false,
@@ -38,28 +45,64 @@ export const ThreeStepOrder = () => {
 
   // AuthUser.client_profile.company !== null;
 
+  const infoUser = {
+    full_name: {
+      value: !!AuthUser.full_name ? AuthUser.full_name : '',
+      visible: false,
+    },
+    email: {
+      value: !!AuthUser.email ? AuthUser.email : '',
+      visible: !!AuthUser.email ? true : false,
+    },
+    phone_number: {
+      value: !!AuthUser.phone_number ? AuthUser.phone_number : '',
+      visible: false,
+    },
+    companyName: {
+      value: '',
+      visible: false,
+    },
+    companyEdrpou: {
+      value: '',
+      visible: false,
+    },
+    address: {
+      value: !!AuthUser.client_profile.address
+        ? AuthUser.client_profile.address
+        : '',
+      visible: false,
+    },
+    webSite: {
+      value: !!AuthUser.client_profile.site
+        ? AuthUser.client_profile.site
+        : '',
+      visible: false,
+    },
+  };
+  if (AuthUser.client_profile.company !== null) {
+    if (!!AuthUser.client_profile.company.edrpou)
+      infoUser.companyEdrpou.value = Number(
+        AuthUser.client_profile.company.edrpou,
+      );
+    if (!AuthUser.client_profile.is_admin)
+      infoUser.companyEdrpou.visible = true;
+    if (!!AuthUser.client_profile.company.name) {
+      infoUser.companyName.value =
+        AuthUser.client_profile.company.name;
+    }
+    if (!AuthUser.client_profile.is_admin)
+      infoUser.companyName.visible = true;
+  }
+
+
   const initialValues = {
-    company_name:
-      AuthUser.client_profile.company !== null &&
-      !!AuthUser.client_profile.company.name
-        ? AuthUser.client_profile.company.name
-        : '',
-    edrpou:
-      AuthUser.client_profile.company !== null &&
-      !!AuthUser.client_profile.company.edrpou
-        ? AuthUser.client_profile.company.edrpou
-        : '',
-    full_name: !!AuthUser.full_name ? AuthUser.full_name : '',
-    phone: !!AuthUser.phone_number
-    ? AuthUser.phone_number
-    : '',
-    email: !!AuthUser.email ? AuthUser.email : '',
-    address: !!AuthUser.client_profile.address
-      ? AuthUser.client_profile.address
-      : '',
-    website: !!AuthUser.client_profile.site
-      ? AuthUser.client_profile.site
-      : '',
+    company_name: infoUser.companyName.value,
+    edrpou: infoUser.companyEdrpou.value,
+    full_name: infoUser.full_name.value,
+    phone: infoUser.phone_number.value,
+    email: infoUser.email.value,
+    address: infoUser.address.value,
+    website: infoUser.webSite.value,
   };
   const error = {
     form: {
@@ -84,30 +127,26 @@ export const ThreeStepOrder = () => {
 
     value.user_id = Number(userID);
     value.order_id = newOrder.orderID;
+   console.log(newOrder );
+   
     if (newOrder.orderID) {
       Promise.resolve(Api.orderFinishStep(value))
         .then((result) => {
           console.log(result);
-          if (result.data.status == 'ok') {
-            console.log(result.data.message);
-            storageService.set(NameStorage.USERORDE, 1);
 
-            history.push(PrivateRoute.HOME);
-          }
-          if (result.data.status == 'bad') {
-            setIsError({
-              ...isError,
-              open: true,
-              text: result.data.messages[0].message,
-            });
-          } else {
-          }
+          result.data.messages.map((item) =>
+            infoMassege(item.status, item.text),
+          );
+
+          history.push(PrivateRoute.HOME);
         })
         .catch((result) => {
           console.log(result);
         });
     }
   }
+
+
 
   return (
     <>
@@ -123,14 +162,18 @@ export const ThreeStepOrder = () => {
                 placeholder="Назва компанії"
                 name="company_name"
                 id="company_name"
+                disabled={!!infoUser.companyName.visible}
+                
                 type="text"
                 component={CustomInput}
               />
               <Field
                 placeholder="Код ЄДРПО"
                 name="edrpou"
+                disabled={!!infoUser.companyEdrpou.visible}
                 id="edrpou"
                 type="tel"
+                
                 component={CustomInput}
               />
               <Field
@@ -141,7 +184,6 @@ export const ThreeStepOrder = () => {
                 component={CustomInput}
               />
               <Field
-                
                 placeholder="Телефон"
                 name="phone"
                 id="phone"
@@ -149,7 +191,6 @@ export const ThreeStepOrder = () => {
                 component={CustomInput}
               />
               <Field
-                
                 placeholder="E-mail"
                 name="email"
                 id="email"
@@ -178,7 +219,7 @@ export const ThreeStepOrder = () => {
                 onSubmit={onSubmit}
                 className={s.butoon__order}
               >
-                Відправитии на розціннку
+                Відправити на розцінення
               </Button>
             </Box>
           </Form>

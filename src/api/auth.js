@@ -34,12 +34,30 @@ export const restorePassword = (data) => {
     url: '/auth/restore-password',
     data,
   });
-}
-export const setUserData = (id,userData) => {
+};
+
+export const changePassword = (data) => {
   return apiRequest({
     method: 'PATCH',
-    url: `/api/project_users/${id}/`,
-    data:userData[0],
+    url: 'https://puz.supply/api/change_password/',
+    data,
+  });
+}
+
+export const updateUser = (data) => {
+  console.log(data);
+
+  return apiRequest({
+    method: 'PATCH',
+    url: 'https://puz.supply/api/update_profile/',
+    data,
   });
 };
-  
+
+// export const setUserData = (id,userData) => {
+//   return apiRequest({
+//     method: 'PATCH',
+//     url: `https://puz.supply/api/project_users/${id}/`,
+//     data:userData[0],
+//   });
+// };

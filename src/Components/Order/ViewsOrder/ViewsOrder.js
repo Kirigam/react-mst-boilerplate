@@ -27,40 +27,49 @@ import { SetingsSVG } from '../../../assetc/svg/setings';
 import { ArrowDown } from '../../../assetc/svg/arrowDown';
 import { ArrowLeft } from '../../../assetc/svg/arrowLeft';
 import { MainTablet } from '../MainTablet/MainTablet';
-// import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
-// import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+
+import { useStore } from '../../../stores/stores';
+import { propOr } from 'ramda';
+
+// function serializeNomenclature({object}) {
+//   {item,product,flag} = object;
+
+// }
 
 export const ViewsOrder = () => {
-  //   const s = useStyles();
+  const { users } = useStore();
+  const AuthUser = users.authUser;
+
   const [viewsOrders, setViewsOrders] = useState({
     isLoading: false,
-    allOrders: [],
     Orders: [],
+    // : [],
   });
-  const countOrder = Number(storageService.get(NameStorage.USERORDE));
-
-  const userId = Number(storageService.get(NameStorage.USERID));
 
   useEffect(() => {
     const userID = storageService.get(NameStorage.USERID);
 
     Promise.resolve(Api.allOrderUsers(userID))
       .then((result) => {
-        console.log(result.data.results);
+        console.log(result);
 
-        const temsArray = [];
         const tableData = [];
         result.data.results.map((item) => {
-          let dataTemp = { header: {}, main: [] };
+          let dataTemp = {idOrder:'', header: {}, main: [] };
           let increment = 1;
           let flag = true;
-
+          dataTemp.idOrder=item.id;
           item.ordered_nomenclatures.map((product) => {
             let tempObject = {
+              
               idNomenclature: flag ? item.id : '',
               idproduct: increment,
               manager: product.nomenclature.manager.full_name,
-              direction: product.nomenclature.direction.name,
+              direction: propOr(
+                '',
+                ['nomenclature', 'direction', 'name'],
+                product,
+              ),
               nomenclature: product.nomenclature.name,
               Count: `${product.amount} (${product.nomenclature.unit.name})`,
               date: product.date,
@@ -75,33 +84,27 @@ export const ViewsOrder = () => {
             }
 
             increment++;
-
             flag = false;
           });
-          console.log(tableData);
           tableData.push(dataTemp);
         });
 
-        storageService.set(
-          NameStorage.USERORDE,
-          result.data.results.length,
-        );
         setViewsOrders({
-          ...viewsOrders,
           isLoading: true,
-          allOrders: temsArray,
           Orders: tableData,
+          
         });
-        return result;
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.log(error);
+      });
   }, []);
 
   return (
     <>
       {viewsOrders.isLoading && (
         <>
-          {countOrder == 0 && (
+          {AuthUser.client_profile.has_free_order && (
             <Box my={6} mx={4}>
               <Typography className={s.MainTitle} variant="h4">
                 Оформлення замовлення
@@ -123,7 +126,7 @@ export const ViewsOrder = () => {
             </Box>
           )}
 
-          {countOrder > 0 && (
+          {!AuthUser.client_profile.has_free_order && (
             <Box my={6} mx={4}>
               <Typography className={s.MainTitle} variant="h4">
                 Активні замовлення
