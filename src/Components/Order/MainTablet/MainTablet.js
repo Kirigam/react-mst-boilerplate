@@ -129,7 +129,7 @@ const ExpandableTableRow = ({ children, ...props }) => {
         </>
       )}
       <TableRow>
-        {/* <TableCell className={s.foterInfoBox} colSpan="10">
+        <TableCell className={s.foterInfoBox} colSpan="10">
           <div className={s.foterInfoLine}>
             <div className={s.foterInfoText}>
               У вас залишилось незавершене замовлення. Продовжіть
@@ -143,7 +143,7 @@ const ExpandableTableRow = ({ children, ...props }) => {
               Продовжити
             </Button>
           </div>
-        </TableCell> */}
+        </TableCell>
       </TableRow>
     </>
   );

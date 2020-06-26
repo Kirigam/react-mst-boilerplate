@@ -208,7 +208,7 @@ export const CreateOrder = () => {
         storageService.get('continueOrderID'),
       );
 
-      // setTimeout(localStorage.removeItem('continueOrderID'))
+      setTimeout(localStorage.removeItem('continueOrderID'))
 
       Promise.resolve(Api.getNomenclatureOrder(continueOrderID)).then(
         (results) => {
