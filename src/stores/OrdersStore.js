@@ -1,11 +1,8 @@
 import { propOr } from 'ramda';
 import { types as t, flow, getSnapshot } from 'mobx-state-tree';
 import storageService from '../utils/storageService';
-import UserModel from './modeles/UserModel';
 
-import { registration } from '../Api/auth.js';
-import { NameStorage } from '../Constants/Index';
-import * as Api from '../Api';
+import * as Api from '../api';
 import OrderModel from './modeles/OrderModel';
 
 const OrdersStore = t

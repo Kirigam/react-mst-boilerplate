@@ -1,63 +1,55 @@
 import { apiRequest } from './utils';
 import storageService from '../utils/storageService';
+import localStorageKeys from '../constants/localStorageKeys';
 
-const setUserToStorage = ({ data: { key, user } }) => {
-  storageService.set('userId', user.id);
-  storageService.set('user_info', JSON.stringify(user));
+const setUserToStorage = ({ data: { user, key: accessToken } }) => {
+  storageService.set(localStorageKeys.USER_ID, user.id);
+  storageService.set(localStorageKeys.ACCESS_TOKEN, accessToken);
+  storageService.set(
+    localStorageKeys.USER_INFO,
+    JSON.stringify(user),
+  );
+
   return user;
 };
 
-export const login = ({ email, password }) => {
-  return apiRequest({
+export const login = ({ email, password }) =>
+  apiRequest({
     method: 'POST',
-    url: 'https://puz.supply/api/dj-rest-auth/login/',
+    url: '/dj-rest-auth/login/',
     data: { email, password },
-  });
-};
+  }).then(setUserToStorage);
+
 export const getUser = (id) => {
   return apiRequest({
     method: 'GET',
-    url: `https://puz.supply/api/project_users/${id}/`,
+    url: `/project_users/${id}/`,
   });
 };
-export const registration = (data) => {
-  return apiRequest({
+export const registration = (data) =>
+  apiRequest({
     method: 'POST',
-    url: 'https://puz.supply/api/dj-rest-auth/registration/',
+    url: '/dj-rest-auth/registration/',
     data,
-  });
-};
+  }).then(setUserToStorage);
 
-export const restorePassword = (data) => {
-  return apiRequest({
+export const restorePassword = (data) =>
+  apiRequest({
     method: 'POST',
-    url: '/auth/restore-password',
+    url: '/dj-rest-auth/restore-password',
     data,
-  });
-};
+  }).then(setUserToStorage);
 
-export const changePassword = (data) => {
-  return apiRequest({
+export const changePassword = (data) =>
+  apiRequest({
     method: 'PATCH',
-    url: 'https://puz.supply/api/change_password/',
+    url: '/change_password/',
     data,
   });
-}
 
-export const updateUser = (data) => {
-  console.log(data);
-
-  return apiRequest({
+export const updateUser = (data) =>
+  apiRequest({
     method: 'PATCH',
-    url: 'https://puz.supply/api/update_profile/',
+    url: '/update_profile/',
     data,
   });
-};
-
-// export const setUserData = (id,userData) => {
-//   return apiRequest({
-//     method: 'PATCH',
-//     url: `https://puz.supply/api/project_users/${id}/`,
-//     data:userData[0],
-//   });
-// };

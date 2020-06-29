@@ -1,49 +1,42 @@
 import React, { useState } from 'react';
 
-import { isLoginUser } from '../utils/userUtil';
-import { PublicRoute, PrivateRoute } from '../Constants/Index';
+import { isLoggedIn } from '../utils/general';
+import { publicRoutes, privateRoutes } from '../constants/routes';
 import { useHistory, Switch, Route } from 'react-router-dom';
-import LoginForm from '../Components/Form/Auth/Login/Login';
-import RegisterForm from '../Components/Form/Auth/Register/Register';
+import Login from './Login/Login';
+import RegisterForm from './Register/Register';
 import MainScreen from './Home/Home';
-import { Headers } from '../Components/Header/Header';
+import { Headers } from '../components/Header/Header';
 import s from './Home/Home.module.scss';
-// import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 export const Router = () => {
-  let history = useHistory();
-
+  const history = useHistory();
+  const currentLocation = history.location.pathname;
   const [isOpen, SetOpen] = useState({ open: false });
+
   function OpenMenu() {
     SetOpen({ open: !isOpen.open });
   }
 
-  if (!isLoginUser()) {
-    if (window.location.pathname != '/auth/register') {
-      history.push(PublicRoute.LOGIN);
-    }
+  if (!isLoggedIn() && currentLocation !== publicRoutes.REGISTER) {
+    history.push(publicRoutes.LOGIN);
   }
 
   return (
-    <>
-      <div className={isOpen.open ? `${s.isOverflov}` : null}>
-        <Headers isOpen={isOpen} OpenMenu={OpenMenu}></Headers>
-        <Switch>
-          <Route
-            path={PublicRoute.LOGIN}
-            component={LoginForm}
-          ></Route>
-          <Route
-            path={PublicRoute.REGISTER}
-            component={RegisterForm}
-          ></Route>
-          <Route
-            path={PrivateRoute.HOME}
-            component={MainScreen}
-          ></Route>
-        </Switch>
-      </div>
-    </>
+    <div className={isOpen.open ? `${s.isOverflov}` : ''}>
+      <Headers isOpen={isOpen} OpenMenu={OpenMenu} />
+      <Switch>
+        <Route path={publicRoutes.LOGIN} component={Login}></Route>
+        <Route
+          path={publicRoutes.REGISTER}
+          component={RegisterForm}
+        ></Route>
+        <Route
+          path={privateRoutes.HOME}
+          component={MainScreen}
+        ></Route>
+      </Switch>
+    </div>
   );
 };
 export default Router;

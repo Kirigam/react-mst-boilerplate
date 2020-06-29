@@ -1,13 +1,19 @@
 import { types as t } from 'mobx-state-tree';
 
-import UsersStore from './usersStore';
-import DirectionsStore from './DirectionsStore';
+import AuthStore from './AuthStore';
+import UsersStore from './UsersStore';
 import OrdersStore from './OrdersStore';
 
-const RootStore = t.model('RootStore', {
-  users: t.optional(UsersStore, {}),
-  // directions: t.optional(DirectionsStore, {}),
-  orders:t.optional(OrdersStore,{})
-});
+const RootStore = t
+  .model('RootStore', {
+    auth: t.optional(AuthStore, {}),
+    users: t.optional(UsersStore, {}),
+    orders: t.optional(OrdersStore, {}),
+  })
+  .actions((store) => ({
+    clearStore() {
+      store = {};
+    },
+  }));
 
 export default RootStore;

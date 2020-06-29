@@ -3,9 +3,7 @@ import { pathEq, mergeDeepLeft } from 'ramda';
 
 import storageService from '../utils/storageService';
 
-export const apiServer = process.env.REACT_APP_API_URL;
-
-const apiBaseUrl = `${apiServer}/api`;
+const apiBaseUrl = process.env.REACT_APP_API_URL;
 
 export const isUnauthorizedError = pathEq(['response', 'status'], 401);
 

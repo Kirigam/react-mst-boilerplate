@@ -1,4 +1,4 @@
-import makeInspectable from 'mobx-devtools-mst';
+import { connectReduxDevtools } from 'mst-middlewares';
 
 import { isProd } from '../utils/general';
 
@@ -9,7 +9,7 @@ export function createStore(initialStore = {}) {
   const store = RootStore.create(initialStore);
 
   if (!isProd()) {
-    makeInspectable(store);
+    connectReduxDevtools(require('remotedev'), store);
   }
 
   return store;
@@ -17,14 +17,10 @@ export function createStore(initialStore = {}) {
 
 const MSTContext = createContext(null);
 
-export const Provider = MSTContext.Provider;
+export const MstProvider = MSTContext.Provider;
 
 export function useStore(mapStateToProps) {
-  // console.log(MSTContext);
-
   const store = useContext(MSTContext);
-
-  // console.log(store);
 
   if (typeof mapStateToProps === 'function') {
     return mapStateToProps(store);

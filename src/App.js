@@ -1,31 +1,26 @@
-import React  from 'react';
-import { CssBaseline, ThemeProvider } from '@material-ui/core';
-import { createStore, Provider } from './stores/stores';
-import Themes from './them';
-import { Router } from './scenes/Routes';
-import s from './App.module.scss';
-import { BrowserRouter } from 'react-router-dom';
+import React from 'react';
 import { observer } from 'mobx-react';
+import { BrowserRouter } from 'react-router-dom';
+import { createStore, MstProvider } from './stores/stores';
+import { CssBaseline, ThemeProvider } from '@material-ui/core';
+
+import { Router } from './scenes/Routes';
 import { SnackbarProvider } from 'notistack';
+import themes from './them';
 
-function App() {
-  const store = createStore();
-  const errorStore = createStore();
+const store = createStore();
 
-  return (
-    <ThemeProvider theme={Themes.default}>
-      <Provider value={store}>
+const App = () => (
+  <ThemeProvider theme={themes.default}>
+    <MstProvider value={store}>
       <SnackbarProvider maxSnack={3}>
         <CssBaseline />
         <BrowserRouter>
-          <div className={s.wrap}>
-            <Router />
-          </div>
+          <Router />
         </BrowserRouter>
       </SnackbarProvider>
-      </Provider>
-    </ThemeProvider>
-  );
-}
+    </MstProvider>
+  </ThemeProvider>
+);
 
 export default observer(App);
