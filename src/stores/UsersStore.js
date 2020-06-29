@@ -69,7 +69,7 @@ const UsersStore = t
     get authUser() {
       const userId = storageService.get('userId');
       const allUsers = propOr([], 'list', store);
-      return allUsers.find(({ id }) => id == userId);
+      return allUsers.find(({ id }) =>  id.toString() === userId);
     },
   }));
 

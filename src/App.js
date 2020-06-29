@@ -1,5 +1,4 @@
 import React from 'react';
-import { observer } from 'mobx-react';
 import { BrowserRouter } from 'react-router-dom';
 import { createStore, MstProvider } from './stores/stores';
 import { CssBaseline, ThemeProvider } from '@material-ui/core';
@@ -23,4 +22,4 @@ const App = () => (
   </ThemeProvider>
 );
 
-export default observer(App);
+export default App;

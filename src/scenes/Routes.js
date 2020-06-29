@@ -38,5 +38,4 @@ export const Router = () => {
       </Switch>
     </div>
   );
-};
-export default Router;
+}
